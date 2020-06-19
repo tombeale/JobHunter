@@ -141,7 +141,9 @@
 
     public void ConfirmDelete(string key)
     {
-
+        todos.Where(t => t.IsDone).ToList().ForEach(t => _context.Remove(t));
+        _context.SaveChanges();
+        StateHasChanged();
     }
 
     protected override void OnInitialized()

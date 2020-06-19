@@ -2,7 +2,7 @@
     <div class="bl-dialog-header">@Title</div>
     <div class="bl-dialog-body">@Message</div>
     <div class="bl-dialog-buttons">
-        <button class="btn btn-secondary" @onclick='eventArgs => OnClickCallback.InvokeAsync("cancel")'>Cancel</button>
+        <button class="btn btn-secondary" @onclick='Hide'>Cancel</button>
         <button class="btn btn-primary" @onclick='eventArgs => OnClickCallback.InvokeAsync("continue")'>Continue</button>
     </div>
 </div>
