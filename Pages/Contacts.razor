@@ -1,0 +1,21 @@
+﻿@page "/contacts"
+@using JobHunter.Shared
+@inject IJSRuntime JsRuntime
+    <SideBar MenuSet="contacts" />
+
+    <h1>Contacts</h1>
+
+    A list of contacts will go here
+
+    @code {
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await SetTitle("Contacts");
+        }
+
+        async Task SetTitle(string title)
+        {
+            await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
+                title);
+        }
+    }

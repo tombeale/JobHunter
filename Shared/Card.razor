@@ -1,0 +1,30 @@
+﻿@using System.Text.Json
+@using System.Text.Json.Serialization
+@using BlueSite.Data.Entities
+
+<div id="@id" class="card" style="width: 18rem;">
+    <img src="images/Card-Head-Bg.png" class="card-img-top">
+    <h5 class="card-title">Card title</h5>
+    <div class="card-body">
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <p class="card-text">
+            @jsonString
+        </p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string id { get; set; } = "";
+    string jsonString;
+
+    protected override void OnInitialized()
+    {
+        ActionItem act = new ActionItem();
+        act.Id = 1;
+        act.Title = "Test Item";
+        act.status = "InWork";
+
+        jsonString = JsonSerializer.Serialize<ActionItem>(act);
+    }
+}

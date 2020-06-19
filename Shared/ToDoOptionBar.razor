@@ -1,0 +1,17 @@
+﻿@using BlueSite.Data.Entities
+
+<div class="section-menu">
+    
+</div>
+
+@code {
+    List<MenuItem> Items = new List<MenuItem>();
+
+    private void InitMenu()
+    {
+        Items.Add(new MenuItem("showAll",   "", "Show All Items", "/todo/showall"));
+        Items.Add(new MenuItem("hideDone",  "", "Hide Done Items", "/todo/hidedone"));
+        Items.Add(new MenuItem("clearDone", "", "Clear Done Items", "/todo/cleardone"));
+    }
+    
+}

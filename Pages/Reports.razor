@@ -1,0 +1,21 @@
+﻿@page "/reports"
+@using JobHunter.Shared
+@inject IJSRuntime JsRuntime
+    <SideBar MenuSet="reports" />
+
+    <h1>Reports</h1>
+
+    A list of reports will go here
+
+    @code {
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await SetTitle("Reports");
+        }
+
+        async Task SetTitle(string title)
+        {
+            await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
+                title);
+        }
+    }

@@ -1,0 +1,31 @@
+﻿@using BlueSite.Data.Entities
+@using JobHunter.Application
+
+    <div id="side-bar">
+        <p class="sidebar-header">Options</p>
+        <ul class="list-group">
+            @foreach (var item in items)
+            {
+                <li class="list-group-item sidebar-link" @onclick='(() => OnClickCallback.InvokeAsync(item.Action))'>@item.Caption</li>
+            }
+        </ul>
+    </div>
+
+
+@code {
+
+    private List<MenuItem> items = new List<MenuItem>();
+    private SideBar Parent;
+
+    [Parameter]
+    public string MenuSet { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        items = SideBars.GetMenuSet(MenuSet);
+    }
+
+}

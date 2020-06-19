@@ -1,0 +1,40 @@
+﻿@using BlueSite.Data.Entities
+
+@if (Items == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div id='menu-bar' style="display: none;">
+        @((MarkupString)DrawTopMenu())
+    </div>
+}
+
+@code {
+    List<MenuItem> Items = new List<MenuItem>();
+
+    protected override void OnInitialized()
+    {
+        Items.Add(new MenuItem("home", "", "Home",             "/"));
+        Items.Add(new MenuItem("todo", "", "To Do List",       "/actions"));
+        Items.Add(new MenuItem("home", "", "Manage Contacts",  "/contacts"));
+        Items.Add(new MenuItem("home", "", "Manage Companies", "/companies"));
+        Items.Add(new MenuItem("home", "", "Reports",          "/reports"));
+    }
+
+    public string DrawTopMenu()
+    {
+        List<string> buffer = new List<string>();
+        @foreach (var item in Items)
+        {
+            buffer.Add($"<a class='menu-bar' href='{item.Action}'>{item.Caption}</a>");
+        }
+        return String.Join("&nbsp;|&nbsp;", buffer.ToArray());
+    }
+
+}
+
+
+
+

@@ -1,0 +1,118 @@
+﻿body {
+    padding: 105px 10px 10px 155px;
+    font-family: Calibri, Arial, Helvitica, sans-serif;
+    font-size: 12pt;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 160%;
+    font-weight: bold;
+}
+
+a.menu-bar {
+    color: #0a305a;
+}
+
+a.menu-bar:hover {
+    color: white;
+    text-decoration: none;
+}
+
+#menu-bar {
+    height: 20px;
+    position: fixed;
+    top: 22px;
+    left: 315px;
+    right: 0;
+    padding: 18px 10px 4px 55px;
+    font-size: 10pt;
+    color: #0a305a;
+    text-align: right;
+    background-color: rgba(168, 186, 216, .7);
+    box-sizing: content-box;
+    border-radius: 0 0 0 30px;
+}
+
+#masthead-left {
+    background-image: url("../images/masthead-bg-left.png");
+    background-position: top right;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 350px;
+    top: 0;
+    left: 0;
+    height: 95px;
+    overflow: hidden;
+}
+
+#masthead-right {
+    background-image: url("../images/masthead-bg-right.png");
+    background-position: top right;
+    background-repeat: repeat-X;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 350px;
+    height: 95px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+#masthead-logo {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    font-size: 24pt;
+    color: white;
+}
+
+#masthead-title {
+    position: fixed;
+    top: 40px;
+    left: 50px;
+    font-size: 105%;
+    color: white;
+}
+
+
+#side-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 146px;
+    height: 100%;
+    background-color: #dee3ec;
+    padding: 105px 5px 5px 15px;
+    border-right: 1px solid #0a305a
+}
+
+p.sidebar-header {
+    font-size: 120%;
+    font-weight: bold;
+    color: #0a305a;
+}
+
+li.sidebar-link {
+    padding: 2px 4px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #0a305a;
+}
+
+
+li.sidebar-link:hover {
+    background-color: #eef;
+    color: black;
+}
+
+.link {
+    cursor: pointer;
+}
+
+select.dropdown {
+    width: 300px;
+    font-size: 14pt;
+    padding: 2px 4px;
+}
