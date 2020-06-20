@@ -111,6 +111,11 @@ li.sidebar-link:hover {
     cursor: pointer;
 }
 
+span.normal {
+    font-weight: normal;
+    font-size: 10pt;
+}
+
 select.dropdown {
     width: 300px;
     font-size: 14pt;

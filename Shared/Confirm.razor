@@ -1,4 +1,4 @@
-﻿<div class="bl-confirm" style="@hidden">
+﻿<div class="bl-dialog" style="@hidden">
     <div class="bl-dialog-header">@Title</div>
     <div class="bl-dialog-body">@Message</div>
     <div class="bl-dialog-buttons">
@@ -17,6 +17,9 @@
 
     [Parameter]
     public EventCallback<string> OnClickCallback { get; set; }
+
+    [Parameter]
+    public string Buttons { get; set; } = "Ok:close";
 
     string hidden = "";
 

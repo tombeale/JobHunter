@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlueSite.Components\BlueSite.Components.csproj" />
     <ProjectReference Include="..\..\BlueSite.Data\BlueSite.Data.csproj" />
   </ItemGroup>
 
