@@ -1,13 +1,54 @@
 ﻿@page "/companies"
 @using JobHunter.Shared
+@using BlueSite.Data
+@using BlueSite.Data.Entities
 @inject IJSRuntime JsRuntime
-    <SideBar MenuSet="companies" />
+@inject BlueSiteContext _context
+<SideBar MenuSet="companies" />
 
-    <h1>Company List</h1>
+<h1>Company List</h1>
 
-    A list of companies will go here
+<table class="to-do" border="0" style="width: 100%">
+
+    @for (int i = 0; i < companies.Count; i++)
+    {
+        int index = i;
+        Company c = companies[index];
+        <tr class="todo-list">
+            <td>@c.Name</td>
+            <td>@c.City</td>
+        </tr>
+    }
+
+</table>
+
+
 
     @code {
+
+        List<Company> companies;
+        JobHuntRepository Repository;
+
+
+
+
+
+
+
+
+
+
+        /* *******************************************************************
+            Startup Events
+         ****************************************************************** */
+
+        protected override void OnInitialized()
+        {
+            Repository = new JobHuntRepository(_context);
+            companies = GetCompanyList();
+
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await SetTitle("Companies");
@@ -18,4 +59,16 @@
             await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
                 title);
         }
+
+
+        /* *******************************************************************
+            Data MEthods
+         ****************************************************************** */
+
+        List<Company> GetCompanyList()
+        {
+            return Repository.AllCompanies;
+        }
+
+
     }

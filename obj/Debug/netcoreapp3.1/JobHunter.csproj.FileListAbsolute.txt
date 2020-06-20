@@ -84,8 +84,6 @@ F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\DropDown.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\DropDown.razor.g.cs
-F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Confirm.razor.g.cs
-F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\Confirm.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\JobHunter.StaticWebAssets.xml
 F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authorization.dll
 F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Components.dll

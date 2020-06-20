@@ -8,7 +8,7 @@
 @using JobHunter.Models
 
 @inject IJSRuntime JsRuntime
-    <!-- inject ActionRepository Actions -->
+    <!-- inject JobHuntRepository Actions -->
 @inject BlueSiteContext _context
 
 <SideBar MenuSet="todolist" OnClickCallback="@HandleSidebarOption" />
@@ -48,9 +48,8 @@
         </td>
     </tr>
 </table>
-<BsDialog @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
-        OnClickCallback="@HandleDialogSelection" 
-        Buttons="Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Do It:continue:btn btn-sm btn-primary bs-dialog"/>
+<Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
+        OnClickCallback="@HandleDialogSelection" />
 @code {
     private IList<ActionItem> todos = new List<ActionItem>();
     private string newTodo;
@@ -59,9 +58,9 @@
     private string ActionKey = "";
     private string ActionType = "todo";
 
-    private ActionRepository Actions;
+    private JobHuntRepository Actions;
 
-    private bool hideDone = false;
+    private bool hideDone = true;
 
     private List<DDOption> Options;
 
@@ -70,7 +69,7 @@
 
     SideBar SideBar1 = new SideBar();
 
-    BsDialog confirm;
+    Confirm confirm;
 
     private void ItemHandler(int index)
     {
@@ -169,7 +168,7 @@
 
     protected override void OnInitialized()
     {
-        Actions = new ActionRepository(_context);
+        Actions = new JobHuntRepository(_context);
         todos = getToDoList();
 
         Options = new List<DDOption>();
@@ -182,7 +181,7 @@
 
     List<ActionItem> getToDoList()
     {
-        return Actions.All.Where(a => a.Type == ActionType).ToList();
+        return Actions.AllActions.Where(a => a.Type == ActionType).ToList();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
