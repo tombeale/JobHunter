@@ -6,16 +6,16 @@
 @inject BlueSiteContext _context
 <SideBar MenuSet="companies" />
 
-<h1>Company List</h1>
+<h1>Companies</h1>
 
 <table class="to-do" border="0" style="width: 100%">
 
     @for (int i = 0; i < companies.Count; i++)
     {
         int index = i;
-        Company c = companies[index];
+        BlueSite.Data.Entities.Company c = companies[index];
         <tr class="todo-list">
-            <td>@c.Name</td>
+            <td><a href="/companyview/@c.Id">@c.Name</a></td>
             <td>@c.City</td>
         </tr>
     }
