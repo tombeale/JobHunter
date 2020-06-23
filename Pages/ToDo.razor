@@ -17,7 +17,7 @@
     <h1>Action Items <span class="normal">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
 </div>
 <div class="d-inline-block" style="width:28%; text-align: right;">
-    <DropDown OptionSet="todolist" OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" />
+    <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" />
 </div>
 <table class="to-do" border="0" style="width: 100%">
 
@@ -63,6 +63,7 @@
     private bool hideDone = true;
 
     private List<DDOption> Options;
+    private List<DDOption> Statuses;
 
 
     private IEnumerable<ActionItem> data;
@@ -141,6 +142,15 @@
     }
 
 
+    public void HandleSetStatusFilter(string key)
+    {
+        string status = key.ToLower();
+        todos = getToDoList();
+        newTodo = string.Empty;
+        StateHasChanged();
+    }
+
+
     public void HandleDialogSelection(string key)
     {
         switch (key)
@@ -177,6 +187,14 @@
         {
             Options.Add(new DDOption(o.Id, o.Name));
         }
+
+        Statuses = new List<DDOption>();
+        Statuses.Add(new DDOption("*",       ""));
+        Statuses.Add(new DDOption("",        "To Do"));
+        Statuses.Add(new DDOption("started", "Started"));
+        Statuses.Add(new DDOption("waiting", "Waiting"));
+        Statuses.Add(new DDOption("hold",    "On Hold"));
+        Statuses.Add(new DDOption("done",    "Done"));
     }
 
     List<ActionItem> getToDoList()

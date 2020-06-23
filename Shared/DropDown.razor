@@ -1,5 +1,5 @@
 ﻿@using JobHunter.Models
-<select class="form-control dropdown" @onchange="(eventArgs => OnClickCallback.InvokeAsync(eventArgs.Value.ToString()))">
+<select class="@Classes" @onchange="(eventArgs => OnClickCallback.InvokeAsync(eventArgs.Value.ToString()))" style="@Style">
     @foreach (var o in Options) {
         <option value="@o.Key">@o.Value</option>
     }
@@ -7,9 +7,6 @@
 
 @code {
     List<DDOption> Options = new List<DDOption>();
-
-    [Parameter]
-    public string OptionSet { get; set; }
 
     [Parameter]
     public EventCallback<string> OnClickCallback { get; set; }
@@ -20,7 +17,16 @@
     [Parameter]
     public string Value { get; set; }
 
+
+    [Parameter]
+    public string Class { get; set; } = "";
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
     private string sel = "";
+
+    private string Classes = "form-control dropdown";
 
     protected override void OnInitialized()
     {
@@ -28,6 +34,11 @@
         {
             Options.Add(new DDOption(dd.Key, dd.Value));
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Class != "") Classes = $"{Classes} {Class}";
     }
 
 

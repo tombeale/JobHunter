@@ -100,3 +100,5 @@ F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\BlueSite.Comp
 F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\BlueSite.Components.pdb
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\CompanyView.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Pages\CompanyView.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\ToDoSets.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\ToDoSets.razor.g.cs

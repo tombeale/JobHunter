@@ -1,0 +1,46 @@
+﻿.to-do {
+    margin: 0;
+}
+
+tr.todo-list {
+    height: calc(1.2em + .75rem + 2px);
+}
+
+tr.todo-list:hover {
+    background-color: #eef;
+}
+
+td.to-do {
+    line-height: 1.5;
+    vertical-align: top;
+}
+
+li.to-do {
+    border: none;
+    padding: 3px 5px;
+}
+
+input[type="text"].to-do {
+    border: none;
+    background: none;
+    padding: 2px 4px;
+    border-bottom: 1px solid white;
+    font-size: 120%;
+    height: calc(1em + .75rem + 2px);
+}
+
+input[type="text"].to-do:active {
+    background-color: white;
+    border-bottom: #eef;
+}
+
+input[type="text"].todo-done {
+    color: #aaa;
+}
+
+input[type="checkbox"].to-do {
+    width: 28px;
+    height: 28px;
+    position: unset;
+    margin-top: 5px;
+}

@@ -51,7 +51,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await SetTitle("Companies");
+        await SetTitle($"Viewing Company Id #{company.Id}");
     }
 
     async Task SetTitle(string title)

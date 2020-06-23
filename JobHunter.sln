@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunter", "JobHunter.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueSite.Data", "..\..\BlueSite.Data\BlueSite.Data.csproj", "{C512A97D-C87D-4766-9621-11A3D2354028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueSite.Components", "..\..\BlueSite.Components\BlueSite.Components.csproj", "{9C0FD27E-FAC5-48B5-AE21-48DB6164ACF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueSite.Components", "..\..\BlueSite.Components\BlueSite.Components.csproj", "{9C0FD27E-FAC5-48B5-AE21-48DB6164ACF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

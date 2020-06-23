@@ -120,4 +120,5 @@ select.dropdown {
     width: 300px;
     font-size: 14pt;
     padding: 2px 4px;
+    display: inline-block;
 }
