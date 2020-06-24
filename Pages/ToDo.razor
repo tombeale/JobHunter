@@ -1,4 +1,5 @@
-﻿@page "/actions"
+﻿@inherits ToDoBase
+@page "/actions"
 @using JobHunter.Shared
 @using JobHunter.Application
 @using BlueSite.Data
@@ -6,10 +7,8 @@
 @using BlueSite.Components
 @using BlueSite.Data.Interfaces
 @using JobHunter.Models
+@using System.Diagnostics
 
-@inject IJSRuntime JsRuntime
-    <!-- inject JobHuntRepository Actions -->
-@inject BlueSiteContext _context
 
 <SideBar MenuSet="todolist" OnClickCallback="@HandleSidebarOption" />
 
@@ -24,21 +23,7 @@
     @for (int i = 0; i < todos.Count; i++)
     {
         int index = i;
-        if (!todos[index].IsDone)
-        {
-            <tr class="todo-list">
-                <td width="40"><img src="images/checkbox-0.png" @onclick="eventArgs => CheckedClicked(index, true)" style="width: 30px" /></td>
-                <td><input type="text" class="form-control to-do" @onchange="eventArgs => CaptionChanged(index, eventArgs.Value.ToString())" value="@todos[index].Title" style="width: 100%" /></td>
-            </tr>
-        }
-        else if (!hideDone)
-        {
-            <tr class="to-do">
-                <td width="40"><img src="images/checkbox-1.png" @onclick="eventArgs => CheckedClicked(index, false)" style="width: 30px" /></td>
-                <td><input type="text" class="form-control to-do todo-done" @onchange="eventArgs => CaptionChanged(index, eventArgs.Value.ToString())" value="@todos[index].Title" style="width: 100%" /></td>
-                <td width="60px"><span class="link" @onclick="eventArgs => ItemHandler(index)">Edit_#@index</span></td>
-            </tr>
-        }
+        <ToDoRow Index="@index" Action="@todos[index]" OnChangeCallback="@HandleActionChange"/>
     }
     <tr class="to-do">
         <td width="40">&nbsp;</td>
@@ -50,166 +35,4 @@
 </table>
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
         OnClickCallback="@HandleDialogSelection" />
-@code {
-    private IList<ActionItem> todos = new List<ActionItem>();
-    private string newTodo;
 
-    private string doneClass = "";
-    private string ActionKey = "";
-    private string ActionType = "todo";
-
-    private JobHuntRepository Actions;
-
-    private bool hideDone = true;
-
-    private List<DDOption> Options;
-    private List<DDOption> Statuses;
-
-
-    private IEnumerable<ActionItem> data;
-
-    SideBar SideBar1 = new SideBar();
-
-    Confirm confirm;
-
-    private void ItemHandler(int index)
-    {
-        var todo = todos[index];
-
-    }
-
-    private void CheckedClicked(int index, bool b)
-    {
-        var t = todos[index];
-        if (t != null && t.Id != null)
-        {
-            t.IsDone = b;
-            _context.SaveChanges();
-        }
-    }
-
-    private void CaptionChanged(int index, string text)
-    {
-        var t = todos[index];
-        if (t != null && t.Id != null)
-        {
-            t.Title = text;
-            _context.SaveChanges();
-        }
-    }
-
-    private void handleNewTodoKeypress(KeyboardEventArgs args)
-    {
-        if (args.Key == "Enter")
-        {
-            AddTodo();
-        }
-    }
-
-
-    private void AddTodo()
-    {
-        if (!string.IsNullOrWhiteSpace(newTodo))
-        {
-            _context.Add(new ActionItem { Title = newTodo, Type = ActionType });
-            _context.SaveChanges();
-            todos = getToDoList();
-            newTodo = string.Empty;
-        }
-    }
-
-    public void HandleSidebarOption(string key)
-    {
-        ActionKey = key;
-        switch (key.ToLower())
-        {
-            case "toggledone":
-                hideDone = !hideDone;
-                break;
-            case "deletedone":
-                confirm.Show();
-                break;
-        }
-        StateHasChanged();
-    }
-
-    public void HandleSetActionType(string key)
-    {
-        ActionType = key.ToLower();
-        todos = getToDoList();
-        newTodo = string.Empty;
-        StateHasChanged();
-    }
-
-
-    public void HandleSetStatusFilter(string key)
-    {
-        string status = key.ToLower();
-        todos = getToDoList();
-        newTodo = string.Empty;
-        StateHasChanged();
-    }
-
-
-    public void HandleDialogSelection(string key)
-    {
-        switch (key)
-        {
-            case "continue":
-                ConfirmDelete(key);
-                confirm.Hide();
-                break;
-            case "cancel":
-                confirm.Hide();
-                break;
-        }
-    }
-
-
-
-    public void ConfirmDelete(string key)
-    {
-        todos.Where(t => t.IsDone).ToList().ForEach(t => _context.Remove(t));
-        _context.SaveChanges();
-        todos = getToDoList();
-        StateHasChanged();
-        confirm.Hide();
-    }
-
-    protected override void OnInitialized()
-    {
-        Actions = new JobHuntRepository(_context);
-        todos = getToDoList();
-
-        Options = new List<DDOption>();
-        var opts = Actions.Types;
-        foreach (var o in opts)
-        {
-            Options.Add(new DDOption(o.Id, o.Name));
-        }
-
-        Statuses = new List<DDOption>();
-        Statuses.Add(new DDOption("*",       ""));
-        Statuses.Add(new DDOption("",        "To Do"));
-        Statuses.Add(new DDOption("started", "Started"));
-        Statuses.Add(new DDOption("waiting", "Waiting"));
-        Statuses.Add(new DDOption("hold",    "On Hold"));
-        Statuses.Add(new DDOption("done",    "Done"));
-    }
-
-    List<ActionItem> getToDoList()
-    {
-        return Actions.AllActions.Where(a => a.Type == ActionType).ToList();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await SetTitle("Actions");
-    }
-
-    async Task SetTitle(string title)
-    {
-        await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
-            title);
-    }
-}

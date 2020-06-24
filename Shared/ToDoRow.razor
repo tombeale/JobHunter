@@ -1,0 +1,47 @@
+﻿@using BlueSite.Data.Entities
+    <tr class="todo-list">
+        <td width="40"><img src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 30px" /></td>
+        <td><input type="text" class="@inputClasses" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" style="width: 100%" /></td>
+    </tr>
+
+@code {
+    [Parameter]
+    public ActionItem Action { get; set; }
+
+    [Parameter]
+    public int Index { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    string inputClasses = "form-control to-do";
+    string imgSource    = "images/checkbox-0.png";
+
+    string Checked = "0";
+
+    private void CaptionChanged(int index, string text)
+    {
+        Action.Title = text;
+        StateHasChanged();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Action.IsDone)
+        {
+            Checked = "1";
+            inputClasses = "form-control to-do todo-done";
+            imgSource    = "images/checkbox-1.png";
+        }
+        else
+        {
+            Checked = "0";
+            inputClasses = "form-control to-do";
+            imgSource = "images/checkbox-0.png";
+        }
+    }
+
+}
