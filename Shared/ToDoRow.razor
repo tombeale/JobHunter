@@ -1,7 +1,8 @@
 ﻿@using BlueSite.Data.Entities
     <tr class="todo-list">
-        <td width="40"><img src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 30px" /></td>
-        <td><input type="text" class="@inputClasses" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" style="width: 100%" /></td>
+        <td style="width: 100px;"><img src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 30px" /></td>
+        <td><input type="text" class="@inputClasses" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
+        <td style="width: 100px; padding: 0px 20px 0px 4px"><InlineToolBar OnChangeCallback="@OnRowOptionCallback" Width="86px" /></td>
     </tr>
 
 @code {
@@ -16,6 +17,9 @@
 
     [Parameter]
     public EventCallback<string> OnChangeCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnRowOptionCallback { get; set; }
 
     string inputClasses = "form-control to-do";
     string imgSource    = "images/checkbox-0.png";

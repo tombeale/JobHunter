@@ -76,6 +76,18 @@ a.menu-bar:hover {
 }
 
 
+div.inline-menu {
+    display: inline-block;
+    background-color: #f1f1f1;
+    border: solid 1px #aaa;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+img.inline-menu {
+    height: 20px;
+}
+
 #side-bar {
     position: fixed;
     top: 0;

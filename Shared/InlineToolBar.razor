@@ -1,0 +1,20 @@
+﻿@using BlueSite.Data.Entities
+
+<div class="inline-menu" style="width:@Width;">
+    <ImageButton Image="Building" 
+    /><ImageButton Image="Person" 
+    /><ImageButton Image="Note" ToolTip="Add a Note" OnChangeCallback="@OnChangeCallback"
+    /><ImageButton Image="Close" />
+</div>
+
+@code {
+    [Parameter]
+    public string Width { get; set; } = "80px";
+
+    [Parameter]
+    public List<ActionItem> ToDos { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+}

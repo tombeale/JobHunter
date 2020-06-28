@@ -12,3 +12,7 @@ function setTitle(title) {
     var element = document.getElementById("masthead-title")
     element.innerHTML = currentPageTitle;
 }
+
+function setIconImage(element, img) {
+    element.src = "images/icons/" + img;
+}

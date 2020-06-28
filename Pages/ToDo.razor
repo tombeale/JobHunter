@@ -23,7 +23,11 @@
     @for (int i = 0; i < todos.Count; i++)
     {
         int index = i;
-        <ToDoRow Index="@index" Action="@todos[index]" OnChangeCallback="@HandleActionChange"/>
+        ActionItem todo = todos[index];
+        if (!todo.IsDone || !hideDone)
+        {
+            <ToDoRow Index="@index" Action="@todos[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
+        }
     }
     <tr class="to-do">
         <td width="40">&nbsp;</td>
@@ -34,5 +38,8 @@
     </tr>
 </table>
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
-        OnClickCallback="@HandleDialogSelection" />
+         OnClickCallback="@HandleDialogSelection" />
+
+<NoteEdit @ref="noteEdit" Title="Edit Note" Message="Note editing stuff goes here"
+         OnClickCallback="@HandleNoteSave" />
 

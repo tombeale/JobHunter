@@ -8,29 +8,33 @@
 
 <h1>Companies</h1>
 
-<table class="to-do" border="0" style="width: 100%">
 
-    @for (int i = 0; i < companies.Count; i++)
+    @if (companies.Count < 1)
     {
-        int index = i;
-        BlueSite.Data.Entities.Company c = companies[index];
-        <tr class="todo-list">
-            <td><a href="/companyview/@c.Id">@c.Name</a></td>
-            <td>@c.City</td>
-        </tr>
+        <p>No companies found</p>
+    }
+    else
+    {
+        <table class="to-do" border="0" style="width: 100%">
+            @for (int i = 0; i < companies.Count; i++)
+            {
+                int index = i;
+                BlueSite.Data.Entities.Company c = companies[index];
+                <tr class="todo-list">
+                    <td><a href="/companyview/@c.CompanyId">@c.Name</a></td>
+                    <td>@c.City</td>
+                </tr>
+            }
+        </table>
     }
 
-</table>
 
 
 
-    @code {
+@code {
 
-        List<Company> companies;
-        JobHuntRepository Repository;
-
-
-
+    List<Company> companies;
+    JobHuntRepository Repository;
 
 
 
@@ -38,37 +42,40 @@
 
 
 
-        /* *******************************************************************
-            Startup Events
-         ****************************************************************** */
-
-        protected override void OnInitialized()
-        {
-            Repository = new JobHuntRepository(_context);
-            companies = GetCompanyList();
-
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await SetTitle("Companies");
-        }
-
-        async Task SetTitle(string title)
-        {
-            await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
-                title);
-        }
 
 
-        /* *******************************************************************
-            Data MEthods
-         ****************************************************************** */
 
-        List<Company> GetCompanyList()
-        {
-            return Repository.AllCompanies;
-        }
+    /* *******************************************************************
+        Startup Events
+     ****************************************************************** */
 
+    protected override void OnInitialized()
+    {
+        Repository = new JobHuntRepository(_context);
+        companies = GetCompanyList();
 
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await SetTitle("Companies");
+    }
+
+    async Task SetTitle(string title)
+    {
+        await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
+            title);
+    }
+
+
+    /* *******************************************************************
+        Data MEthods
+     ****************************************************************** */
+
+    List<Company> GetCompanyList()
+    {
+        return Repository.AllCompanies;
+    }
+
+
+}

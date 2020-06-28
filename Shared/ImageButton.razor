@@ -1,0 +1,20 @@
+﻿<img class="inline-menu" 
+    onmouseover="setIconImage(this, '@Image-1.png')" 
+    onmouseout="setIconImage(this, '@Image-0.png')" 
+    src="images/Icons/@Image-0.png" 
+    @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index.ToString()}|{Image}")'
+    title="@ToolTip" />
+
+@code {
+    [Parameter]
+    public string Image { get; set; }
+
+    [Parameter]
+    public int Index { get; set; }
+
+    [Parameter]
+    public string ToolTip { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+}

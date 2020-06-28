@@ -21,7 +21,7 @@ namespace JobHunter.Models
 
         public DDOption(ActionType actionType)
         {
-            Key = actionType.Id;
+            Key = actionType.ActionTypeId;
             Value = actionType.Name;
         }
     }

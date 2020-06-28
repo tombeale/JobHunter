@@ -1,0 +1,40 @@
+﻿@using BlueSite.Components
+@using BlueSite.Data.Entities
+
+<BsDialog @ref="noteDialog" DlgTitle="@Title" DlgMessage="@Message"
+          DlgOnClickCallback="@OnClickCallback"
+          Buttons="Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Do It:continue:btn btn-sm btn-primary bs-dialog" />
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Message { get; set; }
+
+    [Parameter]
+    public int ActionIteId { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+
+    private ActionItem actionItem;
+
+    
+
+    private BsDialog noteDialog;
+
+
+    public void Hide()
+    {
+        noteDialog.Hide();
+    }
+
+    public void Show()
+    {
+        noteDialog.Show();
+    }
+
+
+}

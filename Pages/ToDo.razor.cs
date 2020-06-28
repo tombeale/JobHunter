@@ -38,11 +38,34 @@ namespace JobHunter.Pages
         SideBar SideBar1 = new SideBar();
 
         protected Confirm confirm;
+        protected NoteEdit noteEdit;
 
         protected void ItemHandler(int index)
         {
             var todo = todos[index];
 
+        }
+
+        protected void HandleRowOptionClick(string value)
+        {
+            var vals = value.Split('|');
+            int index = Convert.ToInt32(vals[0]);
+            var t = todos[index];
+            switch (vals[1].ToLower())
+            {
+                case "note":
+
+
+
+                    noteEdit.Show();
+                    break;
+            }
+
+        }
+
+        public void HandleNoteSave(string value)
+        {
+            var vals = value.Split('|');
         }
 
         protected void HandleActionChange(string value)
@@ -65,7 +88,7 @@ namespace JobHunter.Pages
         protected void CheckedClicked(int index, bool b)
         {
             var t = todos[index];
-            if (t != null && t.Id != null)
+            if (t != null && t.ActionItemId != null)
             {
                 t.IsDone = b;
                 _context.SaveChanges();
@@ -75,7 +98,7 @@ namespace JobHunter.Pages
         protected void CaptionChanged(int index, string text)
         {
             var t = todos[index];
-            if (t != null && t.Id != null)
+            if (t != null && t.ActionItemId != null)
             {
                 t.Title = text;
                 _context.SaveChanges();
@@ -169,7 +192,7 @@ namespace JobHunter.Pages
             var opts = Actions.Types;
             foreach (var o in opts)
             {
-                Options.Add(new DDOption(o.Id, o.Name));
+                Options.Add(new DDOption(o.ActionTypeId, o.Name));
             }
 
             Statuses = new List<DDOption>();
