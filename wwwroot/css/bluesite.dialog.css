@@ -11,6 +11,15 @@
     box-shadow: 3px 3px 6px 1px rgba(60,60,60,0.24);
 }
 
+div.bs-dialog-overlay {
+    background-color: rgba(255, 255, 255, .2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 div.bs-dialog-header {
     background-color: #ddd;
     text-align: center;

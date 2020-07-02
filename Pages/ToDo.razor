@@ -37,8 +37,8 @@
         </td>
     </tr>
 </table>
+<Overlay @ref="overlay" />
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
          OnClickCallback="@HandleDialogSelection" />
-
-<NoteEdit @ref="noteEdit" OnChangeCallback="@HandleNoteSave" NoteId=-1 NoteText="This is some Note Text" />
+<NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 NoteText="This is some Note Text" />
 <NoteViewer @ref="noteviewer" />

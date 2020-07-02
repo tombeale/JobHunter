@@ -40,6 +40,7 @@ namespace JobHunter.Pages
         protected Confirm confirm;
         protected NoteEdit noteEdit;
         protected NoteViewer noteviewer;
+        protected Overlay overlay;
 
         protected void ItemHandler(int index)
         {

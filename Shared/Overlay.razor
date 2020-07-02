@@ -1,12 +1,20 @@
-﻿<div class="@hidden bs-dialog--overlay">&nbsp;</div>
+﻿<div class="@hidden bs-dialog-overlay" style="@style">&nbsp;</div>
 
 @code {
 
-    private string hidden = "display: none";
+    private string hidden = "display: none;";
+    private string style  = "width: 0; height: 0;";
 
     public void Show()
     {
         hidden = "";
+        style  = "width: 100%; height: 100%;";
+        StateHasChanged();
+    }
+    public void Hide()
+    {
+        hidden = "display: none; width: 0; height: 0;";
+        style  = "width: 0; height: 0;";
         StateHasChanged();
     }
 }
