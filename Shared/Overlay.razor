@@ -1,0 +1,12 @@
+﻿<div class="@hidden bs-dialog--overlay">&nbsp;</div>
+
+@code {
+
+    private string hidden = "display: none";
+
+    public void Show()
+    {
+        hidden = "";
+        StateHasChanged();
+    }
+}

@@ -1,40 +1,143 @@
 ﻿@using BlueSite.Components
+@using BlueSite.Data
 @using BlueSite.Data.Entities
+@using BlueSite.Components.Models
+@using BlueSite.Components.Shared
 
-<BsDialog @ref="noteDialog" DlgTitle="@Title" DlgMessage="@Message"
-          DlgOnClickCallback="@OnClickCallback"
-          Buttons="Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Do It:continue:btn btn-sm btn-primary bs-dialog" />
+<div class="bs-dialog" style="@hidden width: 650px">
+    <div class="bs-dialog-header">@Title</div>
+    <div class="bs-dialog-body">
+
+        <textarea class="bs-note-content" @onchange="@(e => {NoteText = e.Value.ToString(); })">@NoteText</textarea>
+    </div>
+    <div class="bs-dialog-buttons">
+        @foreach (ButtonDef b in buttons)
+        {
+            <BsButton Label="@b.Label" Tag="@b.Tag" class="@b.Class" OnClickCallback="@HandleButtonClick" />
+        }
+    </div>
+    <div class="bs-dialog-close" @onclick="Hide"><img class="bs-dialog-close" src="images/icons/close-0.png" onmouseover="setIconImage(this, 'Close-1.png')" onmouseout="setIconImage(this, 'Close-0.png')" /></div>
+</div>
+
 
 @code {
-    [Parameter]
-    public string Title { get; set; }
+    [Inject] BlueSiteContext _context { get; set; }
 
     [Parameter]
-    public string Message { get; set; }
+    public EventCallback<string> OnChangeCallback { get; set; }
 
     [Parameter]
-    public int ActionIteId { get; set; }
+    public string Buttons { get; set; } = "Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Save:save:btn btn-sm btn-primary bs-dialog";
 
     [Parameter]
-    public EventCallback<string> OnClickCallback { get; set; }
+    public string NoteText { get; set; } = "";
 
+    [Parameter]
+    public int NoteId { get; set; } = -1;
 
+    private List<ButtonDef> buttons = new List<ButtonDef>();
+
+    string hidden = "display: none;";
+    string Title = "";
     private ActionItem actionItem;
 
-    
 
-    private BsDialog noteDialog;
+    private JobHuntRepository Repository;
 
+    public ActionItem ActionItem { get; set; }
+
+    private void HandleButtonClick(string value)
+    {
+        switch (value.ToLower())
+        {
+            case "cancel":
+                Hide();
+                break;
+
+            case "save":
+                if (NoteId < 0)
+                {
+                    AddNote();
+                }
+                else
+                {
+                    UpdateNote();
+                }
+                OnChangeCallback.InvokeAsync("Done");
+                break;
+        }
+    }
+
+
+    public bool Load(int ActionId, int? NoteId)
+    {
+        bool success = false;
+
+
+        return success;
+    }
 
     public void Hide()
     {
-        noteDialog.Hide();
+        hidden = "display: none; ";
+        StateHasChanged();
     }
 
-    public void Show()
+    public void Show(ActionItem ai)
     {
-        noteDialog.Show();
+        ActionItem = ai;
+
+        if (NoteId < 0)
+        {
+            Title = $"{ActionItem.Title} — Add New Note";
+
+            NoteText = "";
+        }
+        else
+        {
+            Title = $"{ActionItem.Title} — Edit Note";
+        }
+        hidden = "";
+        StateHasChanged();
     }
 
+    private string AddNote()
+    {
+        Note note = new Note
+        {
+            User = "Tom",
+            Type = "test",
+            Text = NoteText
+        };
+
+        string result = Repository.AddNote(ActionItem.ActionItemId ?? 0, note);
+        Hide();
+
+        return result;
+    }
+
+    private string UpdateNote()
+    {
+        string result = "";
+
+
+        return result;
+    }
+
+    // ================== Lifecycle Methods
+
+
+    protected override void OnParametersSet()
+    {
+        Repository = new JobHuntRepository(_context);
+
+        base.OnParametersSet();
+        var btns = Buttons.Split(',');
+        buttons.Clear();
+        for (int i = 0; i < btns.Length; i++)
+        {
+            buttons.Add(new ButtonDef(btns[i]));
+        }
+    }
 
 }

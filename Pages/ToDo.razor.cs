@@ -39,6 +39,7 @@ namespace JobHunter.Pages
 
         protected Confirm confirm;
         protected NoteEdit noteEdit;
+        protected NoteViewer noteviewer;
 
         protected void ItemHandler(int index)
         {
@@ -54,10 +55,17 @@ namespace JobHunter.Pages
             switch (vals[1].ToLower())
             {
                 case "note":
-
-
-
-                    noteEdit.Show();
+                    if (t != null)
+                    {
+                        noteEdit.ActionItem = t;
+                        noteEdit.Show(t);
+                    }
+                    break;
+                case "note-filled":
+                    if (t != null)
+                    {
+                        noteviewer.Show(t.Notes.ToList());
+                    }
                     break;
             }
 
@@ -65,7 +73,7 @@ namespace JobHunter.Pages
 
         public void HandleNoteSave(string value)
         {
-            var vals = value.Split('|');
+            StateHasChanged();
         }
 
         protected void HandleActionChange(string value)
@@ -172,6 +180,11 @@ namespace JobHunter.Pages
             }
         }
 
+        protected string HandleRowChange()
+        {
+            StateHasChanged();
+            return "";
+        }
 
 
         protected void ConfirmDelete(string key)

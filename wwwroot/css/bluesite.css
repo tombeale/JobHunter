@@ -134,3 +134,39 @@ select.dropdown {
     padding: 2px 4px;
     display: inline-block;
 }
+
+textarea {
+    width: 100%;
+    height: 149px;
+    font-family: Calibri;
+    font-size: 12pt;
+    line-height: 120%;
+    overflow: visible;
+}
+
+div.note-viewer {
+    border: solid 1px #444;
+    border-radius: 6px;
+    background-color: #fafafa;
+    position: absolute;
+    top: 160px;
+    left: 300px;
+}
+
+.note-header {
+    border-top: solid 1px #888;
+    background-color: #eee;
+}
+
+.note-user, .note-timestamp {
+    font-size: 9pt;
+}
+
+.note-timestamp {
+    text-align: right;
+}
+
+.note-body {
+
+}
+

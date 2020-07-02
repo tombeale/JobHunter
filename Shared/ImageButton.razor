@@ -2,7 +2,7 @@
     onmouseover="setIconImage(this, '@Image-1.png')" 
     onmouseout="setIconImage(this, '@Image-0.png')" 
     src="images/Icons/@Image-0.png" 
-    @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index.ToString()}|{Image}")'
+    @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|{Image}")'
     title="@ToolTip" />
 
 @code {
@@ -10,7 +10,7 @@
     public string Image { get; set; }
 
     [Parameter]
-    public int Index { get; set; }
+    public string Index { get; set; }
 
     [Parameter]
     public string ToolTip { get; set; } = "";

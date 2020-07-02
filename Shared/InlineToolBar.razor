@@ -1,10 +1,10 @@
 ﻿@using BlueSite.Data.Entities
 
 <div class="inline-menu" style="width:@Width;">
-    <ImageButton Image="Building" 
-    /><ImageButton Image="Person" 
-    /><ImageButton Image="Note" ToolTip="Add a Note" OnChangeCallback="@OnChangeCallback"
-    /><ImageButton Image="Close" />
+    <ImageButton Index="@Index" Image="Building" 
+    /><ImageButton Index="@Index" Image="Person" 
+    /><ImageButton Index="@Index" Image="@ImageBase" ToolTip="Add a Note" OnChangeCallback="@OnChangeCallback"
+    /><ImageButton Index="@Index" Image="Close" />
 </div>
 
 @code {
@@ -12,9 +12,19 @@
     public string Width { get; set; } = "80px";
 
     [Parameter]
-    public List<ActionItem> ToDos { get; set; }
+    public string Index { get; set; }
+
+    [Parameter]
+    public ActionItem Action { get; set; }
 
     [Parameter]
     public EventCallback<string> OnChangeCallback { get; set; }
+
+    private string ImageBase;
+
+    protected override void OnParametersSet()
+    {
+        ImageBase = (Action.Notes != null && Action.Notes.Count > 0) ? "Note-Filled" : "Note";
+    }
 
 }

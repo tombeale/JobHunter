@@ -110,3 +110,7 @@ F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclarat
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\ImageButton.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\NoteEdit.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\NoteEdit.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\NoteViewer.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\NoteViewer.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Overlay.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\Overlay.razor.g.cs
