@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using JobHunter.Services;
 
 namespace JobHunter
 {
@@ -26,7 +27,7 @@ namespace JobHunter
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddDbContext<BlueSiteContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddScoped<BrowserService>(); // scoped service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

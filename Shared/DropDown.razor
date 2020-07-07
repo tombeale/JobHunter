@@ -1,8 +1,9 @@
 ﻿@using JobHunter.Models
 <select class="@Classes" @onchange="(eventArgs => OnClickCallback.InvokeAsync(eventArgs.Value.ToString()))" style="@Style">
     @foreach (var o in Options) {
-        <option value="@o.Key">@o.Value</option>
-    }
+        string sel = (o.Key == Value) ? "true" : "false";
+        <option value="@o.Key" selected="@sel">@o.Value</option>
+     }
 </select>
 
 @code {
@@ -41,7 +42,9 @@
         if (Class != "") Classes = $"{Classes} {Class}";
     }
 
-
-
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
 
 }

@@ -41,6 +41,7 @@ namespace JobHunter.Pages
         protected NoteEdit noteEdit;
         protected NoteViewer noteviewer;
         protected Overlay overlay;
+        protected DropDown dropDown;
 
         protected void ItemHandler(int index)
         {
@@ -56,16 +57,11 @@ namespace JobHunter.Pages
             switch (vals[1].ToLower())
             {
                 case "note":
+                case "note-filled":
                     if (t != null)
                     {
                         noteEdit.ActionItem = t;
                         noteEdit.Show(t);
-                    }
-                    break;
-                case "note-filled":
-                    if (t != null)
-                    {
-                        noteviewer.Show(t.Notes.ToList());
                     }
                     break;
             }
@@ -155,6 +151,7 @@ namespace JobHunter.Pages
             todos = getToDoList();
             newTodo = string.Empty;
             StateHasChanged();
+            dropDown.Refresh();
         }
 
 
@@ -225,7 +222,8 @@ namespace JobHunter.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await SetTitle("Actions");
+            dropDown.Refresh();
+            await SetTitle("To Do List");
         }
 
         protected async Task SetTitle(string title)

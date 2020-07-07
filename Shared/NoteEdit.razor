@@ -5,18 +5,19 @@
 @using BlueSite.Components.Models
 @using BlueSite.Components.Shared
 
-<div class="bs-dialog" style="@hidden width: 650px">
-    <div class="bs-dialog-header">@Title</div>
-    <div class="bs-dialog-body">
+    <div id="note-editor" class="bs-dialog" style="@hidden width: 650px">
+        <div class="bs-dialog-header">@Title</div>
+        <div class="bs-dialog-buttons">
+            @foreach (ButtonDef b in buttons)
+            {
+                <BsButton Label="@b.Label" Tag="@b.Tag" class="@b.Class" OnClickCallback="@HandleButtonClick" />
+            }
+        </div>
+        <div class="bs-dialog-body">
 
-        <textarea class="bs-note-content" @onchange="@(e => {NoteText = e.Value.ToString(); })">@NoteText</textarea>
+            <textarea class="bs-note-content" @onchange="@(e => {NoteText = e.Value.ToString(); })" value="@NoteText" />
+        </div>
+        <NoteViewer @ref="noteviewer" />
+        <div class="bs-dialog-close" @onclick="Hide"><img class="bs-dialog-close" src="images/icons/close-0.png" onmouseover="setIconImage(this, 'Close-1.png')" onmouseout="setIconImage(this, 'Close-0.png')" /></div>
     </div>
-    <div class="bs-dialog-buttons">
-        @foreach (ButtonDef b in buttons)
-        {
-            <BsButton Label="@b.Label" Tag="@b.Tag" class="@b.Class" OnClickCallback="@HandleButtonClick" />
-        }
-    </div>
-    <div class="bs-dialog-close" @onclick="Hide"><img class="bs-dialog-close" src="images/icons/close-0.png" onmouseover="setIconImage(this, 'Close-1.png')" onmouseout="setIconImage(this, 'Close-0.png')" /></div>
-</div>
 

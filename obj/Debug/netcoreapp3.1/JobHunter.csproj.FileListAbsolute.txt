@@ -98,8 +98,6 @@ F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\Microsoft.Ext
 F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\Microsoft.JSInterop.dll
 F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\BlueSite.Components.dll
 F:\Projects\Blazor\JobHunter2020\JobHunter\bin\Debug\netcoreapp3.1\BlueSite.Components.pdb
-F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\CompanyView.razor.g.cs
-F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Pages\CompanyView.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\ToDoSets.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\ToDoSets.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\ToDoRow.razor.g.cs
@@ -114,3 +112,11 @@ F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclarat
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\NoteViewer.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Overlay.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\Overlay.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\TitleIcons.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\TitleIcons.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\CompanyEdit.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Pages\CompanyEdit.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Actions.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Pages\Actions.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\ActionRow.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\ActionRow.razor.g.cs

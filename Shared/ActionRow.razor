@@ -1,0 +1,72 @@
+﻿@using BlueSite.Data.Entities
+<tr class="action-list">
+    <td style="width: 100px;">
+        <div class="status-button"
+             @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|status|{Action.Status}")'
+             style="width: 70px">&nbsp;@Action.Status&nbsp;</div>
+    </td>
+    <td><input type="text" class="@inputClasses" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
+    <td style="width: 100px; padding: 0px 20px 0px 4px"><InlineToolBar Index="@Index" Action="@Action" OnChangeCallback="@OnRowOptionCallback" Width="86px" /></td>
+</tr>
+<tr>
+    <td style="padding-left: 50px;" colspan="3">
+        <div class="status-button" style="display: inline-block;">Research</div>&nbsp;Start: <b>7/6</b>
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public ActionItem Action { get; set; }
+
+    [Parameter]
+    public string Index { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnRowOptionCallback { get; set; }
+
+    string inputClasses = "form-control to-do";
+    string imgSource = "images/checkbox-0.png";
+
+    string Checked = "0";
+    bool HasNotes = false;
+
+    private void CaptionChanged(int index, string text)
+    {
+        Action.Title = text;
+        StateHasChanged();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Action.IsDone)
+        {
+            Checked = "1";
+            inputClasses = "form-control to-do todo-done";
+            imgSource = "images/checkbox-1.png";
+        }
+        else
+        {
+            Checked = "0";
+            inputClasses = "form-control to-do";
+            imgSource = "images/checkbox-0.png";
+        }
+    }
+
+    private string GetColorStyleFromStatus(string status)
+    {
+        string color = "#8ad88a";
+
+        if (status == "done")
+        {
+            color = "#dee3ec";
+        }
+        return color;
+    }
+
+}

@@ -1,0 +1,40 @@
+﻿@inherits ActionsBase
+@page "/actions"
+
+@using JobHunter.Shared
+@using BlueSite.Data.Entities
+@using BlueSite.Components
+
+<SideBar MenuSet="todolist" OnClickCallback="@HandleSidebarOption" />
+
+<div class="d-inline-block" style="width:70%">
+    <h1>Action Items <span class="normal">(@actions.Count(action => !action.IsDone) Active Items)</span></h1>
+</div>
+<div class="d-inline-block" style="width:28%; text-align: right;">
+    <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" />
+</div>
+<table class="to-do" border="0" style="width: 100%">
+
+    @for (int i = 0; i < actions.Count; i++)
+    {
+        int index = i;
+        ActionItem action = actions[index];
+        if (!action.IsDone || !hideDone)
+        {
+            <ActionRow Index="@index.ToString()" Action="@actions[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
+        }
+    }
+    <tr class="to-do">
+        <td width="40">&nbsp;</td>
+        <td width="100%">
+            <input type="text" class="form-control to-do"
+                   @onkeypress="@(e => handleNewActionKeypress(e))" @bind="newAction" @bind:event="oninput" />
+        </td>
+    </tr>
+</table>
+
+
+<Overlay @ref="overlay" />
+<Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
+         OnClickCallback="@HandleDialogSelection" />
+<NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />

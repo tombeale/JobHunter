@@ -1,0 +1,32 @@
+﻿@inherits CompanyEditBase
+@page "/companyedit"
+@page "/companyedit/{id}"
+@using JobHunter.Shared
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+<SideBar MenuSet="company" />
+
+<EditForm Model="@company" OnValidSubmit="HandleValidSubmit">
+    <h1><InputText @bind-Value="company.Name" class="bs-input-full bs-title" /></h1>
+
+    <table>
+        <tr>
+            <td>
+                <label>
+                    Type:
+                    <InputText @bind-Value="company.Type" />
+                </label>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4">
+                <button @onclick="validateForm">Submit</button>
+            </td>
+        </tr>
+    </table>
+
+</EditForm>
+

@@ -1,0 +1,29 @@
+﻿input.bs-input {
+
+}
+
+
+input.bs-input-full {
+    width: 100%;
+    border-color: #f0f0f0 #f0f0f0 #eee #f0f0f0;
+}
+
+input[type=text] {
+    border: solid 1px 
+}
+
+input.bs-title {
+    font-weight: bold;
+}
+
+
+div.status-button {
+    display: inline-block;
+    border-radius: 6px;
+    background-color: #8ad88a;
+    padding: 2px 4px;
+    font-size: 10pt;
+    text-align: center;
+    color: black;
+}
+

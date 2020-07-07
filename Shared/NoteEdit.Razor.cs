@@ -2,7 +2,9 @@
 using BlueSite.Data;
 using BlueSite.Data.Entities;
 using JobHunter.Models;
+using JobHunter.Services;
 using JobHunter.Shared;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -16,6 +18,7 @@ namespace JobHunter.Shared
     public class NoteEditBase : ComponentBase
     {
         [Inject] BlueSiteContext _context { get; set; }
+        [Inject] BrowserService _browser { get; set; }
 
         [Parameter]
         public EventCallback<string> OnChangeCallback { get; set; }
@@ -36,6 +39,7 @@ namespace JobHunter.Shared
 
         protected string hidden = "display: none;";
         protected string Title = "";
+        protected NoteViewer noteviewer;
 
         private JobHuntRepository Repository;
 
@@ -81,20 +85,12 @@ namespace JobHunter.Shared
 
         public void Show(ActionItem ai)
         {
-            ActionItem = ai;
-
-            if (NoteId < 0)
-            {
-                Title = $"{ActionItem.Title} — Add New Note";
-
-                NoteText = "";
-            }
-            else
-            {
-                Title = $"{ActionItem.Title} — Edit Note";
-            }
+            String actionText = (ActionItem.Title.Length < 43) ? ActionItem.Title : $"{ActionItem.Title.Substring(0, 40)}...";
+            Title = $"Notes for: {actionText}";
+            NoteText = "";
             hidden = "";
             if (overlay != null) overlay.Show();
+            noteviewer.Load(ActionItem.Notes.OrderByDescending(f => f.TimeStamp).ToList());
             StateHasChanged();
         }
 
@@ -137,5 +133,10 @@ namespace JobHunter.Shared
             }
         }
 
+        protected override Task OnAfterRenderAsync(bool firstRender)
+        {
+           // _ = _browser.CenterElement();
+            return _browser.CenterElement();
+        }
     }
 }

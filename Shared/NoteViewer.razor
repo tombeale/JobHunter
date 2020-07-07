@@ -1,41 +1,39 @@
 ﻿@using BlueSite.Data.Entities
 
-    <div class="note-viewer" style="@hidden width: 650px">
-        @if (Notes != null)
-        {
-            <table border="1" style="width: 100%">
-                @foreach (Note note in Notes)
-                {
-                    <tr class="note-header">
-                        <td class="note-user">@note.User</td>
-                        <td class="note-timestamp">@note.TimeStamp</td>
-                    </tr>
-                    <tr>
-                        <td class="note-body" colspan="2">@note.Text</td>
-                    </tr>
-                }
-            </table>
-        }
-    </div>
+<div class="note-viewer" id="note-viewer">
+    @if (Notes != null)
+    {
+        <table border="0" style="width: 100%">
+            @foreach (Note note in Notes)
+            {
+                <tr class="note-header">
+                    <td class="note-user">@note.User</td>
+                    <td class="note-timestamp">@note.TimeStamp</td>
+                </tr>
+                <tr>
+                    <td class="note-body" colspan="2">@note.Text</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
 
 @code {
 
     private List<Note> Notes { get; set; }
 
-    private string hidden = "display: none; ";
-
-    public void Show(List<Note> notes)
+    public void Load(List<Note> notes)
     {
-        Notes = notes;
-        hidden = "";
+        if (notes != null)
+        {
+            Notes = notes;
+        }
+        else
+        {
+            if (Notes != null) Notes.Clear();
+        }
         StateHasChanged();
     }
 
-    public void Hide()
-    {
-        Notes.Clear();
-        hidden = "display: none; ";
-        StateHasChanged();
-    }
 
 }

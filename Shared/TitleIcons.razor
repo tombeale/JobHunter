@@ -1,0 +1,32 @@
+﻿@using JobHunter.Models
+    <span>
+        @foreach (var btn in buttons)
+        {
+            <a href="@btn.Action"><img src='Images/Icons/@btn.GetImage("Add", 0)' href="@btn.Action" title="@btn.ToolTip" style="width: @IconWidth"
+                                       onmouseover="@btn.GetMouseOver()" onmouseout="@btn.GetMouseOut()"/></a>
+        }
+    </span>
+
+
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string IconWidth { get; set; }
+
+    private List<ImgButton> buttons = new List<ImgButton>();
+
+
+    protected override void OnParametersSet()
+    {
+        switch (Title.ToLower())
+        {
+            case "companies":
+                buttons.Add(new ImgButton("Add", "CompanyEdit", "Add a company to the list"));
+                break;
+        }
+
+    }
+}

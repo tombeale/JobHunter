@@ -1,5 +1,5 @@
 ﻿@inherits ToDoBase
-@page "/actions"
+@page "/todo"
 @using JobHunter.Shared
 @using JobHunter.Application
 @using BlueSite.Data
@@ -13,10 +13,10 @@
 <SideBar MenuSet="todolist" OnClickCallback="@HandleSidebarOption" />
 
 <div class="d-inline-block" style="width:70%">
-    <h1>Action Items <span class="normal">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
+    <h1>To Do List <span class="normal">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
 </div>
 <div class="d-inline-block" style="width:28%; text-align: right;">
-    <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" />
+    <DropDown @ref="dropDown" OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" />
 </div>
 <table class="to-do" border="0" style="width: 100%">
 
@@ -40,5 +40,5 @@
 <Overlay @ref="overlay" />
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
          OnClickCallback="@HandleDialogSelection" />
-<NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 NoteText="This is some Note Text" />
-<NoteViewer @ref="noteviewer" />
+<NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />
+

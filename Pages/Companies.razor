@@ -1,4 +1,5 @@
-﻿@page "/companies"
+﻿@inherits CompaniesBase
+@page "/companies"
 @using JobHunter.Shared
 @using BlueSite.Data
 @using BlueSite.Data.Entities
@@ -6,76 +7,28 @@
 @inject BlueSiteContext _context
 <SideBar MenuSet="companies" />
 
-<h1>Companies</h1>
+<h1>Companies<TitleIcons Title="Companies" IconWidth="24px" /></h1>
 
 
-    @if (companies.Count < 1)
-    {
-        <p>No companies found</p>
-    }
-    else
-    {
-        <table class="to-do" border="0" style="width: 100%">
-            @for (int i = 0; i < companies.Count; i++)
-            {
-                int index = i;
-                BlueSite.Data.Entities.Company c = companies[index];
-                <tr class="todo-list">
-                    <td><a href="/companyview/@c.CompanyId">@c.Name</a></td>
-                    <td>@c.City</td>
-                </tr>
-            }
-        </table>
-    }
-
-
-
-
-@code {
-
-    List<Company> companies;
-    JobHuntRepository Repository;
-
-
-
-
-
-
-
-
-
-
-    /* *******************************************************************
-        Startup Events
-     ****************************************************************** */
-
-    protected override void OnInitialized()
-    {
-        Repository = new JobHuntRepository(_context);
-        companies = GetCompanyList();
-
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await SetTitle("Companies");
-    }
-
-    async Task SetTitle(string title)
-    {
-        await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
-            title);
-    }
-
-
-    /* *******************************************************************
-        Data MEthods
-     ****************************************************************** */
-
-    List<Company> GetCompanyList()
-    {
-        return Repository.AllCompanies;
-    }
-
-
+@if (companies.Count < 1)
+{
+    <p>No companies found</p>
 }
+else
+{
+    <table class="to-do" border="0" style="width: 100%">
+        @for (int i = 0; i < companies.Count; i++)
+        {
+            int index = i;
+            BlueSite.Data.Entities.Company c = companies[index];
+            <tr class="todo-list">
+                <td><a href="/companyedit/@c.CompanyId">@c.Name</a></td>
+                <td>@c.City</td>
+            </tr>
+        }
+    </table>
+}
+
+
+
+
