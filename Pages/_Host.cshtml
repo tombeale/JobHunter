@@ -30,10 +30,12 @@
     </app>
 
     <script src="_framework/blazor.server.js"></script>
+    <script src="Scripts/selectList.js"></script>
     <script>
         $(document).ready(function () {
-            $("#masthead-title").html("Bullshit");
-        })
+            window.actionStatusList = new SelectList("todo:To Do,started:Started,waiting:Waiting,hold:On Hold,done:Done");
+        });
     </script>
+    <div id="select-list-sec" style="display:none;"></div>
 </body>
 </html>

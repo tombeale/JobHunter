@@ -1,72 +1,89 @@
 ﻿@using BlueSite.Data.Entities
+@using JobHunter.Models
+@using JobHunter.Application
+
 <tr class="action-list">
     <td style="width: 100px;">
-        <div class="status-button"
-             @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|status|{Action.Status}")'
-             style="width: 70px">&nbsp;@Action.Status&nbsp;</div>
-    </td>
-    <td><input type="text" class="@inputClasses" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
-    <td style="width: 100px; padding: 0px 20px 0px 4px"><InlineToolBar Index="@Index" Action="@Action" OnChangeCallback="@OnRowOptionCallback" Width="86px" /></td>
-</tr>
-<tr>
-    <td style="padding-left: 50px;" colspan="3">
-        <div class="status-button" style="display: inline-block;">Research</div>&nbsp;Start: <b>7/6</b>
-    </td>
-</tr>
+        <div class="status-button" id="action-row-@Index"
+             @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|status")'
+             style="width: 70px">&nbsp;@GetFriendlyStatusName(Action.Status)&nbsp;</div>
+        </td>
+        <td><input type="text" class="@inputClasses" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
+        <td style="width: 120px; padding: 0px 20px 0px 4px"><InlineToolBar Index="@Index" 
+             MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" /></td>
+    </tr>
+    <tr>
+        <td style="padding-left: 50px;" colspan="3">
+            <div class="status-button" style="display: inline-block;">Research</div>&nbsp;Start: <b>@message</b>
+        </td>
+    </tr>
 
-@code {
-    [Parameter]
-    public ActionItem Action { get; set; }
+    @code {
+        [Parameter]
+        public ActionItem Action { get; set; }
 
-    [Parameter]
-    public string Index { get; set; }
 
-    [Parameter]
-    public EventCallback<string> OnClickCallback { get; set; }
+        [Parameter]
+        public string Index { get; set; }
 
-    [Parameter]
-    public EventCallback<string> OnChangeCallback { get; set; }
+        [Parameter]
+        public List<DDOption> Statuses { get; set; }
 
-    [Parameter]
-    public EventCallback<string> OnRowOptionCallback { get; set; }
+        [Parameter]
+        public EventCallback<string> OnClickCallback { get; set; }
 
-    string inputClasses = "form-control to-do";
-    string imgSource = "images/checkbox-0.png";
+        [Parameter]
+        public EventCallback<string> OnChangeCallback { get; set; }
 
-    string Checked = "0";
-    bool HasNotes = false;
+        [Parameter]
+        public EventCallback<string> OnRowOptionCallback { get; set; }
 
-    private void CaptionChanged(int index, string text)
-    {
-        Action.Title = text;
-        StateHasChanged();
-    }
+        string inputClasses = "form-control to-do";
+        string imgSource = "images/checkbox-0.png";
 
-    protected override void OnParametersSet()
-    {
-        if (Action.IsDone)
+        string Checked = "0";
+        bool HasNotes = false;
+
+        string message = "Original";
+
+        private void CaptionChanged(int index, string text)
         {
-            Checked = "1";
-            inputClasses = "form-control to-do todo-done";
-            imgSource = "images/checkbox-1.png";
+            Action.Title = text;
+            StateHasChanged();
         }
-        else
+
+        private string GetFriendlyStatusName(string key)
         {
-            Checked = "0";
-            inputClasses = "form-control to-do";
-            imgSource = "images/checkbox-0.png";
+            var fs = Statuses.Where(s => s.Key == key).Select(s => s.Value).FirstOrDefault();
+            if (fs == null) fs = "";
+            return fs;
         }
-    }
 
-    private string GetColorStyleFromStatus(string status)
-    {
-        string color = "#8ad88a";
-
-        if (status == "done")
+        protected override void OnParametersSet()
         {
-            color = "#dee3ec";
-        }
-        return color;
-    }
 
-}
+            HasNotes = (Action.Notes != null && Action.Notes.Count > 0);
+
+            if (Action.IsDone)
+            {
+                inputClasses = "form-control to-do todo-done";
+            }
+            else
+            {
+                inputClasses = "form-control to-do";
+            }
+        }
+
+        private string GetColorStyleFromStatus(string status)
+        {
+            string color = "#8ad88a";
+
+            if (status == "done")
+            {
+                color = "#dee3ec";
+            }
+            return color;
+        }
+
+
+    }

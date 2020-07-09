@@ -25,5 +25,23 @@ div.status-button {
     font-size: 10pt;
     text-align: center;
     color: black;
+    cursor: pointer;
+}
+
+td.list-item {
+    padding: 1px 5px;
+    cursor: pointer;
+}
+
+td.list-item:hover {
+    background-color: #dee3ec;
+}
+
+#select-list-sec {
+    position: absolute;
+    border: solid 1px #6d7c98;
+    border-radius: 6px;
+    background-color: white;
+    padding: 0;
 }
 

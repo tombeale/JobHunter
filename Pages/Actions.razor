@@ -21,7 +21,8 @@
         ActionItem action = actions[index];
         if (!action.IsDone || !hideDone)
         {
-            <ActionRow Index="@index.ToString()" Action="@actions[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
+            <ActionRow Index="@index.ToString()" Action="@actions[index]" Statuses="@Statuses"
+                       OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
         }
     }
     <tr class="to-do">
@@ -35,6 +36,7 @@
 
 
 <Overlay @ref="overlay" />
+<ActionStatus @ref="actionStatus" Statuses="@Statuses" OnChangeCallback="@HandleSetActionStatus"/>
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
          OnClickCallback="@HandleDialogSelection" />
 <NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />

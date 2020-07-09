@@ -9,6 +9,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 
 namespace JobHunter.Pages
@@ -26,6 +27,7 @@ namespace JobHunter.Pages
         protected NoteEdit noteEdit;
         protected NoteViewer noteviewer;
         protected Overlay overlay;
+        protected ActionStatus actionStatus;
 
         protected IList<ActionItem> actions = new List<ActionItem>();
         protected string newAction;
@@ -54,12 +56,11 @@ namespace JobHunter.Pages
             }
 
             Statuses = new List<DDOption>();
-            Statuses.Add(new DDOption("*", ""));
-            Statuses.Add(new DDOption("todo", "To Do"));
+            Statuses.Add(new DDOption("todo",    "To Do"));
             Statuses.Add(new DDOption("started", "Started"));
             Statuses.Add(new DDOption("waiting", "Waiting"));
-            Statuses.Add(new DDOption("hold", "On Hold"));
-            Statuses.Add(new DDOption("done", "Done"));
+            Statuses.Add(new DDOption("hold",    "On Hold"));
+            Statuses.Add(new DDOption("done",    "Done"));
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -116,12 +117,17 @@ namespace JobHunter.Pages
         protected void HandleActionChange(string value)
         {
             var vals = value.Split('|');
+            ActionItem t;
             int index = Convert.ToInt32(vals[0]);
-            var t = actions[index];
+            t = actions[index];
             switch (vals[1])
             {
                 case "done":
                     t.IsDone = (vals[2] == "1");
+                    break;
+                case "status":
+                    actionStatus.Show(index);
+                    JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec|action-row-{index}");
                     break;
                 case "title":
                     t.Title = vals[2];
@@ -138,6 +144,13 @@ namespace JobHunter.Pages
             var t = actions[index];
             switch (vals[1].ToLower())
             {
+                case "add":
+                    t.IsDone = false;
+                    break;
+                case "close":
+                    t.IsDone = true;
+                    StateHasChanged();
+                    break;
                 case "note":
                 case "note-filled":
                     if (t != null)
@@ -148,6 +161,17 @@ namespace JobHunter.Pages
                     break;
             }
         }
+
+        protected void HandleSetActionStatus(string value)
+        {
+            string[] vals = value.Split('|');
+            int index = Convert.ToInt32(vals[0]);
+            var t = actions[index];
+            t.Status = vals[1];
+            StateHasChanged();
+            JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec");
+        }
+
 
         protected void HandleSetActionType(string key)
         {

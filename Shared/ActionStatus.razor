@@ -1,0 +1,41 @@
+﻿@using JobHunter.Models
+
+<div id="select-list-sec" style="display:none;">
+    <table cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+            @foreach (DDOption status in Statuses) { 
+            <tr><td class="list-item" @onclick='@(() => SetActionStatus(status.Key))'>@status.Value</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public List<DDOption> Statuses { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    protected int ActionId = 0;
+
+    private string display = "display:none;";
+
+    public int Index { get; set; }
+
+    public void Show(int index)
+    {
+        Index = index;
+
+        display = "";
+        StateHasChanged();
+    }
+
+
+    private void SetActionStatus(string status)
+    {
+        string args = $"{Index}|{status}";
+        OnChangeCallback.InvokeAsync(args);
+    }
+
+}

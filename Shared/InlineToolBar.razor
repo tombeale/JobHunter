@@ -1,16 +1,13 @@
 ﻿@using BlueSite.Data.Entities
 
-<div class="inline-menu" style="width:@Width;">
-    <ImageButton Index="@Index" Image="Building" 
-    /><ImageButton Index="@Index" Image="Person" 
-    /><ImageButton Index="@Index" Image="@ImageBase" ToolTip="Add a Note" OnChangeCallback="@OnChangeCallback"
-    /><ImageButton Index="@Index" Image="Close" />
-</div>
+    <div class="flex inline-menu">
+        @foreach (var t in MenuSet)
+        {<ImageButton Index="@Index.ToString()" Image="@t.Icon" ToolTip="@t.Caption" OnChangeCallback="@OnChangeCallback" />}
+
+
+    </div>
 
 @code {
-    [Parameter]
-    public string Width { get; set; } = "80px";
-
     [Parameter]
     public string Index { get; set; }
 
@@ -19,6 +16,9 @@
 
     [Parameter]
     public EventCallback<string> OnChangeCallback { get; set; }
+
+    [Parameter]
+    public List<MenuItem> MenuSet { get; set; }
 
     private string ImageBase;
 
