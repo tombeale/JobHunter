@@ -60,3 +60,9 @@ function setActionStatus(index, status) {
     alert(index + ": " + status);
     dotnetHelper.invokeMethod('JobHunter', 'UpdateActionStatus')
 }
+
+$(document).ready(function() {
+    $(document).on("click", function () {
+        $(".float-listing").fadeOut(300);
+    })
+})

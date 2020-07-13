@@ -1,0 +1,59 @@
+﻿@inherits ActionEditBase
+@page "/actionedit"
+@page "/actionedit/{actId}"
+
+@using JobHunter.Shared
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+<SideBar MenuSet="Create New Action" />
+
+<div class="d-inline-block" style="width:70%">
+    <h1>Edit Action <span class="normal">(Id: #@Action.ActionItemId)</span></h1>
+</div>
+<EditForm Model="@Action" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+    <div class="alert">@StatusMessage</div>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label class="form-label" for="action-title">Title</label>
+        <input type="text" @bind-value="Action.Title" id="action-title" class="form-control bs-input-full bs-title inset" />
+    </div>
+
+    @*<div class="form-group">
+        <label class="form-label" for="action-type">Action Type</label><br />
+        <div class="select-control select-large" id="action-type"
+             @onclick="HandleActionTypeClick"
+             style="width: 115px;">
+            &nbsp;@Utilities.GetFriendlyTypeName(Action.Type, ActionTypes)&nbsp;
+        </div>
+    </div>*@
+    <div class="form-group">
+        <label class="form-label" for="action-title">Action Type</label><br />
+        <input type="text" @bind-value="Action.Type" id="action-type" class="form-control inset" style="width: 225px;" />
+        <div class="select-button select-large"
+             @onclick="HandleActionTypeClick"
+             style="width: 28px;">
+            &nbsp;
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="action-title">Set Id</label><br />
+        <input type="text" @bind-value="Action.SetId" id="action-set-id" class="form-control inset" style="width: 225px;" />
+        <div class="select-button select-large"
+             @onclick="HandleActionSetIdClick"
+             style="width: 28px;">
+            &nbsp;
+        </div>
+    </div>
+    <p>
+        <button class="btn btn-primary" style="margin-top: 25px;">Submit</button>
+    </p>
+
+</EditForm>
+<SelectListing Id="1" @ref="actionTypeList"  Data="@ActionTypes"  OnChangeCallback="@HandleSetActionType"  Class="select select-large" />
+<SelectListing Id="2" @ref="actionSetIdList" Data="@ActionSetIds" OnChangeCallback="@HandleSetActionSetId" Class="select select-large" />
+

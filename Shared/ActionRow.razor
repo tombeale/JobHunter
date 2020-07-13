@@ -3,18 +3,18 @@
 @using JobHunter.Application
 
 <tr class="action-list">
-    <td style="width: 100px;">
+    <td class="column-action-status">
         <div class="status-button" id="action-row-@Index"
              @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|status")'
-             style="width: 70px">&nbsp;@GetFriendlyStatusName(Action.Status)&nbsp;</div>
+             style="width: 100px; background-color:@GetColorStyleFromStatus(Action.Status); ">&nbsp;@GetFriendlyStatusName(Action.Status)&nbsp;</div>
         </td>
-        <td><input type="text" class="@inputClasses" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
-        <td style="width: 120px; padding: 0px 20px 0px 4px"><InlineToolBar Index="@Index" 
-             MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" /></td>
-    </tr>
-    <tr>
-        <td style="padding-left: 50px;" colspan="3">
-            <div class="status-button" style="display: inline-block;">Research</div>&nbsp;Start: <b>@message</b>
+        <td class="column-action-name">@Action.Title</td>
+        <td class="column-action-type">@GetFriendlyTypeName(Action.Type)</td>
+        <td class="column-action-date">@Action.StartDate</td>
+        <td class="column-action-date">@Action.EndDate</td>
+        <td style="width: 120px; padding: 0px 20px 0px 4px">
+            <InlineToolBar Index="@Index"
+                           MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" />
         </td>
     </tr>
 
@@ -28,6 +28,9 @@
 
         [Parameter]
         public List<DDOption> Statuses { get; set; }
+
+        [Parameter]
+        public List<DDOption> Types { get; set; }
 
         [Parameter]
         public EventCallback<string> OnClickCallback { get; set; }
@@ -52,19 +55,12 @@
             StateHasChanged();
         }
 
-        private string GetFriendlyStatusName(string key)
-        {
-            var fs = Statuses.Where(s => s.Key == key).Select(s => s.Value).FirstOrDefault();
-            if (fs == null) fs = "";
-            return fs;
-        }
-
         protected override void OnParametersSet()
         {
 
             HasNotes = (Action.Notes != null && Action.Notes.Count > 0);
 
-            if (Action.IsDone)
+            if (Utilities.GetDoneFromStatus(Action))
             {
                 inputClasses = "form-control to-do todo-done";
             }
@@ -74,16 +70,37 @@
             }
         }
 
+        private string GetFriendlyStatusName(string key)
+        {
+            var fs = Statuses.Where(s => s.Key == key).Select(s => s.Value).FirstOrDefault();
+            if (fs == null) fs = "";
+            return fs;
+        }
+
+        private string GetFriendlyTypeName(string key)
+        {
+            var fs = Types.Where(s => s.Key == key).Select(s => s.Value).FirstOrDefault();
+            if (fs == null) fs = "&nbsp;";
+            return fs;
+        }
+
         private string GetColorStyleFromStatus(string status)
         {
             string color = "#8ad88a";
-
-            if (status == "done")
+            switch (status)
             {
-                color = "#dee3ec";
+                case "expired":
+                case "cancelled":
+                case "done":
+                    color = "#eee";
+                    break;
+                default:
+                    color = "#8ad88a";
+                    break;
             }
             return color;
         }
+
 
 
     }

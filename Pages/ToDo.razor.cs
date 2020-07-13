@@ -17,6 +17,7 @@ namespace JobHunter.Pages
     {
         [Inject] IJSRuntime JsRuntime { get; set; }
         [Inject] BlueSiteContext _context { get; set; }
+        [Inject] NavigationManager NavManager { get; set; }
 
         protected IList<ActionItem> todos = new List<ActionItem>();
         protected string newTodo;
@@ -24,6 +25,7 @@ namespace JobHunter.Pages
         protected string doneClass = "";
         protected string ActionKey = "";
         protected string ActionType = "todo";
+        protected string SetId = "*";
 
         protected JobHuntRepository Actions;
 
@@ -31,7 +33,8 @@ namespace JobHunter.Pages
 
         protected List<DDOption> Options;
         protected List<DDOption> Statuses;
-
+        protected List<DDOption> ActionSetIds;
+        protected SelectListing actionSetIdList;
 
         protected IEnumerable<ActionItem> data;
 
@@ -56,6 +59,9 @@ namespace JobHunter.Pages
             var t = todos[index];
             switch (vals[1].ToLower())
             {
+                case "edit":
+                    NavManager.NavigateTo($"/ActionEdit/{t.ActionItemId}");
+                    break;
                 case "note":
                 case "note-filled":
                     if (t != null)
@@ -67,6 +73,12 @@ namespace JobHunter.Pages
             }
 
         }
+        public void HandleActionSetIdClick()
+        {
+            actionSetIdList.Show();
+            JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-0|action-set-id");
+        }
+
 
         public void HandleNoteSave(string value)
         {
@@ -206,6 +218,13 @@ namespace JobHunter.Pages
                 Options.Add(new DDOption(o.ActionTypeId, o.Name));
             }
 
+            ActionSetIds = new List<DDOption>();
+            var setIds = Actions.GetActionSetIdList();
+            foreach (var s in setIds)
+            {
+                ActionSetIds.Add(new DDOption(s, s));
+            }
+
             Statuses = new List<DDOption>();
             Statuses.Add(new DDOption("*", ""));
             Statuses.Add(new DDOption("", "To Do"));
@@ -222,7 +241,6 @@ namespace JobHunter.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            dropDown.Refresh();
             await SetTitle("To Do List");
         }
 

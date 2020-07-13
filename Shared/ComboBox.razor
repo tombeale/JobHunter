@@ -1,0 +1,33 @@
+﻿@using JobHunter.Models
+@using BlueSite.Data.Entities
+
+<div class="form-group">
+    <label class="form-label" for="action-title">@Caption</label><br />
+    <input type="text" @bind-value="Value" id="@Id" class="form-control inset" style="width: @Width;" 
+    />&nbsp;<div class="select-button select-large"
+         @onclick="HandleActionSetIdClick"
+         style="width: 28px;">
+        &nbsp;
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public string Width { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public EventCallback HandleActionSetIdClick { get; set; }
+
+
+}

@@ -34,17 +34,10 @@ namespace JobHunter.Application
             string NoteImage = (hasNotes) ? "Note-Filled" : "Note";
 
             List<MenuItem> list = new List<MenuItem>();
+            list.Add(new MenuItem("", "Edit",     "View or edit this action", "", ""));
             list.Add(new MenuItem("", "Building", "List/Add an Organization", "", ""));
             list.Add(new MenuItem("", "Person",   "List/Add a Contact",       "", ""));
             list.Add(new MenuItem("", NoteImage,  "List/Add a Note",          "", ""));
-            if (!isDone)
-            {
-                list.Add(new MenuItem("", "Close", "Mark as done", "", ""));
-            }
-            else
-            {
-                list.Add(new MenuItem("", "Add", "Add back into this list", "", ""));
-            }
             return list;
 
         }

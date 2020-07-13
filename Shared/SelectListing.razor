@@ -1,0 +1,45 @@
+﻿@using JobHunter.Models
+
+<div id="select-list-sec-@Id" style="display:none;" class="float-listing float-shadow">
+    <table cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+            @foreach (DDOption item in Data)
+            {
+                <tr><td class="list-item @Class" @onclick='@(() => CallBack(item.Key))'>@item.Value</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public List<DDOption> Data { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+
+    protected int ActionId = 0;
+
+    private string display = "display:none;";
+
+    public int Index { get; set; }
+
+    public void Show()
+    {
+        display = "";
+        StateHasChanged();
+    }
+
+    private void CallBack(string value)
+    {
+        string args = value;
+        OnChangeCallback.InvokeAsync(args);
+    }
+
+}

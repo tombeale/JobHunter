@@ -19,8 +19,8 @@ namespace JobHunter.Application
         public static List<MenuItem> GetToDoListSet()
         { 
             List<MenuItem> list = new List<MenuItem>();
-            list.Add(new MenuItem("", "", "Show/Hide Done", "toggledone",   "option"));
-            list.Add(new MenuItem("", "", "Remove Done", "deletedone", "option"));
+            list.Add(new MenuItem("", "", "Show/Hide Done", "toggledone", "option"));
+            list.Add(new MenuItem("", "", "Remove Done",    "deletedone", "option"));
             return list;
         }
     }

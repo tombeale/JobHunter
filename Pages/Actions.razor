@@ -2,6 +2,7 @@
 @page "/actions"
 
 @using JobHunter.Shared
+@using JobHunter.Application
 @using BlueSite.Data.Entities
 @using BlueSite.Components
 
@@ -11,24 +12,30 @@
     <h1>Action Items <span class="normal">(@actions.Count(action => !action.IsDone) Active Items)</span></h1>
 </div>
 <div class="d-inline-block" style="width:28%; text-align: right;">
-    <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" />
+    <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" First="*|All" />
 </div>
 <table class="to-do" border="0" style="width: 100%">
-
+    <tr class="action-header">
+        <th class="column-action-status">Status</th>
+        <th class="column-action-name">Name</th>
+        <th class="column-action-type">Type</th>
+        <th class="column-action-date">Start</th>
+        <th class="column-action-date">End</th>
+    </tr>
     @for (int i = 0; i < actions.Count; i++)
     {
         int index = i;
         ActionItem action = actions[index];
-        if (!action.IsDone || !hideDone)
+        if (!Utilities.GetDoneFromStatus(action) || !hideDone)
         {
-            <ActionRow Index="@index.ToString()" Action="@actions[index]" Statuses="@Statuses"
+            <ActionRow Index="@index.ToString()" Action="@actions[index]" Statuses="@Statuses" Types=@Options
                        OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
         }
     }
     <tr class="to-do">
-        <td width="40">&nbsp;</td>
+        <td width="40" class="right-align">Add:</td>
         <td width="100%">
-            <input type="text" class="form-control to-do"
+            <input type="text" class="form-control to-do inset"
                    @onkeypress="@(e => handleNewActionKeypress(e))" @bind="newAction" @bind:event="oninput" />
         </td>
     </tr>
@@ -36,7 +43,7 @@
 
 
 <Overlay @ref="overlay" />
-<ActionStatus @ref="actionStatus" Statuses="@Statuses" OnChangeCallback="@HandleSetActionStatus"/>
+<ActionStatus @ref="actionStatus" Statuses="@Statuses" OnChangeCallback="@HandleSetActionStatus" />
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
          OnClickCallback="@HandleDialogSelection" />
 <NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />

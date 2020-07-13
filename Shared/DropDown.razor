@@ -1,8 +1,7 @@
 ﻿@using JobHunter.Models
-<select class="@Classes" @onchange="(eventArgs => OnClickCallback.InvokeAsync(eventArgs.Value.ToString()))" style="@Style">
+<select class="@Classes" @onchange="(eventArgs => OnClickCallback.InvokeAsync(eventArgs.Value.ToString()))" style="@Style" value="@Value">
     @foreach (var o in Options) {
-        string sel = (o.Key == Value) ? "true" : "false";
-        <option value="@o.Key" selected="@sel">@o.Value</option>
+        <option value="@o.Key">@o.Value</option>
      }
 </select>
 
@@ -16,8 +15,10 @@
     public List<DDOption> Data { get; set; }
 
     [Parameter]
-    public string Value { get; set; }
+    public string First { get; set; }
 
+    [Parameter]
+    public string Value { get; set; }
 
     [Parameter]
     public string Class { get; set; } = "";
@@ -31,6 +32,12 @@
 
     protected override void OnInitialized()
     {
+        if (First != null)
+        {
+            string[] opt = First.Split('|');
+            Options.Add(new DDOption(opt[0], opt[1]));
+        }
+
         foreach (var dd in Data)
         {
             Options.Add(new DDOption(dd.Key, dd.Value));

@@ -2,34 +2,88 @@
 
 }
 
+input.form-control {
+    display: inline-block;
+}
 
 input.bs-input-full {
     width: 100%;
-    border-color: #f0f0f0 #f0f0f0 #eee #f0f0f0;
 }
 
-input[type=text] {
-    border: solid 1px 
+input[type=text], input.form-control, textarea {
+    border: solid .5px #ddd;
+    padding: 2px 4px;
+    font-size: 120%;
+    height: calc(1em + .75rem + 2px);
 }
+
+    input.inset:focus, textarea.inset:focus {
+        -webkit-box-shadow: inset 2px 2px 3px 3px rgba(0,0,0,0.10);
+        -moz-box-shadow: inset 2px 2px 3px 3px rgba(0,0,0,0.10);
+        box-shadow: inset 2px 2px 3px 3px rgba(0,0,0,0.10);
+    }
 
 input.bs-title {
     font-weight: bold;
 }
 
 
-div.status-button {
+div.select-control {
     display: inline-block;
-    border-radius: 6px;
-    background-color: #8ad88a;
-    padding: 2px 4px;
+    border: solid .5px #ddd;
+    border-radius: 4px;
+    background-color: white;
+    background-image: url(../images/Controls/DownIndicator.png);
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: right;
+    white-space: nowrap;
+    padding: 2px 25px 2px 4px;
     font-size: 10pt;
-    text-align: center;
+    text-align: left;
     color: black;
     cursor: pointer;
 }
 
+div.select-button {
+    display: inline-block;
+    border: solid .5px #ddd;
+    border-radius: 4px;
+    background-color: white;
+    background-image: url(../images/Controls/DownIndicator.png);
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: right;
+    white-space: nowrap;
+    padding: 2px 22px 2px 4px;
+    font-size: 10pt;
+    text-align: left;
+    color: black;
+    cursor: pointer;
+}
+
+div.select, td.select {
+    background-position-x: right;
+}
+
+div.select-large, td.select-large {
+    font-size: 14pt;
+}
+
+div.float-listing {
+    position: absolute;
+    border: solid 1px #6d7c98;
+    border-radius: 6px;
+    background-color: white;
+    padding: 0;
+}
+
+td {
+    vertical-align: top;
+}
+
 td.list-item {
-    padding: 1px 5px;
+    padding: 1px 12px 1px 8px;
     cursor: pointer;
 }
 
@@ -37,11 +91,64 @@ td.list-item:hover {
     background-color: #dee3ec;
 }
 
-#select-list-sec {
-    position: absolute;
-    border: solid 1px #6d7c98;
-    border-radius: 6px;
-    background-color: white;
-    padding: 0;
+/* ====================================================
+    Action List
+   ================================================= */
+
+tr.action-list:hover {
+    background-color: #eef;
+}
+
+td {
+    padding: 2px 4px;
+}
+
+th.action-header {
+    font-size: 8pt;
+    color: #6d7c98;
+}
+
+th.column-action-status {
+    width: 125px;
+}
+
+th.column-action-name {
+    
+}
+th.column-action-type {
+    width: 130px;
+}
+th.column-action-date {
+    width: 120px;
+}
+
+
+td.column-action-status {
+    width: 125px;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+
+td.column-action-name {
+    
+}
+
+td.column-action-type {
+    width: 130px;
+    white-space: nowrap;
+}
+
+td.column-action-date {
+    width: 120px;
+    white-space: nowrap;
+}
+
+td.right-align {
+    text-align: right;
+}
+
+label.form-label {
+    margin: 0;
+    color: #6d7c98;
 }
 

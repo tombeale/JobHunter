@@ -3,6 +3,7 @@ using BlueSite.Data;
 using BlueSite.Data.Entities;
 using JobHunter.Models;
 using JobHunter.Shared;
+using JobHunter.Application;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -18,6 +19,7 @@ namespace JobHunter.Pages
     {
         [Inject] IJSRuntime JsRuntime { get; set; }
         [Inject] BlueSiteContext _context { get; set; }
+        [Inject] NavigationManager NavManager { get; set; }
 
         protected string doneClass = "";
         protected string ActionKey = "";
@@ -55,12 +57,7 @@ namespace JobHunter.Pages
                 Options.Add(new DDOption(o.ActionTypeId, o.Name));
             }
 
-            Statuses = new List<DDOption>();
-            Statuses.Add(new DDOption("todo",    "To Do"));
-            Statuses.Add(new DDOption("started", "Started"));
-            Statuses.Add(new DDOption("waiting", "Waiting"));
-            Statuses.Add(new DDOption("hold",    "On Hold"));
-            Statuses.Add(new DDOption("done",    "Done"));
+            Statuses = Globals.GetActionStatuses();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -151,6 +148,9 @@ namespace JobHunter.Pages
                     t.IsDone = true;
                     StateHasChanged();
                     break;
+                case "edit":
+                    NavManager.NavigateTo($"/ActionEdit/{t.ActionItemId}");
+                    break;
                 case "note":
                 case "note-filled":
                     if (t != null)
@@ -168,6 +168,7 @@ namespace JobHunter.Pages
             int index = Convert.ToInt32(vals[0]);
             var t = actions[index];
             t.Status = vals[1];
+            _context.SaveChanges();
             StateHasChanged();
             JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec");
         }
@@ -175,9 +176,9 @@ namespace JobHunter.Pages
 
         protected void HandleSetActionType(string key)
         {
-            ActionType = key.ToLower();
-            actions = getActionList();
-            newAction = string.Empty;
+                ActionType = key.ToLower();
+                actions = getActionList();
+                newAction = string.Empty;
             StateHasChanged();
         }
 
@@ -209,7 +210,13 @@ namespace JobHunter.Pages
 
         List<ActionItem> getActionList()
         {
-            return Actions.AllActions.Where(a => a.Type == ActionType).ToList();
+            if (ActionType != "*") { 
+                return Actions.AllActions.Where(a => a.Type == ActionType).ToList();
+            }
+            else
+            {
+                return Actions.AllActions.ToList();
+            }
         }
 
         protected async Task SetTitle(string title)

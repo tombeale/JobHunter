@@ -22,7 +22,7 @@ function locateElementBelowParent(elementIds) {
         var w = $(parent).width();
         var h = $(parent).height();
 
-        var top = p.top + (h - 2)
+        var top = p.top + h + 1
         var left = p.left + 20;
 
         element.style.top = top + "px";
@@ -36,6 +36,10 @@ function locateElementBelowParent(elementIds) {
 
 function hideElement(elementId) {
     $("#" + elementId).fadeOut(300);
+}
+
+function hideElementsWithClass(elementClass) {
+    $("." + elementClass).fadeOut(300);
 }
 
 function setIconImage(element, img) {

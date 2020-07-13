@@ -20,13 +20,13 @@ a.menu-bar:hover {
 }
 
 #menu-bar {
-    height: 20px;
+    height: 22px;
     position: fixed;
     top: 22px;
     left: 315px;
     right: 0;
     padding: 18px 10px 4px 55px;
-    font-size: 10pt;
+    font-size: 12pt;
     color: #0a305a;
     text-align: right;
     background-color: rgba(168, 186, 216, .7);
@@ -169,5 +169,6 @@ div.note-viewer {
 
 .note-body {
     padding: 4px 8px;
+    white-space: pre-wrap;
 }
 

@@ -45,6 +45,12 @@ div.bs-dialog-close {
     cursor: pointer;
 }
 
+div.float-shadow {
+    -webkit-box-shadow: 3px 3px 3px -2px rgba(0,0,0,0.46);
+    -moz-box-shadow: 3px 3px 3px -2px rgba(0,0,0,0.46);
+    box-shadow: 3px 3px 3px -2px rgba(0,0,0,0.46);
+}
+
 img.bs-dialog-close {
     height: 22px;
 }

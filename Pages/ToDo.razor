@@ -16,7 +16,7 @@
     <h1>To Do List <span class="normal">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
 </div>
 <div class="d-inline-block" style="width:28%; text-align: right;">
-    <DropDown @ref="dropDown" OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" />
+    <ComboBox Caption="Set Id" Id="action-set-id" HandleActionSetIdClick="@HandleActionSetIdClick" Value="@SetId" Width="225px" />
 </div>
 <table class="to-do" border="0" style="width: 100%">
 
@@ -26,14 +26,14 @@
         ActionItem todo = todos[index];
         if (!todo.IsDone || !hideDone)
         {
-            <ToDoRow Index="@index.ToString()" Action="@todos[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
+            <ToDoRow Index="@index.ToString()" Action="@todos[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick"/>
         }
     }
     <tr class="to-do">
-        <td width="40">&nbsp;</td>
+        <td width="40" class="right-align">Add:</td>
         <td width="100%">
-            <input type="text" class="form-control to-do"
-                   @onkeypress="@(e => handleNewTodoKeypress(e))" placeholder="---" @bind="newTodo" @bind:event="oninput" />
+            <input type="text" class="form-control to-do inset"
+                   @onkeypress="@(e => handleNewTodoKeypress(e))" @bind="newTodo" @bind:event="oninput" />
         </td>
     </tr>
 </table>
@@ -41,4 +41,5 @@
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
          OnClickCallback="@HandleDialogSelection" />
 <NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />
+<SelectListing Id="0" @ref="actionSetIdList" Data="@ActionSetIds" OnChangeCallback="@HandleSetActionType" Class="select select-large" />
 
