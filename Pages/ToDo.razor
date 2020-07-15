@@ -16,7 +16,7 @@
     <h1>To Do List <span class="normal">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
 </div>
 <div class="d-inline-block" style="width:28%; text-align: right;">
-    <ComboBox Caption="Set Id" Id="action-set-id" HandleActionSetIdClick="@HandleActionSetIdClick" Value="@SetId" Width="225px" />
+    <ComboBox Caption="Set Id" Id="action-set-id" HandleEventClick="@HandleActionSetIdClick" Value="@SetId" Width="225px" />
 </div>
 <table class="to-do" border="0" style="width: 100%">
 
@@ -41,5 +41,5 @@
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
          OnClickCallback="@HandleDialogSelection" />
 <NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />
-<SelectListing Id="0" @ref="actionSetIdList" Data="@ActionSetIds" OnChangeCallback="@HandleSetActionType" Class="select select-large" />
+<SelectListing Id="0" @ref="actionSetIdList" Data="@ActionSetIds" OnChangeCallback="@HandleSetIdFilter" Class="select select-large" />
 

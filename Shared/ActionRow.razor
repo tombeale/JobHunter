@@ -4,11 +4,11 @@
 
 <tr class="action-list">
     <td class="column-action-status">
-        <div class="status-button" id="action-row-@Index"
+        <div class="select-button" id="action-row-@Index"
              @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|status")'
              style="width: 100px; background-color:@GetColorStyleFromStatus(Action.Status); ">&nbsp;@GetFriendlyStatusName(Action.Status)&nbsp;</div>
         </td>
-        <td class="column-action-name">@Action.Title</td>
+        <td class="column-action-name @TitleClass">@Action.Title</td>
         <td class="column-action-type">@GetFriendlyTypeName(Action.Type)</td>
         <td class="column-action-date">@Action.StartDate</td>
         <td class="column-action-date">@Action.EndDate</td>
@@ -42,10 +42,12 @@
         public EventCallback<string> OnRowOptionCallback { get; set; }
 
         string inputClasses = "form-control to-do";
+        string TitleClass = "";
         string imgSource = "images/checkbox-0.png";
 
         string Checked = "0";
         bool HasNotes = false;
+
 
         string message = "Original";
 
@@ -63,10 +65,12 @@
             if (Utilities.GetDoneFromStatus(Action))
             {
                 inputClasses = "form-control to-do todo-done";
+                TitleClass = "todo-done";
             }
             else
             {
                 inputClasses = "form-control to-do";
+                TitleClass = "";
             }
         }
 

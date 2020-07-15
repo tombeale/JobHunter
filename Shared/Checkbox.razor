@@ -1,0 +1,39 @@
+﻿
+<div class="checkbox" @onclick='HandleClick'><img src="@imgSource"  style="width: 30px" /><label>@Label</label></div>
+
+@code {
+
+    [Parameter]
+    public EventCallback<string> HandleDoneClick {  get; set; }
+
+    [Parameter]
+    public bool Checked { get; set; } = false;
+
+    [Parameter]
+    public string Label { get; set; }
+
+    private string imgSource;
+   
+    private string isChecked()
+    {
+        return (Checked) ? "1" : "0";
+    }
+
+    private void HandleClick()
+    {
+        Checked = !Checked;
+        HandleDoneClick.InvokeAsync((Checked) ? "1" : "0");
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Checked)
+        {
+            imgSource = $"images/checkbox-1.png";
+        }
+        else
+        {
+            imgSource = $"images/checkbox-0.png";
+        }
+    }
+}

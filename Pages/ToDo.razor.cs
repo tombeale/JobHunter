@@ -25,7 +25,7 @@ namespace JobHunter.Pages
         protected string doneClass = "";
         protected string ActionKey = "";
         protected string ActionType = "todo";
-        protected string SetId = "*";
+        protected string SetId = "All";
 
         protected JobHuntRepository Actions;
 
@@ -157,13 +157,13 @@ namespace JobHunter.Pages
             StateHasChanged();
         }
 
-        protected void HandleSetActionType(string key)
+        protected void HandleSetIdFilter(string key)
         {
-            ActionType = key.ToLower();
+            
+            SetId = key.ToLower();
             todos = getToDoList();
             newTodo = string.Empty;
             StateHasChanged();
-            dropDown.Refresh();
         }
 
 
@@ -219,7 +219,7 @@ namespace JobHunter.Pages
             }
 
             ActionSetIds = new List<DDOption>();
-            var setIds = Actions.GetActionSetIdList();
+            var setIds = Actions.GetActionSetIdListForToDos();
             foreach (var s in setIds)
             {
                 ActionSetIds.Add(new DDOption(s, s));
@@ -236,7 +236,15 @@ namespace JobHunter.Pages
 
         List<ActionItem> getToDoList()
         {
-            return Actions.AllActions.Where(a => a.Type == ActionType).ToList();
+            var todos = Actions.AllActions.Where(a => a.Type == ActionType).ToList();
+            if (SetId.ToLower() != "all") 
+            { 
+                return todos.Where(a => a.SetId?.ToLower() == SetId.ToLower()).ToList();
+            }
+            else
+            {
+                return todos;
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

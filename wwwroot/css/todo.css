@@ -29,7 +29,7 @@ input[type="text"].to-do:active {
     border-bottom: #eef;
 }
 
-input[type="text"].todo-done {
+input[type="text"].todo-done, td.todo-done {
     color: #aaa;
 }
 

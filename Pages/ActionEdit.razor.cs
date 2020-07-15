@@ -31,6 +31,7 @@ namespace JobHunter.Pages
 
         protected SelectListing actionTypeList;
         protected SelectListing actionSetIdList;
+        protected SelectListing actionProjectList;
 
         protected string StatusMessage = "";
 
@@ -47,14 +48,14 @@ namespace JobHunter.Pages
             var opts = Actions.Types;
             foreach (var o in opts)
             {
-                ActionTypes.Add(new DDOption(o.ActionTypeId, o.Name));
+                if (o != null) ActionTypes.Add(new DDOption(o.ActionTypeId, o.Name));
             }
 
             ActionSetIds = new List<DDOption>();
             var setIds = Actions.GetActionSetIdList();
-            foreach (var s in setIds)
+            foreach (var setId in setIds)
             {
-                ActionSetIds.Add(new DDOption(s, s));
+                if (setId != null) ActionSetIds.Add(new DDOption(setId, setId));
             }
 
             Statuses = Globals.GetActionStatuses();
@@ -89,14 +90,14 @@ namespace JobHunter.Pages
 
         protected void HandleValidSubmit()
         {
-            StatusMessage = "Valid Submit";
+            StatusMessage = "Saved";
             StateHasChanged();
             _context.SaveChanges();
         }
 
         protected void HandleInvalidSubmit()
         {
-            StatusMessage = "Invalid Submit";
+            StatusMessage = "There was a problem saving the form";
             StateHasChanged();
         }
 
@@ -123,10 +124,22 @@ namespace JobHunter.Pages
             JSRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-1|action-type");
         }
 
+        protected void HandleDoneClicked(string value)
+        {
+            Action.IsDone = (value == "1");
+            StateHasChanged();
+        }
+
         protected void HandleActionSetIdClick()
         {
             actionTypeList.Show();
             JSRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-2|action-set-id");
+        }
+
+        protected void HandleActionProjectIdClick()
+        {
+            actionTypeList.Show();
+            JSRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-3|action-project-id");
         }
 
 
@@ -142,6 +155,14 @@ namespace JobHunter.Pages
             Action.SetId = value;
             StateHasChanged();
             JSRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-2");
+        }
+
+
+        protected void HandleSetActionPtojectId(string value)
+        {
+            Action.ProjectId = Convert.ToInt32(value);
+            StateHasChanged();
+            JSRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-3");
         }
 
 
