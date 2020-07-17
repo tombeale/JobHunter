@@ -10,6 +10,8 @@ h1 {
     font-weight: bold;
 }
 
+
+
 a.menu-bar {
     color: #0a305a;
 }
@@ -172,3 +174,6 @@ div.note-viewer {
     white-space: pre-wrap;
 }
 
+.item-list {
+    font-size: 14pt;
+}

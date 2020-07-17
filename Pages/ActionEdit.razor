@@ -30,13 +30,13 @@
         </div>
         <div class="row">
             <div class="form-group col-sm-4">
-                <ComboBox Caption="Action Type" Id="action-type" HandleEventClick="@HandleActionTypeClick" Value="@Action.Type" Width="225px" />
+                <ComboBox Caption="Action Type" Id="action-status" HandleEventClick="@HandleActionStatusClick" Value="@Utilities.GetFriendlyTypeName(Action.Status, Statuses)" Width="225px" />
+            </div>
+            <div class="form-group col-sm-4">
+                <ComboBox Caption="Action Type" Id="action-type" HandleEventClick="@HandleActionTypeClick" Value="@Utilities.GetFriendlyTypeName(Action.Type, ActionTypes)" Width="225px" />
             </div>
             <div class="form-group col-sm-4">
                 <ComboBox Caption="Set Id" Id="action-set-id" HandleEventClick="@HandleActionSetIdClick" Value="@Action.SetId" Width="225px" />
-            </div>
-            <div class="form-group col-sm-4">
-                <Checkbox Label="Is Done?" Checked="@Action.IsDone" HandleDoneClick="@HandleDoneClicked"/>
             </div>
         </div>
         <div class="row">
@@ -48,12 +48,14 @@
                 <label class="form-label" for="action-title">End Date</label><br />
                 <input type="date" @bind-value="Action.EndDate" id="action-end-date" class="form-control inset" style="width: 160px;" />
             </div>
+            <div class="form-group col-sm-4">
+                <br /><Checkbox Label="Is Done?" Checked="@Action.IsDone" HandleDoneClick="@HandleDoneClicked" />
+            </div>
         </div>
-        <p>
-            <div class="alert">@StatusMessage</div>
-        </p>
     </div>
 </EditForm>
-<SelectListing Id="1" @ref="actionTypeList"  Data="@ActionTypes"  OnChangeCallback="@HandleSetActionType"  Class="select select-large" />
-<SelectListing Id="2" @ref="actionSetIdList" Data="@ActionSetIds" OnChangeCallback="@HandleSetActionSetId" Class="select select-large" />
+<SelectListing Id="1" @ref="actionTypeList" Data="@ActionTypes" OnChangeCallback="@HandleSetActionType" Class="select select-large" Width="220px" />
+<SelectListing Id="2" @ref="actionSetIdList" Data="@ActionSetIds" OnChangeCallback="@HandleSetActionSetId" Class="select select-large" Width="220px" />
+<SelectListing Id="3" @ref="actionStatusList" Data="@Statuses" OnChangeCallback="@HandleSetActionStatus" Class="select select-large" Width="220px" />
+<div class="info">@StatusMessage</div>
 

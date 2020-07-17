@@ -1,32 +1,54 @@
 ﻿@inherits CompanyEditBase
 @page "/companyedit"
 @page "/companyedit/{id}"
+
 @using JobHunter.Shared
+@using JobHunter.Application
 @using BlueSite.Data
 @using BlueSite.Data.Entities
+
 @inject IJSRuntime JsRuntime
 @inject BlueSiteContext _context
 <SideBar MenuSet="company" />
 
-<EditForm Model="@company" OnValidSubmit="HandleValidSubmit">
-    <h1><InputText @bind-Value="company.Name" class="bs-input-full bs-title" /></h1>
+<EditForm Model="@Company" OnValidSubmit="HandleValidSubmit">
+    <div class="d-inline-block" style="width:70%">
+        <h1>Edit Organization <span class="normal">(Id: #@Company.CompanyId.)</span></h1>
+    </div>
+    <div class="d-inline-block" style="width:28%; text-align: right;">
+        <button class="btn btn-primary" style="margin-top: 25px;">Submit</button>
+    </div>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-    <table>
-        <tr>
-            <td>
-                <label>
-                    Type:
-                    <InputText @bind-Value="company.Type" />
-                </label>
-            </td>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label class="form-label" for="company-name">Name</label>
+                <input type="text" @bind-value="Company.Name" id="company-name" class="form-control bs-input-full bs-title inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <ComboBox Caption="Company Type" Id="company-type" HandleEventClick="@HandleCompanyTypeClick" Value="@Utilities.GetFriendlyDDName(Company.Type, CompanyTypes)" Width="225px" />
+            </div>
+            <div class="form-group col-sm-4">
+                <ComboBox Caption="Interest" Id="company-interest" HandleEventClick="@HandleCompanyInterestClick" Value="@Utilities.GetFriendlyDDName(Company.Interest, CompanyIntrests)" Width="225px" />
+            </div>
+        </div>
 
-        </tr>
-        <tr>
-            <td colspan="4">
-                <button @onclick="validateForm">Submit</button>
-            </td>
-        </tr>
-    </table>
 
+
+
+
+
+
+
+
+
+    </div>
 </EditForm>
+<SelectListing Id="1" @ref="companyTypeList" Data="@CompanyTypes" OnChangeCallback="@HandleSetCompanyType" Class="select select-large" Width="220px" />
+<SelectListing Id="2" @ref="companyInterestList" Data="@CompanyIntrests" OnChangeCallback="@HandleSetCompanyInterest" Class="select select-large" Width="220px" />
+<div class="info">@StatusMessage</div>
 

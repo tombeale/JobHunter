@@ -1,0 +1,44 @@
+﻿@inherits ContactEditBase
+@page "/contactedit"
+@page "/contactedit/{contactId}"
+
+@using JobHunter.Shared
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+<SideBar MenuSet="Create New Action" />
+
+<EditForm Model="@Contact" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+    <div class="d-inline-block" style="width:70%">
+        <h1>Edit Action <span class="normal">(Id: #@Contact.ContactId)</span></h1>
+    </div>
+    <div class="d-inline-block" style="width:28%; text-align: right;">
+        <button class="btn btn-primary" style="margin-top: 25px;">Submit</button>
+    </div>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label class="form-label" for="action-title">First Name</label>
+                <input type="text" @bind-value="Contact.FirstName" id="first-name" class="form-control bs-input-full bs-title inset" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="form-label" for="action-title">Last Name</label>
+                <input type="text" @bind-value="Contact.LastName" id="last-name" class="form-control bs-input-full bs-title inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="form-label" for="action-title">Title</label>
+                <input type="text" @bind-value="Contact.Title" id="first-name" class="form-control bs-input-full inset" />
+            </div>
+        </div>
+    </div>
+</EditForm>
+@*<SelectListing Id="1" @ref="actionTypeList" Data="@ActionTypes" OnChangeCallback="@HandleSetActionType" Class="select select-large" Width="220px" />*@
+<div class="info">@StatusMessage</div>

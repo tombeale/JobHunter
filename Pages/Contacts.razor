@@ -1,21 +1,56 @@
 ﻿@page "/contacts"
 @using JobHunter.Shared
+@using BlueSite.Data
+@using BlueSite.Data.Entities
 @inject IJSRuntime JsRuntime
-    <SideBar MenuSet="contacts" />
+@inject BlueSiteContext _context
+<SideBar MenuSet="contacts" />
 
-    <h1>Contacts</h1>
+<h1>Contacts&nbsp;<TitleIcons Title="contacts" IconWidth="24px" /></h1>
 
-    A list of contacts will go here
-
-    @code {
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+@if (contacts.Count < 1)
+{
+    <p>No contacts found</p>
+}
+else
+{
+    <table class="to-do" border="0" style="width: 100%">
+        @for (int i = 0; i < contacts.Count; i++)
         {
-            await SetTitle("Contacts");
+            int index = i;
+            Contact c = contacts[index];
+        <tr class="item-list">
+            <td>
+                <a href="/contactedit/@c.ContactId">@c.FirstName</a>
+                <a href="/contactedit/@c.ContactId">@c.LastName</a>
+            </td>
+            <td>@c.Title</td>
+        </tr>
         }
+    </table>
+}
 
-        async Task SetTitle(string title)
-        {
-            await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
-                title);
-        }
+
+@code {
+
+    protected List<Contact> contacts;
+    JobHuntRepository Repository;
+
+    protected override void OnInitialized()
+    {
+        Repository = new JobHuntRepository(_context);
+        contacts = Repository.AllContacts;
+
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await SetTitle("Contacts");
+    }
+
+    async Task SetTitle(string title)
+    {
+        await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
+            title);
+    }
+}

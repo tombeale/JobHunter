@@ -32,6 +32,13 @@ namespace JobHunter.Application
             return false;
         }
 
+        public static string GetFriendlyDDName(string key, List<DDOption> items)
+        {
+            var fs = items.Where(s => s.Key == key).Select(s => s.Value).FirstOrDefault();
+            if (fs == null) fs = "";
+            return fs;
+        }
+
         public static string GetFriendlyStatusName(string key, List<DDOption> statuses)
         {
             var fs = statuses.Where(s => s.Key == key).Select(s => s.Value).FirstOrDefault();

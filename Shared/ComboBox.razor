@@ -1,15 +1,23 @@
 ﻿@using JobHunter.Models
 @using BlueSite.Data.Entities
 
-<div class="form-group">
-    <label class="form-label" for="action-title">@Caption</label><br />
-    <input type="text" @bind-value="Value" id="@Id" class="form-control inset" readonly style="width: @Width;" 
-    />&nbsp;<div class="select-button select-large"
-         @onclick="HandleEventClick"
-         style="width: 28px;">
-        &nbsp;
+    <div class="form-group">
+        <label class="form-label" for="@Id">@Caption</label><br />
+        @if (Type.ToLower() == "combo")
+        {
+            <input type="text" @bind-value="Value" id="@Id" class="form-control inset" readonly style="width: @Width;" /><div class="select-button select-large"
+                    @onclick="HandleEventClick"
+                    style="width: 28px;">
+                    &nbsp;
+                </div>
+        }
+        else 
+        { 
+            <div id="@Id" class="form-control select-control link" @onclick="HandleEventClick" style="width: @Width;">
+                @Value
+            </div>
+        }
     </div>
-</div>
 
 
 @code {
@@ -28,6 +36,9 @@
 
     [Parameter]
     public EventCallback HandleEventClick { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "normal"; // -- normal / combo
 
 
 }

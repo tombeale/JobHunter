@@ -30,6 +30,7 @@ namespace JobHunter.Pages
         protected List<DDOption> Statuses;
 
         protected SelectListing actionTypeList;
+        protected SelectListing actionStatusList;
         protected SelectListing actionSetIdList;
         protected SelectListing actionProjectList;
 
@@ -118,6 +119,12 @@ namespace JobHunter.Pages
             Handlers
          ****************************************************************** */
 
+        protected void HandleActionStatusClick()
+        {
+            actionTypeList.Show();
+            JSRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-3|action-status");
+        }
+
         protected void HandleActionTypeClick()
         {
             actionTypeList.Show();
@@ -150,21 +157,19 @@ namespace JobHunter.Pages
             JSRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-1");
         }
 
+        protected void HandleSetActionStatus(string value)
+        {
+            Action.Status = value;
+            StateHasChanged();
+            JSRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-3");
+        }
+
         protected void HandleSetActionSetId(string value)
         {
             Action.SetId = value;
             StateHasChanged();
             JSRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-2");
         }
-
-
-        protected void HandleSetActionPtojectId(string value)
-        {
-            Action.ProjectId = Convert.ToInt32(value);
-            StateHasChanged();
-            JSRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-3");
-        }
-
 
         protected async Task SetTitle(string title)
         {

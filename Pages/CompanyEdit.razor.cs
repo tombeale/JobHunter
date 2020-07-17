@@ -6,6 +6,8 @@ using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobHunter.Shared;
+using JobHunter.Models;
 
 namespace JobHunter.Pages
 {
@@ -18,8 +20,17 @@ namespace JobHunter.Pages
         [Parameter]
         public string Id { get; set; } = null;
 
-        public Company company;
+        public Company Company;
+
+        protected SelectListing companyTypeList;
+        protected SelectListing companyInterestList;
+
+        
         JobHuntRepository Repository;
+        protected List<DDOption> CompanyTypes;
+        protected List<DDOption> CompanyIntrests;
+
+        protected string StatusMessage = "";
 
         /* *******************************************************************
             Startup Events
@@ -29,7 +40,19 @@ namespace JobHunter.Pages
         {
             Repository = new JobHuntRepository(_context);
 
+            CompanyTypes = new List<DDOption>();
+            var types = Repository.GetCompanyTypes();
+            foreach (var t in types)
+            {
+                if (t != null) CompanyTypes.Add(new DDOption(t.CompanyTypeId, t.Name));
+            }
 
+            CompanyIntrests = new List<DDOption>();
+            var intrests = Repository.GetCompanyIntrests();
+            foreach (var ci in intrests)
+            {
+                if (ci != null) CompanyIntrests.Add(new DDOption(ci.CompanyInterestId, ci.Name));
+            }
         }
 
         protected override void OnParametersSet()
@@ -38,11 +61,11 @@ namespace JobHunter.Pages
             if (Id != null)
             {
                 int CompanyId = Convert.ToInt32(Id);
-                company = GetCompany(CompanyId);
+                Company = GetCompany(CompanyId);
             }
             else
             {
-                company = new Company();
+                Company = new Company();
             }
         }
 
@@ -50,7 +73,7 @@ namespace JobHunter.Pages
         {
             if (Id != null)
             {
-                await SetTitle($"Viewing Company Id #{company.CompanyId}");
+                await SetTitle($"Viewing Company Id #{Company.CompanyId}");
             }
             else
             {
@@ -74,17 +97,54 @@ namespace JobHunter.Pages
             return Repository.GetCompany(id);
         }
 
-        protected void HandleValidSubmit()
+        /* *******************************************************************
+            Handlers
+         ****************************************************************** */
+
+        protected void HandleCompanyTypeClick()
         {
-            Console.WriteLine("OnValidSubmit");
+            companyTypeList.Show();
+            JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-1|company-type");
         }
+
+        protected void HandleCompanyInterestClick()
+        {
+            companyInterestList.Show();
+            JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-2|company-interest");
+        }
+
+        public void HandleSetCompanyType(string value)
+        {
+            Company.Type = value;
+            StateHasChanged();
+            JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-1");
+        }
+
+        public void HandleSetCompanyInterest(string value)
+        {
+            Company.Interest = value;
+            StateHasChanged();
+            JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-2");
+        }
+
 
         /* *******************************************************************
             Form-Related Methods
          ****************************************************************** */
+        protected void HandleValidSubmit()
+        {
+            StatusMessage = "Saved";
+            if (Company.CompanyId < 1)
+            {
+                _context.Companies.Add(Company);
+            }
+            StateHasChanged();
+            _context.SaveChanges();
+        }
+
         public void validateForm()
         {
-            if (company != null)
+            if (Company != null)
             {
 
             }
