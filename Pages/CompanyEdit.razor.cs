@@ -5,7 +5,9 @@ using System;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using JobHunter.Application;
 using JobHunter.Shared;
 using JobHunter.Models;
 
@@ -21,14 +23,19 @@ namespace JobHunter.Pages
         public string Id { get; set; } = null;
 
         public Company Company;
+        public Phone   NewPhone = new Phone();
 
         protected SelectListing companyTypeList;
         protected SelectListing companyInterestList;
+        protected SelectListing phoneTypeList;
 
         
         JobHuntRepository Repository;
         protected List<DDOption> CompanyTypes;
+        protected List<DDOption> PhoneTypes;
         protected List<DDOption> CompanyIntrests;
+
+        protected List<Phone> Phones;
 
         protected string StatusMessage = "";
 
@@ -53,7 +60,18 @@ namespace JobHunter.Pages
             {
                 if (ci != null) CompanyIntrests.Add(new DDOption(ci.CompanyInterestId, ci.Name));
             }
+
+            PhoneTypes = new List<DDOption>();
+            var phoneTypes = Repository.GetPhoneTypes();
+            foreach (var pt in phoneTypes)
+            {
+                if (pt != null) PhoneTypes.Add(new DDOption(pt.Type, pt.Name));
+            }
         }
+
+        /* *******************************************************************
+            Startup Events
+         ****************************************************************** */
 
         protected override void OnParametersSet()
         {
@@ -113,6 +131,20 @@ namespace JobHunter.Pages
             JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-2|company-interest");
         }
 
+        protected void HandlePhoneTypeClick()
+        {
+            phoneTypeList.Show();
+            if (G.CurrentPhoneIndex >= 0)
+            {
+                string index = G.CurrentPhoneIndex.ToString();
+                JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-3|phone-type-{index}");
+            }
+            else
+            {
+                JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-3|phone-type-new");
+            }
+        }
+
         public void HandleSetCompanyType(string value)
         {
             Company.Type = value;
@@ -127,6 +159,22 @@ namespace JobHunter.Pages
             JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-2");
         }
 
+        public void HandleSetPhoneType(string value)
+        {
+            if (G.CurrentPhoneIndex < 0)
+            {
+                NewPhone.Type = value;
+            }
+            else
+            {
+                Company.Phones[G.CurrentPhoneIndex].Type = value;
+            }
+            
+            //Company.Interest = value;
+            //StateHasChanged();
+            JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-2");
+        }
+
 
         /* *******************************************************************
             Form-Related Methods
@@ -138,8 +186,24 @@ namespace JobHunter.Pages
             {
                 _context.Companies.Add(Company);
             }
+            else
+            {
+                if (!String.IsNullOrWhiteSpace(NewPhone.Number) && !String.IsNullOrWhiteSpace(NewPhone.Type))
+                {
+                    NewPhone.CompanyId = Company.CompanyId;
+                    NewPhone.Number    = Regex.Replace(NewPhone.Number, @"[^0-9]", "");
+
+                    if (Company.Phones == null)
+                    {
+                        Company.Phones = new List<Phone>();
+                    }
+
+                    Company.Phones.Add(NewPhone);
+                }
+            }
             StateHasChanged();
             _context.SaveChanges();
+            NewPhone = new Phone();
         }
 
         public void validateForm()

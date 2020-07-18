@@ -177,3 +177,12 @@ div.note-viewer {
 .item-list {
     font-size: 14pt;
 }
+
+.noborder, .noborder:hover, .noborder:active {
+    border: none !important;
+}
+
+.nomargin {
+    margin: 0;
+    padding: 0;
+}

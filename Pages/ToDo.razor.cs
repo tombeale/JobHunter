@@ -135,7 +135,7 @@ namespace JobHunter.Pages
         {
             if (!string.IsNullOrWhiteSpace(newTodo))
             {
-                _context.Add(new ActionItem { Title = newTodo, Type = ActionType });
+                _context.Add(new ActionItem { Title = newTodo, Type = ActionType, SetId = SetId });
                 _context.SaveChanges();
                 todos = getToDoList();
                 newTodo = string.Empty;

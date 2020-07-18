@@ -29,11 +29,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-6">
                 <ComboBox Caption="Company Type" Id="company-type" HandleEventClick="@HandleCompanyTypeClick" Value="@Utilities.GetFriendlyDDName(Company.Type, CompanyTypes)" Width="225px" />
             </div>
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-6">
                 <ComboBox Caption="Interest" Id="company-interest" HandleEventClick="@HandleCompanyInterestClick" Value="@Utilities.GetFriendlyDDName(Company.Interest, CompanyIntrests)" Width="225px" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="form-label">Phone Numbers</label><br />
+                @if (Company.Phones != null)
+                {
+                    @for (int a = 0; a < Company.Phones.Count; a++)
+                    {
+                        <PhoneNumber Id="phone-type" Index="a" Phone="Company.Phones[a]" PhoneTypes="PhoneTypes" HandleEventClick="@HandlePhoneTypeClick" Width="225px" />
+                    }
+                }
+                <PhoneNumber Id="phone-type-new" Phone="NewPhone" PhoneTypes="PhoneTypes" HandleEventClick="@HandlePhoneTypeClick" Width="225px" />
             </div>
         </div>
 
@@ -48,7 +61,8 @@
 
     </div>
 </EditForm>
-<SelectListing Id="1" @ref="companyTypeList" Data="@CompanyTypes" OnChangeCallback="@HandleSetCompanyType" Class="select select-large" Width="220px" />
+<SelectListing Id="1" @ref="companyTypeList"     Data="@CompanyTypes"    OnChangeCallback="@HandleSetCompanyType"     Class="select select-large" Width="220px" />
 <SelectListing Id="2" @ref="companyInterestList" Data="@CompanyIntrests" OnChangeCallback="@HandleSetCompanyInterest" Class="select select-large" Width="220px" />
+<SelectListing Id="3" @ref="phoneTypeList"       Data="@PhoneTypes"      OnChangeCallback="@HandleSetPhoneType"       Class="select select-large" Width="120px" />
 <div class="info">@StatusMessage</div>
 

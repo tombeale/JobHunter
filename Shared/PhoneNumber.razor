@@ -1,0 +1,68 @@
+﻿@using JobHunter.Models
+@using JobHunter.Application
+@using BlueSite.Data.Entities
+
+    <div class="form-group">
+        @if (Caption != null) 
+        {
+            <label class="form-label" for="@Id">@Caption</label><br />
+        }
+        <table class="form-control nomargin" cellspacing='0' cellpadding='0' border='0' style="min-width: 16em;">
+            <tr>
+                <td width="100%" style="padding: 0;">
+                    <input type="text" @bind-value="Phone.Number" class="form-control inset phone-number noborder" />
+                </td>
+                <td>
+                    <div class="select-control link select-large noborder" id="@PhoneId"
+                         @onclick="handleClick"
+                         style="width: 5em; float: right; text-align: right;">
+                        @Utilities.GetFriendlyDDName(Phone.Type, PhoneTypes)
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public int Index {  get; set; } = -1;
+
+    [Parameter]
+    public string Width { get; set; }
+
+    [Parameter]
+    public Phone Phone { get; set; }
+
+    [Parameter]
+    public List<DDOption> PhoneTypes { get; set; }
+
+    [Parameter]
+    public EventCallback HandleEventClick { get; set; }
+
+    protected string PhoneId;
+
+    protected void handleClick()
+    {
+        G.CurrentPhoneIndex = Index;
+        HandleEventClick.InvokeAsync("");
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (Phone == null)
+        {
+            Phone = new Phone("", "main");
+        }
+        PhoneId = (Index >= 0) ? $"{Id}-{Index.ToString()}" : Id;
+    }
+
+}

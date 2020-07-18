@@ -26,16 +26,19 @@
         ActionItem todo = todos[index];
         if (!todo.IsDone || !hideDone)
         {
-            <ToDoRow Index="@index.ToString()" Action="@todos[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick"/>
+            <ToDoRow Index="@index.ToString()" Action="@todos[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
         }
     }
-    <tr class="to-do">
-        <td width="40" class="right-align">Add:</td>
-        <td width="100%">
-            <input type="text" class="form-control to-do inset"
-                   @onkeypress="@(e => handleNewTodoKeypress(e))" @bind="newTodo" @bind:event="oninput" />
-        </td>
-    </tr>
+    @if (SetId.ToLower() != "all")
+    {
+        <tr class="to-do">
+            <td width="40" class="right-align">Add:</td>
+            <td width="100%">
+                <input type="text" class="form-control to-do inset"
+                       @onkeypress="@(e => handleNewTodoKeypress(e))" @bind="newTodo" @bind:event="oninput" />
+            </td>
+        </tr>
+    }
 </table>
 <Overlay @ref="overlay" />
 <Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
