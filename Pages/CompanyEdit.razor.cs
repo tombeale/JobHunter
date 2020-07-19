@@ -112,7 +112,12 @@ namespace JobHunter.Pages
 
         public Company GetCompany(int id)
         {
-            return Repository.GetCompany(id);
+            Company company = Repository.GetCompany(id);
+            if (company != null && company.Phones == null)
+            {
+                company.Phones = Repository.GetPhonesForCompany(id);
+            }
+            return company;
         }
 
         /* *******************************************************************
@@ -170,8 +175,7 @@ namespace JobHunter.Pages
                 Company.Phones[G.CurrentPhoneIndex].Type = value;
             }
             
-            //Company.Interest = value;
-            //StateHasChanged();
+            G.CurrentPhoneIndex = -1;
             JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-2");
         }
 
@@ -204,6 +208,11 @@ namespace JobHunter.Pages
             StateHasChanged();
             _context.SaveChanges();
             NewPhone = new Phone();
+        }
+
+        protected void HandleInvalidSubmit()
+        {
+            StatusMessage = "There was an error submitting the form";
         }
 
         public void validateForm()

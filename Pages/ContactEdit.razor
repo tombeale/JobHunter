@@ -13,10 +13,10 @@
 
 <EditForm Model="@Contact" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
     <div class="d-inline-block" style="width:70%">
-        <h1>Edit Action <span class="normal">(Id: #@Contact.ContactId)</span></h1>
+        <h1>Edit Contact <span class="normal">(Id: #@Contact.ContactId)</span></h1>
     </div>
     <div class="d-inline-block" style="width:28%; text-align: right;">
-        <button class="btn btn-primary" style="margin-top: 25px;">Submit</button>
+        <button class="btn btn-primary" style="margin-top: 25px;">Save</button>
     </div>
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -38,7 +38,20 @@
                 <input type="text" @bind-value="Contact.Title" id="first-name" class="form-control bs-input-full inset" />
             </div>
         </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="form-label">Phone Numbers</label><br />
+                @if (Contact.Phones != null)
+                {
+                    @for (int a = 0; a < Contact.Phones.Count; a++)
+                    {
+                        <PhoneNumber Id="phone-type" Index="a" Phone="Contact.Phones[a]" PhoneTypes="PhoneTypes" HandleEventClick="@HandlePhoneTypeClick" Width="225px" />
+                    }
+                }
+                <PhoneNumber Id="phone-type-new" Phone="NewPhone" PhoneTypes="PhoneTypes" HandleEventClick="@HandlePhoneTypeClick" Width="225px" />
+            </div>
+        </div>
     </div>
 </EditForm>
-@*<SelectListing Id="1" @ref="actionTypeList" Data="@ActionTypes" OnChangeCallback="@HandleSetActionType" Class="select select-large" Width="220px" />*@
+<SelectListing Id="1" @ref="phoneTypeList" Data="@PhoneTypes" OnChangeCallback="@HandleSetPhoneType" Class="select select-large" Width="120px" />
 <div class="info">@StatusMessage</div>
