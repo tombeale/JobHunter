@@ -1,10 +1,12 @@
 ﻿using BlueSite.Components;
 using BlueSite.Data;
 using BlueSite.Data.Entities;
+using JobHunter.Application;
 using JobHunter.Models;
 using JobHunter.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -37,6 +39,8 @@ namespace JobHunter.Pages
         protected SelectListing actionSetIdList;
 
         protected IEnumerable<ActionItem> data;
+
+        private User _user;
 
         SideBar SideBar1 = new SideBar();
 
@@ -164,6 +168,7 @@ namespace JobHunter.Pages
             todos = getToDoList();
             newTodo = string.Empty;
             StateHasChanged();
+            Actions.SaveUserPref(_user.UserId, "todo:setid", SetId);
         }
 
 
@@ -206,9 +211,19 @@ namespace JobHunter.Pages
             confirm.Hide();
         }
 
+
+        /* *******************************************************************
+         * LifeCycle Methods
+         * **************************************************************** */
+
         protected override void OnInitialized()
         {
+            
             Actions = new JobHuntRepository(_context);
+            _user = Actions.GetUserFromSignon();
+
+            SetId = Actions.GetUserPref(_user.UserId, "todo:setid", SetId);
+
             todos = getToDoList();
 
             Options = new List<DDOption>();
@@ -232,6 +247,11 @@ namespace JobHunter.Pages
             Statuses.Add(new DDOption("waiting", "Waiting"));
             Statuses.Add(new DDOption("hold", "On Hold"));
             Statuses.Add(new DDOption("done", "Done"));
+        }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
         }
 
         List<ActionItem> getToDoList()

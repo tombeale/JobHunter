@@ -1,5 +1,7 @@
 ﻿using BlueSite.Data;
 using BlueSite.Data.Entities;
+using JobHunter.Application;
+using JobHunter.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
@@ -13,6 +15,8 @@ namespace JobHunter.Pages
         [Inject] BlueSiteContext _context { get; set; }
 
         protected List<Company> companies;
+        protected List<DDOption> phoneTypes;
+
         JobHuntRepository Repository;
 
 
@@ -38,6 +42,12 @@ namespace JobHunter.Pages
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await SetTitle("Companies");
+        }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            phoneTypes = Utilities.GetPhoneTypeLookup(Repository.GetPhoneTypes());
         }
 
         async Task SetTitle(string title)

@@ -94,9 +94,9 @@ namespace JobHunter.Pages
         protected void HandlePhoneTypeClick()
         {
             phoneTypeList.Show();
-            if (G.CurrentPhoneIndex >= 0)
+            if (Globals.CurrentPhoneIndex >= 0)
             {
-                string index = G.CurrentPhoneIndex.ToString();
+                string index = Globals.CurrentPhoneIndex.ToString();
                 JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"select-list-sec-1|phone-type-{index}");
             }
             else
@@ -108,16 +108,16 @@ namespace JobHunter.Pages
 
         public void HandleSetPhoneType(string value)
         {
-            if (G.CurrentPhoneIndex < 0)
+            if (Globals.CurrentPhoneIndex < 0)
             {
                 NewPhone.Type = value;
             }
             else
             {
-                Contact.Phones[G.CurrentPhoneIndex].Type = value;
+                Contact.Phones[Globals.CurrentPhoneIndex].Type = value;
             }
             
-            G.CurrentPhoneIndex = -1;
+            Globals.CurrentPhoneIndex = -1;
             JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec-2");
         }
 
@@ -138,7 +138,6 @@ namespace JobHunter.Pages
                 if (!String.IsNullOrWhiteSpace(NewPhone.Number) && !String.IsNullOrWhiteSpace(NewPhone.Type))
                 {
                     NewPhone.ContactId = Contact.ContactId;
-                    NewPhone.Number    = Regex.Replace(NewPhone.Number, @"[^0-9]", "");
 
                     if (Contact.Phones == null)
                     {

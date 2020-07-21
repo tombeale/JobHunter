@@ -23,7 +23,7 @@ namespace JobHunter.Pages
 
         protected string doneClass = "";
         protected string ActionKey = "";
-        protected string ActionType = "research";
+        protected string ActionType = "All";
 
         protected Confirm confirm;
         protected NoteEdit noteEdit;
@@ -33,6 +33,8 @@ namespace JobHunter.Pages
 
         protected IList<ActionItem> actions = new List<ActionItem>();
         protected string newAction;
+
+        private User _user;
 
         protected JobHuntRepository Actions;
 
@@ -48,6 +50,10 @@ namespace JobHunter.Pages
         protected override void OnInitialized()
         {
             Actions = new JobHuntRepository(_context);
+            _user = Actions.GetUserFromSignon();
+            ActionType = Actions.GetUserPref(_user.UserId, "actions:actiontype", ActionType);
+
+
             actions = getActionList();
 
             Options = new List<DDOption>();
@@ -176,11 +182,13 @@ namespace JobHunter.Pages
 
         protected void HandleSetActionType(string key)
         {
-                ActionType = key.ToLower();
-                actions = getActionList();
-                newAction = string.Empty;
+            ActionType = key.ToLower();
+            actions = getActionList();
+            newAction = string.Empty;
             StateHasChanged();
-        }
+            Actions.SaveUserPref(_user.UserId, "actions:actiontype", ActionType);
+            _context.SaveChanges();
+         }
 
 
         /* =============================================

@@ -7,15 +7,16 @@
         {
             <label class="form-label" for="@Id">@Caption</label><br />
         }
-        <table class="form-control nomargin" cellspacing='0' cellpadding='0' border='0' style="min-width: 16em;">
-            <tr>
-                <td width="100%" style="padding: 0;">
-                    <input type="text" @bind-value="Phone.Number" class="form-control inset phone-number noborder" />
+        <table class="form-control nomargin" cellspacing='0' cellpadding='0' border='0' style="min-width: 350px; height: 30px;">
+            <tr height="28px">
+                <td width="100%" style=" padding: 0; white-space: nowrap; ">
+                    <input type="text" @bind-value="Phone.Number" class="form-control inset phone-number noborder" /> 
+                    <input type="text" @bind-value="Phone.Ext"    class="form-control inset phone-number noborder" style="min-width:  50px; max-width:  70px;" />
                 </td>
-                <td>
+                <td style="padding: 0;">
                     <div class="select-control link select-large noborder" id="@PhoneId"
                          @onclick="handleClick"
-                         style="width: 5em; float: right; text-align: right;">
+                         style="width: 75px; height: 28px; float: right; text-align: right;">
                         @Utilities.GetFriendlyDDName(Phone.Type, PhoneTypes)
                     </div>
                 </td>
@@ -51,7 +52,7 @@
 
     protected void handleClick()
     {
-        G.CurrentPhoneIndex = Index;
+        Globals.CurrentPhoneIndex = Index;
         HandleEventClick.InvokeAsync("");
     }
 

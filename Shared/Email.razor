@@ -1,0 +1,15 @@
+﻿
+
+@if (@Address != null)
+{
+    <a href="mailto:@Address">@Address</a>
+}
+else
+{
+    @:&nbsp;
+}
+
+@code {
+    [Parameter]
+    public string Address { get; set; }
+}

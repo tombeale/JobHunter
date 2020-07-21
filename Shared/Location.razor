@@ -1,0 +1,36 @@
+﻿@if (!String.IsNullOrEmpty(Url))
+{
+    <a href="@linkUrl" target="_new"><img src="images/icons/Location-0.png" width="28" /></a>
+}
+else
+{
+   <img src="images/icons/blank.png" width="28" />
+}
+
+@code {
+    [Parameter]
+    public string Url { get; set; }
+
+    string[] link;
+    string linkText;
+    string linkUrl;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (Url != null)
+        {
+            link = Url.Split("://");
+            if (link.Length > 1)
+            {
+                linkUrl = $"{link[0]}://{link[1]}";
+            }
+            else
+            {
+                linkUrl = $"http://{link[0]}";
+            }
+
+        }
+    }
+
+}

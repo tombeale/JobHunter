@@ -1,5 +1,7 @@
 ﻿@page "/contacts"
 @using JobHunter.Shared
+@using JobHunter.Models
+@using JobHunter.Application
 @using BlueSite.Data
 @using BlueSite.Data.Entities
 @inject IJSRuntime JsRuntime
@@ -24,6 +26,9 @@ else
                 <a href="/contactedit/@c.ContactId">@c.FirstName&nbsp;@c.LastName</a>
             </td>
             <td>@c.Title</td>
+            <td class="phones"><Phones Numbers="@c.Phones" PhoneTypes="@phoneTypes" /></td>
+            <td><Email Address="@c.Email" /></td>
+            <td><WebLink Url="@c.Website" /></td>
         </tr>
         }
     </table>
@@ -33,7 +38,18 @@ else
 @code {
 
     protected List<Contact> contacts;
+    protected List<DDOption> phoneTypes;
+
     JobHuntRepository Repository;
+
+    async Task SetTitle(string title)
+    {
+        await JsRuntime.InvokeVoidAsync(identifier: "setTitle", title);
+    }
+
+    /* *******************************************************************
+        Life-Cycle Events
+    ******************************************************************* */
 
     protected override void OnInitialized()
     {
@@ -42,14 +58,16 @@ else
 
     }
 
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        phoneTypes = Utilities.GetPhoneTypeLookup(Repository.GetPhoneTypes());
+    }
+
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await SetTitle("Contacts");
     }
 
-    async Task SetTitle(string title)
-    {
-        await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
-            title);
-    }
 }

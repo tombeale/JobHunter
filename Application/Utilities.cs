@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace JobHunter.Application
@@ -68,6 +69,39 @@ namespace JobHunter.Application
                     break;
             }
             return color;
+        }
+
+        public static string FormatPhoneNumber(string number)
+        {
+            string formattedNumber = number;
+            number = Regex.Replace(number, @"[^0-9]", "");
+            switch (number.Length)
+            {
+                case 11:
+                    formattedNumber = String.Format("{0:# (###) ###-####}", Convert.ToInt64(number));
+                    break;
+                case 10:
+                    formattedNumber = String.Format("{0:(###) ###-####}", Convert.ToInt64(number));
+                    break;
+                case 7:
+                    formattedNumber = String.Format("{0:###-####}", Convert.ToInt64(number));
+                    break;
+            }
+            return formattedNumber;
+        }
+
+        /* *********************************************
+         * Lookup Tables
+         * ******************************************* */
+
+        public static List<DDOption> GetPhoneTypeLookup(List<PhoneType> phoneTypes)
+        {
+            List<DDOption> list = new List<DDOption>();
+            foreach (var pt in phoneTypes)
+            {
+                if (pt != null) list.Add(new DDOption(pt.Type, pt.Name));
+            }
+            return list;
         }
 
     }

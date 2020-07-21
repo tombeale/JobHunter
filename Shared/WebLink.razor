@@ -1,0 +1,38 @@
+﻿@if (!String.IsNullOrEmpty(Url))
+{
+    <a href="@linkUrl" target="_new">@linkText</a>
+}
+else
+{
+    @:&nbsp;
+}
+
+@code {
+    [Parameter]
+    public string Url { get; set; }
+
+    string[] link;
+    string linkText;
+    string linkUrl;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (Url != null)
+        {
+            link = Url.Split("://");
+            if  (link.Length > 1)
+            {
+                linkUrl  = $"{link[0]}://{link[1]}";
+                linkText = link[1];
+            }
+            else
+            {
+                linkUrl = $"http://{link[0]}";
+                linkText = link[0];
+            }
+
+        }
+    }
+
+}

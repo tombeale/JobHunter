@@ -1,0 +1,45 @@
+﻿@using BlueSite.Data.Entities
+@using JobHunter.Models
+@using JobHunter.Application
+@using System.Text.RegularExpressions
+
+@if (Numbers != null && Numbers.Count > 0)
+{
+    @for (int i=0; i<Numbers.Count; i++)
+    {
+        Phone p = Numbers[i];
+        string number = Regex.Replace(p.Number, @"[^0-9]", "");
+        string type = (PhoneTypes != null) ? Utilities.GetFriendlyDDName(p.Type, PhoneTypes) : p.Type;
+        <div class="inline-phone phone-number"><a href="tel:@number">@Utilities.FormatPhoneNumber(p.Number)</a> @ShowExt(p.Ext)</div>
+        <div class="inline-phone phone-number-type">@type</div>
+        @if (i < count)
+        {
+            <br />
+        }
+    }
+}
+else
+{
+    <div class="inline phone-number">&nbsp;</div>
+}
+
+@code {
+    [Parameter]
+    public List<Phone> Numbers { get; set; }
+
+    [Parameter]
+    public List<DDOption> PhoneTypes { get; set; }
+
+    int count = 0;
+
+    string ShowExt(string ext)
+    {
+        return (String.IsNullOrEmpty(ext)) ? "" : $" x{ext}";
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        count = (Numbers != null) ? Numbers.Count -1 : 0;
+    }
+}

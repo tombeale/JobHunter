@@ -21,10 +21,13 @@ else
         {
             int index = i;
             BlueSite.Data.Entities.Company c = companies[index];
-            <tr class="item-list">
-                <td><a href="/companyedit/@c.CompanyId">@c.Name</a></td>
-                <td>@c.City</td>
-            </tr>
+        <tr class="item-list">
+            <td><a href="/companyedit/@c.CompanyId">@c.Name</a></td>
+            <td>@c.City</td>
+            <td class="phones"><Phones Numbers="@c.Phones" PhoneTypes="@phoneTypes" /></td>
+            <td><WebLink Url="@c.Website" /></td>
+            <td><Location Url="@c.Location" /></td>
+        </tr>
         }
     </table>
 }

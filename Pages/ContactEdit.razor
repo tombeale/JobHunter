@@ -21,13 +21,13 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="container">
+    <div class="container left">
         <div class="row">
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-3">
                 <label class="form-label" for="action-title">First Name</label>
                 <input type="text" @bind-value="Contact.FirstName" id="first-name" class="form-control bs-input-full bs-title inset" />
             </div>
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-3">
                 <label class="form-label" for="action-title">Last Name</label>
                 <input type="text" @bind-value="Contact.LastName" id="last-name" class="form-control bs-input-full bs-title inset" />
             </div>
@@ -49,6 +49,18 @@
                     }
                 }
                 <PhoneNumber Id="phone-type-new" Phone="NewPhone" PhoneTypes="PhoneTypes" HandleEventClick="@HandlePhoneTypeClick" Width="225px" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="form-label" for="action-title">Email Address</label>
+                <input type="text" @bind-value="Contact.Email" id="email" class="form-control bs-input-full inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="form-label" for="action-title">Website</label>
+                <input type="text" @bind-value="Contact.Website" id="website" class="form-control bs-input-full inset" />
             </div>
         </div>
     </div>
