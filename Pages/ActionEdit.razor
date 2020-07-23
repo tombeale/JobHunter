@@ -30,7 +30,7 @@
         </div>
         <div class="row">
             <div class="form-group col-sm-4">
-                <ComboBox Caption="Action Type" Id="action-status" HandleEventClick="@HandleActionStatusClick" Value="@Utilities.GetFriendlyTypeName(Action.Status, Statuses)" Width="225px" />
+                <ComboBox Caption="Status" Id="action-status" HandleEventClick="@HandleActionStatusClick" Value="@Utilities.GetFriendlyTypeName(Action.Status, Statuses)" Width="225px" />
             </div>
             <div class="form-group col-sm-4">
                 <ComboBox Caption="Action Type" Id="action-type" HandleEventClick="@HandleActionTypeClick" Value="@Utilities.GetFriendlyTypeName(Action.Type, ActionTypes)" Width="225px" />

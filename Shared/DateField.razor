@@ -1,0 +1,45 @@
+﻿@if (!String.IsNullOrEmpty(FormattedDate))
+{
+    @FormattedDate
+}
+else
+{
+    @:&nbsp;
+}
+
+
+@code {
+    [Parameter]
+    public DateTime? DateValue { get; set; }
+
+    [Parameter]
+    public string Option { get; set; } = "dateonly";
+
+    protected string FormattedDate = "";
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (DateValue != null)
+        {
+            switch (Option.ToLower())
+            {
+                case "date":
+                case "dateonly":
+                    FormattedDate = DateValue?.ToString("MM/dd/yyyy");
+                    break;
+                case "both":
+                case "datetime":
+                    FormattedDate = DateValue?.ToString("MM/dd/yyyy hh/mm/ss");
+                    break;
+                case "time":
+                case "timeonly":
+                    FormattedDate = DateValue?.ToString("hh/mm/ss");
+                    break;
+            }
+        }
+    }
+
+}
+
+

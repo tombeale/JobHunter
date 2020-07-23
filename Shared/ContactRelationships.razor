@@ -1,0 +1,33 @@
+﻿@using BlueSite.Components
+@using BlueSite.Data.Entities
+
+<span class="link" @onclick="LaunchDialog">
+    <img src="images/icons/@Image-0.png" width="28" title="Location on Google Maps"
+         onmouseover="setIconImage(this, '@Image-1.png')"
+         onmouseout="setIconImage(this, '@Image-0.png')" />
+</span>
+
+@code {
+
+    [Parameter]
+    public BsDialog Dialog { get; set; }
+
+    [Parameter]
+    public Company Company { get; set; }
+
+    [Parameter]
+    public JobHunter.Pages.Companies Parent { get; set; }
+
+    string Image = "Person-add";
+
+    void LaunchDialog()
+    {
+        Parent.dialog.CompanyId = Company.CompanyId;
+        Parent.dialog.Show();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+}

@@ -1,6 +1,23 @@
-﻿@if (!String.IsNullOrEmpty(Url))
+﻿@inject IJSRuntime JsRuntime
+@using System.Diagnostics
+
+@if (!String.IsNullOrEmpty(Url))
 {
-    <a href="@linkUrl" target="_new">@linkText</a>
+    switch (option)
+    {
+        case "icon":
+            <span class="link">
+                <img @onclick="(() => GoToWeblink(linkUrl))" src="images/icons/@Image-0.png" width="28" title="Location on Google Maps"
+                     onmouseover="setIconImage(this, '@Image-1.png')"
+                     onmouseout="setIconImage(this, '@Image-0.png')" />
+            </span>
+            break;
+        default:
+            <a href="@linkUrl" target="_new">@linkText</a>
+            break;
+    }
+
+
 }
 else
 {
@@ -11,9 +28,26 @@ else
     [Parameter]
     public string Url { get; set; }
 
+    [Parameter]
+    public string option { get; set; } = "";
+
+    string Image = "WWW";
+
     string[] link;
     string linkText;
     string linkUrl;
+
+    protected async void GoToWeblink(string url)
+    {
+        try {
+            await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+
+        }
+        catch(Exception e)
+        {
+            Debug.WriteLine(e.ToString());
+        }
+    }
 
     protected override void OnParametersSet()
     {
@@ -21,9 +55,9 @@ else
         if (Url != null)
         {
             link = Url.Split("://");
-            if  (link.Length > 1)
+            if (link.Length > 1)
             {
-                linkUrl  = $"{link[0]}://{link[1]}";
+                linkUrl = $"{link[0]}://{link[1]}";
                 linkText = link[1];
             }
             else

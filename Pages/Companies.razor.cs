@@ -1,7 +1,9 @@
-﻿using BlueSite.Data;
+﻿using BlueSite.Components;
+using BlueSite.Data;
 using BlueSite.Data.Entities;
 using JobHunter.Application;
 using JobHunter.Models;
+using JobHunter.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
@@ -14,8 +16,11 @@ namespace JobHunter.Pages
         [Inject] IJSRuntime JsRuntime { get; set; }
         [Inject] BlueSiteContext _context { get; set; }
 
+
         protected List<Company> companies;
         protected List<DDOption> phoneTypes;
+
+        public AddRelationsshipDialog dialog;
 
         JobHuntRepository Repository;
 
@@ -23,9 +28,28 @@ namespace JobHunter.Pages
 
 
 
+        /* *******************************************************************
+            Handlers
+         ****************************************************************** */
+
+        protected void OnClickCallback(string key)
+        {
+
+        }
 
 
-
+        protected void HandleDialogSelection(string key)
+        {
+            switch (key)
+            {
+                case "add":
+                    dialog.Hide();
+                    break;
+                case "cancel":
+                    dialog.Hide();
+                    break;
+            }
+        }
 
 
         /* *******************************************************************

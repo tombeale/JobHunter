@@ -17,6 +17,7 @@ namespace JobHunter.Pages
     {
         [Inject] IJSRuntime JsRuntime { get; set; }
         [Inject] BlueSiteContext _context { get; set; }
+        [Inject] NavigationManager NavManager { get; set; }
 
 
         [Parameter]
@@ -207,6 +208,7 @@ namespace JobHunter.Pages
             StateHasChanged();
             _context.SaveChanges();
             NewPhone = new Phone();
+            NavManager.NavigateTo("/companies");
         }
 
         protected void HandleInvalidSubmit()

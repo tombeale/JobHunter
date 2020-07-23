@@ -1,0 +1,68 @@
+﻿@using BlueSite.Components
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@using JobHunter.Services
+
+@inject BlueSiteContext _context
+@inject BrowserService _browser
+
+    <BsDialog @ref="dialog" DlgTitle="Add Relationship" Style="@Style"
+              DlgOnClickCallback="@OnClickCallback"
+              Buttons="Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Do It:continue:btn btn-sm btn-primary bs-dialog">
+        <table>
+            @for (int a = 0; a < Contacts.Count; a++)
+            {
+                <tr><td>@Contacts[a].FirstName @Contacts[a].LastName</td><td> @Contacts[a].Title </td></tr>
+            }
+        </table>
+
+    </BsDialog>
+
+
+    @code {
+
+        [Parameter]
+        public EventCallback<string> OnClickCallback { get; set; }
+
+        [Parameter]
+        public string Style { get; set; }
+
+        public int CompanyId { get; set; } = -1;
+
+        protected List<Contact> Contacts { get; set; } = new List<Contact>();
+
+        BsDialog dialog;
+        JobHuntRepository Repository;
+
+        protected override void OnInitialized()
+        {
+            Repository = new JobHuntRepository(_context);
+        }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+        }
+
+        protected override Task OnAfterRenderAsync(bool firstRender)
+        {
+            // _ = _browser.CenterElement();
+            return _browser.CenterElement();
+        }
+
+        public void Show()
+        {
+            dialog.Show();
+            if (CompanyId >= 0)
+            {
+                Contacts = Repository.GetUnrelatedCompanyContacts(CompanyId);
+                StateHasChanged();
+            }
+        }
+
+        public void Hide()
+        {
+            dialog.Hide();
+        }
+
+    }

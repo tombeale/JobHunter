@@ -1,6 +1,9 @@
 ﻿@if (!String.IsNullOrEmpty(Url))
 {
-    <a href="@linkUrl" target="_new"><img src="images/icons/Location-0.png" width="28" /></a>
+    <a href="@linkUrl" target="_new"><img src="images/icons/@Image-0.png" width="28" title="Location on Google Maps"
+        onmouseover="setIconImage(this, '@Image-1.png')" 
+        onmouseout="setIconImage(this, '@Image-0.png')" 
+     /></a>
 }
 else
 {
@@ -14,6 +17,8 @@ else
     string[] link;
     string linkText;
     string linkUrl;
+
+    string Image = "Location";
 
     protected override void OnParametersSet()
     {

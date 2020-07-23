@@ -23,15 +23,17 @@ else
             BlueSite.Data.Entities.Company c = companies[index];
         <tr class="item-list">
             <td><a href="/companyedit/@c.CompanyId">@c.Name</a></td>
-            <td>@c.City</td>
+            <td><Address Company="@c" /></td>
             <td class="phones"><Phones Numbers="@c.Phones" PhoneTypes="@phoneTypes" /></td>
-            <td><WebLink Url="@c.Website" /></td>
-            <td><Location Url="@c.Location" /></td>
+            <td><WebLink Url="@c.Website" option="icon" /><Location Url="@c.Location" /><ContactRelationships Parent="@this" Company="@c" /></td>
+        </tr>
+        <tr id="company-@c.CompanyId" class="hidden-row">
+            <td colspan="4" class="item-relationship-list">
+                Relationships go Here
+            </td>
         </tr>
         }
     </table>
 }
-
-
-
+<AddRelationsshipDialog @ref="dialog" Style="width: 400px;" />
 

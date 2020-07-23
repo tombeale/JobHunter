@@ -217,3 +217,13 @@ F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclarat
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\WebLink.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Location.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\Location.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\DateField.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\DateField.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Address.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\Address.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\AddressEdit.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\AddressEdit.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\ContactRelationships.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\ContactRelationships.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\AddRelationsshipDialog.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\AddRelationsshipDialog.razor.g.cs

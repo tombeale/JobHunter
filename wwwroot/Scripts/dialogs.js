@@ -14,7 +14,7 @@ BS_Dialog.prototype.CenterElement = function (elementId) {
         $(e).css("top", top);
     }
 
-    var nv = document.getElementById("note-viewer");
+    var nv = $("div.bs-dialog");
     if (nv) {
         var nvdh = $(e).height();
         var t = 227;
