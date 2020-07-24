@@ -34,6 +34,11 @@ else
     </table>
 }
 
+@foreach (var ct in contactList)
+{
+    <div>@ct.ContactTypeKey @ct.ContactTypeName</div>
+}
+
 
 @code {
 
@@ -41,6 +46,8 @@ else
     protected List<DDOption> phoneTypes;
 
     JobHuntRepository Repository;
+
+    List<ContactType> contactList;
 
     async Task SetTitle(string title)
     {
@@ -62,6 +69,9 @@ else
     {
         base.OnParametersSet();
         phoneTypes = Utilities.GetPhoneTypeLookup(Repository.GetPhoneTypes());
+
+        contactList = Repository.GetContactTypes();
+
     }
 
 

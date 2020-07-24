@@ -18,15 +18,37 @@ function locateElementBelowParent(elementIds) {
     var element = document.getElementById(ids[0]);
     var parent  = document.getElementById(ids[1]);
     if (element && parent) {
-        var p = $(parent).offset();
-        var w = $(parent).width();
-        var h = $(parent).height();
+        $(element).hide();
+        var p    = $(parent);
+        var pos  = $(parent).offset();
+        let top  = pos.top;
+        let left = pos.left;
 
-        var top = p.top + h + 1
-        var left = p.left + 20;
 
-        element.style.top = top + "px";
-        element.style.left = left + "px";
+        let w = $(parent).width();
+        let h = $(parent).height();
+
+        console.log("------------------------");
+        console.log($(parent).position());
+        console.log($(element).position());
+        console.log($(parent).offset());
+        element.style.top  = 0;
+        element.style.left = 0;
+
+        //top = $(parent).offset().top  - $(element).offset().top;
+        //top = $(parent).offset().left - $(element).offset().left;
+
+        top  =  top + h + 1
+        left = left + 20;
+
+        let offset = { top: top, left: left };
+
+        console.log(offset);
+
+        $(element).offset(offset);
+        console.log("After...");
+        console.log($(element).position());
+        console.log($(element).offset());
         $(element).fadeIn(300);
     }
     else {

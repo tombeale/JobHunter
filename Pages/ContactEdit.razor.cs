@@ -22,6 +22,9 @@ namespace JobHunter.Pages
         [Parameter]
         public string contactId { get; set; } = null;
 
+        [Parameter]
+        public bool IsPartial { get; set; } = false;
+
         protected Contact Contact;
 
         public Phone NewPhone = new Phone();

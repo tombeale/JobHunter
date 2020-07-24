@@ -12,12 +12,15 @@
 <SideBar MenuSet="Create New Action" />
 
 <EditForm Model="@Contact" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
-    <div class="d-inline-block" style="width:70%">
-        <h1>Edit Contact <span class="normal">(Id: #@Contact.ContactId)</span></h1>
-    </div>
-    <div class="d-inline-block" style="width:28%; text-align: right;">
-        <button class="btn btn-primary" style="margin-top: 25px;">Save</button>
-    </div>
+    @if (!IsPartial)
+    {
+        <div class="d-inline-block" style="width:70%">
+            <h1>Edit Contact <span class="normal">(Id: #@Contact.ContactId)</span></h1>
+        </div>
+        <div class="d-inline-block" style="width:28%; text-align: right;">
+            <button class="btn btn-primary" style="margin-top: 25px;">Save</button>
+        </div>
+    }
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -36,6 +39,11 @@
             <div class="form-group col-sm-8">
                 <label class="form-label" for="action-title">Title</label>
                 <input type="text" @bind-value="Contact.Title" id="first-name" class="form-control bs-input-full inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <AddressEdit Contact="@Contact" />
             </div>
         </div>
         <div class="row">

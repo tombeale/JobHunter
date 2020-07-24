@@ -1,0 +1,14 @@
+﻿<div id="@Id" style="width: 100%; height: @Height; overflow: auto">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public string Id {  get; set; }
+
+    [Parameter]
+    public string Height { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

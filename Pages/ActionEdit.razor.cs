@@ -56,7 +56,7 @@ namespace JobHunter.Pages
             var setIds = Actions.GetActionSetIdList();
             foreach (var setId in setIds)
             {
-                if (setId != null) ActionSetIds.Add(new DDOption(setId, setId));
+                if (setId != null) ActionSetIds.Add(new DDOption(setId.SetId, setId.Name));
             }
 
             Statuses = Globals.GetActionStatuses();

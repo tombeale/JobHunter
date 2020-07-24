@@ -234,10 +234,10 @@ namespace JobHunter.Pages
             }
 
             ActionSetIds = new List<DDOption>();
-            var setIds = Actions.GetActionSetIdListForToDos();
+            var setIds = Actions.GetActionSetIdList();
             foreach (var s in setIds)
             {
-                ActionSetIds.Add(new DDOption(s, s));
+                ActionSetIds.Add(new DDOption(s.SetId, s.Name));
             }
 
             Statuses = new List<DDOption>();
