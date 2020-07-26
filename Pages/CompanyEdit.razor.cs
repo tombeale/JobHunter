@@ -47,6 +47,7 @@ namespace JobHunter.Pages
         protected override void OnInitialized()
         {
             Repository = new JobHuntRepository(_context);
+            NewPhone.Type = "main";
 
             CompanyTypes = new List<DDOption>();
             var types = Repository.GetCompanyTypes();
@@ -190,6 +191,11 @@ namespace JobHunter.Pages
             if (Company.CompanyId < 1)
             {
                 _context.Companies.Add(Company);
+                if (!String.IsNullOrWhiteSpace(NewPhone.Number) && !String.IsNullOrWhiteSpace(NewPhone.Type))
+                {
+                    if (Company.Phones == null) Company.Phones = new List<Phone>(); 
+                    Company.Phones.Add(NewPhone);
+                }
             }
             else
             {
@@ -214,6 +220,11 @@ namespace JobHunter.Pages
         protected void HandleInvalidSubmit()
         {
             StatusMessage = "There was an error submitting the form";
+        }
+
+        protected void HandleCancel()
+        {
+            NavManager.NavigateTo("/companies");
         }
 
         public void validateForm()

@@ -16,8 +16,7 @@ namespace JobHunter.Pages
     {
         [Inject] IJSRuntime JsRuntime { get; set; }
         [Inject] BlueSiteContext _context { get; set; }
-
-
+        [Inject] NavigationManager NavManager { get; set; }
 
         [Parameter]
         public string contactId { get; set; } = null;
@@ -44,6 +43,7 @@ namespace JobHunter.Pages
             Repository = new JobHuntRepository(_context);
 
             PhoneTypes = new List<DDOption>();
+            NewPhone.Type = "work";
             var phoneTypes = Repository.GetPhoneTypes();
             foreach (var pt in phoneTypes)
             {
@@ -135,6 +135,11 @@ namespace JobHunter.Pages
             if (Contact.ContactId < 1)
             {
                 _context.Contacts.Add(Contact);
+                if (!String.IsNullOrWhiteSpace(NewPhone.Number) && !String.IsNullOrWhiteSpace(NewPhone.Type))
+                {
+                    if (Contact.Phones == null) Contact.Phones = new List<Phone>(); 
+                    Contact.Phones.Add(NewPhone);
+                }
             }
             else
             {
@@ -151,12 +156,17 @@ namespace JobHunter.Pages
             }
             StateHasChanged();
             _context.SaveChanges();
-            NewPhone = new Phone();
+            NavManager.NavigateTo("/contacts");
         }
 
         protected void HandleInvalidSubmit()
         {
             StatusMessage = "There was an error submitting the form";
+        }
+
+        protected void HandleCancel()
+        {
+            NavManager.NavigateTo("/contacts");
         }
 
 

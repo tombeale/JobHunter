@@ -24,6 +24,9 @@ input.phone-number {
     width:     unset !important;
 }
 
+.label {
+    color: #6d7c98;
+}
 
 input.inset:focus, textarea.inset:focus {
     -webkit-box-shadow: inset 2px 2px 3px 3px rgba(0,0,0,0.10);
@@ -178,6 +181,10 @@ td.right-align {
 label.form-label {
     margin: 0;
     color: #6d7c98;
+}
+
+select.select-control {
+    padding: 3px 4px 3px 4px;
 }
 
 .btn-primary {
