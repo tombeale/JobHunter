@@ -7,12 +7,12 @@
 @inject BlueSiteContext _context
 @inject BrowserService _browser
 
-<BsDialog @ref="dialog" DlgTitle="Add Relationship" Style="@Style"
+<BsDialog @ref="dialog" Id="add-relationship" DlgTitle="Add Relationship" Style="@Style"
           DlgOnClickCallback="@OnClickCallback"
           Buttons="">
 
     <ScrollableDiv Id="new-contact" Height="490px">
-        <ContactEdit @ref="contactForm" ParentDialog="@this" IsPartial="true" />
+        <ContactEdit @ref="contactForm" ParentDialog="@this" FromPage="@FromPage" />
     </ScrollableDiv>
 
 </BsDialog>
@@ -28,6 +28,9 @@
 
     [Parameter]
     public CompaniesBase Parent { get; set; } = null;
+
+    [Parameter]
+    public string FromPage { get; set; } = "";
 
     public int CompanyId { get; set; } = -1;
 

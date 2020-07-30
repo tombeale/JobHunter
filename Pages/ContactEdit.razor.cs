@@ -23,6 +23,9 @@ namespace JobHunter.Pages
         public string contactId { get; set; } = null;
 
         [Parameter]
+        public string FromPage { get; set; } = "";
+
+        //[Parameter]
         public bool IsPartial { get; set; } = false;
 
         [Parameter]
@@ -69,6 +72,9 @@ namespace JobHunter.Pages
             {
                 Contact = new Contact();
             }
+
+            IsPartial = (FromPage != "");
+
         }
 
 
@@ -151,6 +157,7 @@ namespace JobHunter.Pages
          ****************************************************************** */
         protected void HandleValidSubmit()
         {
+            if (String.IsNullOrEmpty(Contact?.FirstName) && String.IsNullOrEmpty(Contact?.LastName)) return;
             StatusMessage = "Saved";
             if (Contact.ContactId < 1)
             {
@@ -190,7 +197,7 @@ namespace JobHunter.Pages
                 _context.SaveChanges();
                 NavManager.NavigateTo("/companies", true);
             }
-            NavManager.NavigateTo("/contacts");
+            Redirect();
         }
 
         protected void HandleInvalidSubmit()
@@ -200,7 +207,27 @@ namespace JobHunter.Pages
 
         protected void HandleCancel()
         {
-            NavManager.NavigateTo("/contacts");
+            Redirect();
+            //if (IsPartial)
+            //{
+            //}
+            //else
+            //{
+            //    JsRuntime.InvokeVoidAsync(identifier: "hideElementsWithClass", "bs-dialog");
+            //}
+        }
+
+        protected void Redirect()
+        {
+            switch (FromPage)
+            {
+                case "companies":
+                    NavManager.NavigateTo("/companies", true);
+                    break;
+                case "contacts":
+                    NavManager.NavigateTo("/contacts", true);
+                    break;
+            }
         }
 
 

@@ -2,7 +2,7 @@
 @using BlueSite.Data.Entities
 
 <span class="link" @onclick="LaunchDialog">
-    <img src="images/icons/@Image-0.png" width="28" title="Location on Google Maps"
+    <img src="images/icons/@Image-0.png" width="@Size" title="Location on Google Maps"
          onmouseover="setIconImage(this, '@Image-1.png')"
          onmouseout="setIconImage(this, '@Image-0.png')" />
 </span>
@@ -14,6 +14,9 @@
 
     [Parameter]
     public Company Company { get; set; }
+
+    [Parameter]
+    public string Size { get; set; } = "28";
 
     [Parameter]
     public JobHunter.Pages.Companies Parent { get; set; }

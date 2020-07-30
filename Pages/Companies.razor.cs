@@ -6,6 +6,7 @@ using JobHunter.Models;
 using JobHunter.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace JobHunter.Pages
         protected List<CompanyContactRelationship> contactRelationships;
 
         public AddRelationsshipDialog dialog;
+        public CompanyNoteEditor companyNoteEditor;
 
 
         protected string hideContacts = "display: none;";
@@ -71,6 +73,22 @@ namespace JobHunter.Pages
                     break;
             }
             StateHasChanged();
+        }
+
+        protected void OnChangeCallback(string value)
+        {
+            string[] vals = value.Split("|");
+            int index = Convert.ToInt32(vals[0]);
+            companyNoteEditor.Show(index, companies[index]);
+        }
+
+        protected void HandleNoteChange(string result)
+        {
+            companyNoteEditor.Hide();
+            if (result == "continue")
+            {
+                _context.SaveChanges();
+            }
         }
 
         protected async void HandleRowExpand(string id)

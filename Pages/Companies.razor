@@ -24,6 +24,8 @@ else
             int index = i;
             BlueSite.Data.Entities.Company c = companies[index];
             var ct = GetContactsForCompany(c.CompanyId);
+            string NoteIcon = (String.IsNullOrEmpty(c.Notes)) ? "Note" : "Note-Filled";
+
             <tr class="item-list hover grid-primary">
                 <td>
                     @if (ct.Count > 0)
@@ -34,7 +36,7 @@ else
                 <td><a href="/companyedit/@c.CompanyId">@c.Name</a></td>
                 <td><Address Company="@c" /></td>
                 <td class="phones"><Phones Numbers="@c.Phones" PhoneTypes="@phoneTypes" /></td>
-                <td><WebLink Url="@c.Website" option="icon" /><ContactRelationships Parent="@this"  Company="@c" /></td>
+                <td><WebLink Url="@c.Website" option="icon" Size="20"/><ContactRelationships Parent="@this"  Company="@c" Size="20" /><ImageButton Index="@i.ToString()" Image="@NoteIcon" ToolTip="View Notes" OnChangeCallback="@OnChangeCallback" Size="20" /></td>
             </tr>
             @if (ct != null && ct.Count > 0)
             {
@@ -57,5 +59,6 @@ else
         }
     </table>
 }
-<AddRelationsshipDialog OnClickCallback="@AddContactCallback" @ref="dialog" Parent="@Self" Style="width: 750px;" />
+<AddRelationsshipDialog OnClickCallback="@AddContactCallback" FromPage="companies" @ref="dialog" Parent="@Self" Style="width: 750px;" />
+<CompanyNoteEditor @ref="companyNoteEditor" OnClickCallback="@HandleNoteChange" Style="width: 750px;" />
 

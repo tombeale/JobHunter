@@ -1,0 +1,66 @@
+﻿@using BlueSite.Components
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@using JobHunter.Services
+
+@inject BlueSiteContext _context
+@inject BrowserService _browser
+
+    <BsDialog @ref="notedialog" Id="note-editor" DlgTitle="Notes" Style="@Style"
+              DlgOnClickCallback="@OnClickCallback"
+              Buttons="Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Do It:continue:btn btn-sm btn-primary bs-dialog">
+        @*<textarea style="width: 100%; height: 490px;" @onchange="@(e => {HandleChange(e.Value.ToString()); })" value="@Company.Notes"></textarea>*@
+        <textarea style="width: 100%; height: 490px;" @onchange="@(e => {HandleChange(e.Value.ToString()); })" value="@Notes" />
+    </BsDialog>
+
+
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+    [Parameter]
+    public string Style { get; set; }
+
+    protected BsDialog notedialog;
+    JobHuntRepository Repository;
+
+    protected string Notes { get; set; } = "";
+
+    public Company company { get; set; }
+
+    protected void HandleChange(string value)
+    {
+        company.Notes = value;
+    }
+
+    protected override void OnInitialized()
+    {
+        Repository = new JobHuntRepository(_context);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        return _browser.CenterElement();
+    }
+
+    public void Show(int index, Company co)
+    {
+        company = co;
+        Notes = (company.Notes != null) ? company.Notes : "";
+        notedialog.Show();
+        StateHasChanged();
+    }
+
+    public void Hide()
+    {
+        notedialog.Hide();
+        StateHasChanged();
+    }
+
+}

@@ -1,4 +1,4 @@
-﻿<img class="inline-menu" 
+﻿<img class="inline-menu" style="@ImageSize"
     onmouseover="setIconImage(this, '@Image-1.png')" 
     onmouseout="setIconImage(this, '@Image-0.png')" 
     src="images/Icons/@Image-0.png" 
@@ -13,8 +13,18 @@
     public string Index { get; set; }
 
     [Parameter]
+    public string Size { get; set; } = "20";
+
+    [Parameter]
     public string ToolTip { get; set; } = "";
 
     [Parameter]
     public EventCallback<string> OnChangeCallback { get; set; }
+
+    string ImageSize;
+
+    protected override void OnParametersSet()
+    {
+        ImageSize = $"{Size}px";
+    }
 }
