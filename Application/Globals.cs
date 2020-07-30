@@ -1,4 +1,5 @@
 ﻿using JobHunter.Models;
+using BlueSite.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace JobHunter.Application
     public static class Globals
     {
         public static int CurrentPhoneIndex { get; set; }
+
+        public static User CurrentUser { get; set; }
 
         public static List<DDOption> GetActionStatuses()
         {

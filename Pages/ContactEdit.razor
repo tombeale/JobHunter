@@ -12,7 +12,14 @@
 <SideBar MenuSet="Create New Action" />
 
 <EditForm Model="@Contact" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
-    @if (!IsPartial)
+    @if (IsPartial)
+    {
+        <div style="text-align: right;">
+            <button class="btn btn-secondary" @onclick="HandleCancel" style="margin-top: 5px;">Cancel</button>
+            <button class="btn btn-primary" style="margin-top: 5px;">Save</button>
+        </div>
+    }
+    else
     {
         <div class="d-inline-block" style="width:70%">
             <h1>Edit Contact <span class="normal">(Id: #@Contact.ContactId)</span></h1>
@@ -22,6 +29,7 @@
             <button class="btn btn-primary" style="margin-top: 25px;">Save</button>
         </div>
     }
+
     <DataAnnotationsValidator />
     <ValidationSummary />
 

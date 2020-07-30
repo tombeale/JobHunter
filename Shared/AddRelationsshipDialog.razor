@@ -9,10 +9,10 @@
 
 <BsDialog @ref="dialog" DlgTitle="Add Relationship" Style="@Style"
           DlgOnClickCallback="@OnClickCallback"
-          Buttons="Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Do It:continue:btn btn-sm btn-primary bs-dialog">
+          Buttons="">
 
     <ScrollableDiv Id="new-contact" Height="490px">
-        <ContactEdit IsPartial="true" />
+        <ContactEdit @ref="contactForm" ParentDialog="@this" IsPartial="true" />
     </ScrollableDiv>
 
 </BsDialog>
@@ -26,9 +26,14 @@
     [Parameter]
     public string Style { get; set; }
 
+    [Parameter]
+    public CompaniesBase Parent { get; set; } = null;
+
     public int CompanyId { get; set; } = -1;
 
     protected List<Contact> Contacts { get; set; } = new List<Contact>();
+
+    private ContactEdit contactForm { get; set; }
 
     BsDialog dialog;
     JobHuntRepository Repository;
@@ -51,6 +56,8 @@
 
     public void Show()
     {
+        contactForm.Clear();
+        contactForm.setCompanyId(CompanyId);
         dialog.Show();
         if (CompanyId >= 0)
         {
@@ -62,6 +69,7 @@
     public void Hide()
     {
         dialog.Hide();
+        OnClickCallback.InvokeAsync("changed");
     }
 
 }

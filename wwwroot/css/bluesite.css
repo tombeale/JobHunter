@@ -207,6 +207,10 @@ textarea {
     font-size: 14pt;
 }
 
+tr.hover:hover {
+    background: #eff4fd;
+}
+
 td.item-relationship-list {
     padding: 0 4px 8px 30px;
 }

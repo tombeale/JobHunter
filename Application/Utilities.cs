@@ -90,6 +90,27 @@ namespace JobHunter.Application
             return formattedNumber;
         }
 
+        public static Address GetAddress<T>(T Obj)
+        {
+            Address address  = new Address();
+            address.Address1 = typeof(T).GetProperty("Address1")?.GetValue(Obj)?.ToString();
+            address.Address2 = typeof(T).GetProperty("Address2")?.GetValue(Obj)?.ToString();
+            address.City     = typeof(T).GetProperty("City")?.GetValue(Obj)?.ToString();
+            address.State    = typeof(T).GetProperty("State")?.GetValue(Obj)?.ToString();
+            address.Zip      = typeof(T).GetProperty("Zip")?.GetValue(Obj)?.ToString();
+            return address;
+        }
+
+        public static string GetDirections(Address address)
+        {
+            User user = Globals.CurrentUser;
+            Address userAddress = GetAddress<User>(user);
+            string addr1 = userAddress.GetAddressString().Replace(" ", "+");
+            string addr2 = address.GetAddressString().Replace(" ", "+");
+            string url   = $"https://www.google.com/maps/dir/{addr1}/{addr2}";
+            return url;
+        }
+
         /* *********************************************
          * Lookup Tables
          * ******************************************* */

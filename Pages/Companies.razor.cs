@@ -7,6 +7,7 @@ using JobHunter.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JobHunter.Pages
@@ -17,15 +18,19 @@ namespace JobHunter.Pages
         [Inject] BlueSiteContext _context { get; set; }
 
 
-        protected List<Company> companies;
+        protected List<Company>  companies;
         protected List<DDOption> phoneTypes;
+        protected List<Contact> contacts;
+        protected List<CompanyContactRelationship> contactRelationships;
 
         public AddRelationsshipDialog dialog;
 
+
+        protected string hideContacts = "display: none;";
+
+        protected CompaniesBase Self;
+
         JobHuntRepository Repository;
-
-
-
 
 
         /* *******************************************************************
@@ -36,7 +41,6 @@ namespace JobHunter.Pages
         {
 
         }
-
 
         protected void HandleDialogSelection(string key)
         {
@@ -51,6 +55,28 @@ namespace JobHunter.Pages
             }
         }
 
+        protected void HandleSidebarOption(string key)
+        {
+            switch (key.ToLower())
+            {
+                case "togglecontacts":
+                    if (hideContacts == "")
+                    {
+                        hideContacts = "display: none;";
+                    }
+                    else
+                    {
+                        hideContacts = "";
+                    }
+                    break;
+            }
+            StateHasChanged();
+        }
+
+        protected async void HandleRowExpand(string id)
+        {
+            await JsRuntime.InvokeVoidAsync(identifier: "toggleExpand", $"company-{id}");
+        }
 
         /* *******************************************************************
             Startup Events
@@ -60,7 +86,9 @@ namespace JobHunter.Pages
         {
             Repository = new JobHuntRepository(_context);
             companies = GetCompanyList();
-
+            contacts  = GetAllContacts();
+            contactRelationships  = GetCompanyContactRelationships();
+            Self = this;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -89,6 +117,27 @@ namespace JobHunter.Pages
         {
             return Repository.AllCompanies;
         }
+
+        List<Contact> GetAllContacts()
+        {
+            return Repository.AllContacts.ToList();
+        }
+        List<CompanyContactRelationship> GetCompanyContactRelationships()
+        {
+            return Repository.GetCompanyContactRelationships().ToList();
+        }
+
+        protected void AddContactCallback(string value)
+        {
+            StateHasChanged();
+        }
+
+        protected List<Contact> GetContactsForCompany(int companyId)
+        {
+            var relationships = contactRelationships.Where(r => r.CompanyId == companyId).Select(c => c.ContactId).ToList();
+            return contacts.Where(c => relationships.Contains(c.ContactId)).ToList();
+        }
+
 
 
     }

@@ -1,0 +1,14 @@
+﻿td.contact { padding: 0px 2px;}
+
+td.contact-name { width: 240px; }
+td.contact-title { width: 300px; }
+td.contact-address { width: 100%; }
+td.contact-phones { width: 180px; text-align: right; white-space: nowrap; }
+
+tr.grid-primary {
+    border-top: 2px solid #dee3ec;
+}
+
+tr.grid-secondary {
+    border-top: .5px solid #eff4fd;
+}

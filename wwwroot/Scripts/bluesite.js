@@ -56,6 +56,11 @@ function locateElementBelowParent(elementIds) {
     }
 }
 
+function toggleExpand(elementId) {
+    var id = "#" + elementId
+    $(id).toggle(300);
+}
+
 function hideElement(elementId) {
     $("#" + elementId).fadeOut(300);
 }

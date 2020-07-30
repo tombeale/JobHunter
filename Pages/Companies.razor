@@ -1,11 +1,13 @@
 ﻿@inherits CompaniesBase
 @page "/companies"
 @using JobHunter.Shared
+@using JobHunter.Application
 @using BlueSite.Data
 @using BlueSite.Data.Entities
 @inject IJSRuntime JsRuntime
 @inject BlueSiteContext _context
-<SideBar MenuSet="companies" />
+
+<SideBar MenuSet="companies" OnClickCallback="@HandleSidebarOption" />
 
 <h1>Companies<TitleIcons Title="Companies" IconWidth="24px" /></h1>
 
@@ -21,19 +23,39 @@ else
         {
             int index = i;
             BlueSite.Data.Entities.Company c = companies[index];
-            <tr class="item-list">
+            var ct = GetContactsForCompany(c.CompanyId);
+            <tr class="item-list hover grid-primary">
+                <td>
+                    @if (ct.Count > 0)
+                    {
+                        <img class="inline-menu link" src="images/icons/Expand-0.png" @onclick="e => HandleRowExpand(c.CompanyId.ToString())" />
+                    }
+                </td>
                 <td><a href="/companyedit/@c.CompanyId">@c.Name</a></td>
                 <td><Address Company="@c" /></td>
                 <td class="phones"><Phones Numbers="@c.Phones" PhoneTypes="@phoneTypes" /></td>
-                <td><WebLink Url="@c.Website" option="icon" /><Location Url="@c.Location" /><ContactRelationships Parent="@this" Company="@c" /></td>
+                <td><WebLink Url="@c.Website" option="icon" /><ContactRelationships Parent="@this"  Company="@c" /></td>
             </tr>
-            <tr id="company-@c.CompanyId" class="hidden-row">
-                <td colspan="4" class="item-relationship-list">
-                    Relationships go Here
-                </td>
-            </tr>
+            @if (ct != null && ct.Count > 0)
+            {
+                <tr id="company-@c.CompanyId" style="@hideContacts">
+                    <td colspan="5" class="item-relationship-list">
+                        <table width="100%" cellsacing="0" cellpadding="0" border="0">
+                            @foreach (var contact in ct)
+                            {
+                            <tr class="hover grid-secondary">
+                                <td class="contact contact-name">@contact.FirstName @contact.LastName</td>
+                                <td class="contact contact-title">@contact.Title</td>
+                                <td class="contact phones contact-phones"><Phones Numbers="@contact.Phones" PhoneTypes="@phoneTypes" /></td>
+                                <td class="contact"><Address Contact="@contact" /></td>
+                            </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
+            }
         }
     </table>
 }
-<AddRelationsshipDialog @ref="dialog" Style="width: 750px;" />
+<AddRelationsshipDialog OnClickCallback="@AddContactCallback" @ref="dialog" Parent="@Self" Style="width: 750px;" />
 

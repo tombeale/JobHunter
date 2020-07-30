@@ -12,6 +12,8 @@ namespace JobHunter.Application
             {
                 case "todolist":
                     return GetToDoListSet();
+                case "companies":
+                    return GetCompanyListSet();
                 default:
                     return new List<MenuItem>();
             }
@@ -21,6 +23,12 @@ namespace JobHunter.Application
             List<MenuItem> list = new List<MenuItem>();
             list.Add(new MenuItem("", "", "Show/Hide Done", "toggledone", "option"));
             list.Add(new MenuItem("", "", "Remove Done",    "deletedone", "option"));
+            return list;
+        }
+        public static List<MenuItem> GetCompanyListSet()
+        { 
+            List<MenuItem> list = new List<MenuItem>();
+            list.Add(new MenuItem("", "", "All Contacts", "togglecontacts", "option"));
             return list;
         }
     }

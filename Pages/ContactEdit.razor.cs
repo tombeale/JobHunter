@@ -1,4 +1,5 @@
-﻿using BlueSite.Data;
+﻿using BlueSite.Components;
+using BlueSite.Data;
 using BlueSite.Data.Entities;
 using JobHunter.Application;
 using JobHunter.Models;
@@ -24,11 +25,16 @@ namespace JobHunter.Pages
         [Parameter]
         public bool IsPartial { get; set; } = false;
 
+        [Parameter]
+        public AddRelationsshipDialog ParentDialog { get; set; } = null;
+
         protected Contact Contact;
 
         public Phone NewPhone = new Phone();
         protected SelectListing phoneTypeList;
         protected List<DDOption> PhoneTypes;
+
+        private int CompanyId = -1;
 
         JobHuntRepository Repository;
 
@@ -67,6 +73,20 @@ namespace JobHunter.Pages
 
 
 
+        /* *******************************************************************
+            API
+         ****************************************************************** */
+
+        public void Clear()
+        {
+            Contact = new Contact();
+            StateHasChanged();
+        }
+
+        public void setCompanyId(int companyId)
+        {
+            CompanyId = companyId;
+        } 
 
         /* *******************************************************************
             Data Methods
@@ -154,8 +174,22 @@ namespace JobHunter.Pages
                     Contact.Phones.Add(NewPhone);
                 }
             }
-            StateHasChanged();
             _context.SaveChanges();
+            if (!IsPartial)
+            {
+            }
+            else if (Contact.ContactId > 0)
+            {
+                var ccr = new CompanyContactRelationship () 
+                { 
+                    CompanyId = CompanyId,
+                    ContactId = Contact.ContactId,
+                    Name = "Contact"
+                };
+                _context.CompanyContactRelationships.Add(ccr);
+                _context.SaveChanges();
+                NavManager.NavigateTo("/companies", true);
+            }
             NavManager.NavigateTo("/contacts");
         }
 

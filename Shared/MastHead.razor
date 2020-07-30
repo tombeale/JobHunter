@@ -1,4 +1,13 @@
-﻿<div id="masthead-left">
+﻿@using JobHunter.Application
+@using JobHunter.Models
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+
+@inject BlueSiteContext _context
+
+
+
+<div id="masthead-left">
     <img src="images/masthead-logo.png" id="masthead-logo" />
     <span id="masthead-title">Default Title</span>
 </div>
@@ -8,5 +17,15 @@
 
 @code {
 
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        JobHuntRepository Repository;
+
+        Repository = new JobHuntRepository(_context);
+
+        Globals.CurrentUser = Repository.GetUserFromSignon("Tom");
+    }
 
 }
