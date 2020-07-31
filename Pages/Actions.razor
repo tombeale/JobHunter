@@ -12,7 +12,7 @@
     <h1>Action Items <span class="normal">(@actions.Count(action => !action.IsDone) Active Items)</span></h1>
 </div>
 <div class="d-inline-block" style="width:28%; text-align: right;">
-    <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:120px;" First="*|All" />
+    <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:180px;" First="*|All" />
 </div>
 <table class="to-do" border="0" style="width: 100%">
     <tr class="action-header">

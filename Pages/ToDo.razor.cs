@@ -101,6 +101,13 @@ namespace JobHunter.Pages
                 case "title":
                     t.Title = vals[2];
                     break;
+                case "startdate":
+                    DateTime dateValue;
+                    if (DateTime.TryParse(vals[2], out dateValue))
+                    {
+                        t.StartDate = dateValue;
+                    }
+                    break;
             }
             _context.SaveChanges();
             StateHasChanged();
@@ -235,6 +242,7 @@ namespace JobHunter.Pages
 
             ActionSetIds = new List<DDOption>();
             var setIds = Actions.GetActionSetIdList();
+            ActionSetIds.Add(new DDOption("all", "All"));
             foreach (var s in setIds)
             {
                 ActionSetIds.Add(new DDOption(s.SetId, s.Name));
