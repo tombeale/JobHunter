@@ -23,7 +23,7 @@ namespace JobHunter.Pages
         public string contactId { get; set; } = null;
 
         [Parameter]
-        public string FromPage { get; set; } = "";
+        public string FromPage { get; set; } = "contacts";
 
         //[Parameter]
         public bool IsPartial { get; set; } = false;

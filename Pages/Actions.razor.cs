@@ -127,6 +127,7 @@ namespace JobHunter.Pages
             {
                 case "done":
                     t.IsDone = (vals[2] == "1");
+                    t.EndDate = t.IsDone ? DateTime.Now : (DateTime?) null;
                     break;
                 case "status":
                     actionStatus.Show(index);
@@ -172,8 +173,18 @@ namespace JobHunter.Pages
         {
             string[] vals = value.Split('|');
             int index = Convert.ToInt32(vals[0]);
-            var t = actions[index];
-            t.Status = vals[1];
+            var t     = actions[index];
+            t.Status  = vals[1];
+            if (Utilities.GetDoneFromStatus(t))
+            {
+                t.IsDone  = true;
+                t.EndDate = DateTime.Now;
+            }
+            else
+            {
+                t.IsDone  = false;
+                t.EndDate = (DateTime?) null;
+            }
             _context.SaveChanges();
             StateHasChanged();
             JsRuntime.InvokeVoidAsync(identifier: "hideElement", "select-list-sec");

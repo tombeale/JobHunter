@@ -97,6 +97,7 @@ namespace JobHunter.Pages
             switch (vals[1]) { 
                 case "done":
                     t.IsDone = (vals[2] == "1");
+                    t.EndDate = t.IsDone ? DateTime.Now : (DateTime?) null;
                     break;
                 case "title":
                     t.Title = vals[2];

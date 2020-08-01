@@ -1,6 +1,22 @@
-﻿@page "/campaigns"
-<h3>Campaigns</h3>
+﻿@inherits CampaignsBase
+@page "/campaigns"
+@using JobHunter.Shared
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
 
-@code {
+<SideBar MenuSet="companies" OnClickCallback="@HandleSidebarOption" />
+
+<h1>Campaigns<TitleIcons Title="Campaigns" IconWidth="24px" /></h1>
+
+
+@if (Campaigns.Count < 1)
+{
+    <p>No campaigns found</p>
+}
+else
+{
 
 }

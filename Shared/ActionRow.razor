@@ -3,20 +3,21 @@
 @using JobHunter.Application
 
     <tr class="action-list">
+        <td style="padding-top: 0;"><img src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 30px" /></td>
         <td class="column-action-status">
             <div class="select-button" id="action-row-@Index"
                  @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|status")'
                  style="width: 100px; background-color:@GetColorStyleFromStatus(Action.Status); ">&nbsp;@GetFriendlyStatusName(Action.Status)&nbsp;</div>
-            </td>
-            <td class="column-action-name @TitleClass">@Action.Title</td>
-            <td class="column-action-type">@GetFriendlyTypeName(Action.Type)</td>
-            <td class="column-action-date"><DateField DateValue="@Action.StartDate" Option="date" /></td>
-            <td class="column-action-date"><DateField DateValue="@Action.EndDate"   Option="date" /></td>
-            <td style="width: 120px; padding: 0px 20px 0px 4px">
-                <InlineToolBar Index="@Index"
-                               MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" />
-            </td>
-        </tr>
+        </td>
+        <td class="column-action-name @TitleClass">@Action.Title</td>
+        <td class="column-action-type">@GetFriendlyTypeName(Action.Type)</td>
+        <td class="column-action-date"><DateField DateValue="@Action.StartDate" Option="date" /></td>
+        <td class="column-action-date"><DateField DateValue="@Action.EndDate" Option="date" /></td>
+        <td style="width: 120px; padding: 0px 20px 0px 4px">
+            <InlineToolBar Index="@Index"
+                            MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" />
+        </td>
+     </tr>
 
     @code {
         [Parameter]
@@ -64,12 +65,16 @@
 
             if (Utilities.GetDoneFromStatus(Action))
             {
+                Checked = "1";
                 inputClasses = "form-control to-do todo-done";
+                imgSource = "images/checkbox-1.png";
                 TitleClass = "todo-done";
             }
             else
             {
+                Checked = "0";
                 inputClasses = "form-control to-do";
+                imgSource = "images/checkbox-0.png";
                 TitleClass = "";
             }
         }

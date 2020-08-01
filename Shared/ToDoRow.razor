@@ -2,9 +2,9 @@
 @using JobHunter.Application
 
     <tr class="todo-list">
-        <td style="width: 100px;"><img src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 40px" /></td>
-        <td><input type="text" class="@inputClasses inset" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
-        <td style="width: 40px"><input type="date" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|startdate|{eventArgs.Value.ToString()}")' value='@Action.StartDate?.ToString("yyyy-MM-dd")' /></td>
+        <td style="width: 100px; padding-top: 0;"><img src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 30px" /></td>
+        <td style="width: 120px"><input type="date" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|startdate|{eventArgs.Value.ToString()}")' value='@Action.StartDate?.ToString("yyyy-MM-dd")' /></td>
+        <td style="width: 100%"><input type="text" class="@inputClasses inset" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
         <td style="width: 100px; padding: 0px 20px 0px 4px">
             <InlineToolBar Index="@Index"
                            MenuSet="@ToolBars.GetToDoRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" />

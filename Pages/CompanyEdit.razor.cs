@@ -71,10 +71,6 @@ namespace JobHunter.Pages
             }
         }
 
-        /* *******************************************************************
-            Startup Events
-         ****************************************************************** */
-
         protected override void OnParametersSet()
         {
             base.OnParametersSet();

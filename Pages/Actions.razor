@@ -16,11 +16,12 @@
 </div>
 <table class="to-do" border="0" style="width: 100%">
     <tr class="action-header">
-        <th class="column-action-status">Status</th>
-        <th class="column-action-name">Name</th>
-        <th class="column-action-type">Type</th>
-        <th class="column-action-date">Start</th>
-        <th class="column-action-date">End</th>
+        <th class="column-action-status" style="width: 75px;">Done</th>
+        <th class="column-action-status" style="width: 125px;">Status</th>
+        <th class="column-action-name" style="width: 100%;">Name</th>
+        <th class="column-action-type" style="width: 125px;">Type</th>
+        <th class="column-action-date" style="width: 125px;">Start</th>
+        <th class="column-action-date" style="width: 125px;">End</th>
     </tr>
     @for (int i = 0; i < actions.Count; i++)
     {
@@ -33,7 +34,7 @@
         }
     }
     <tr class="to-do">
-        <td width="40" class="right-align">Add:</td>
+        <td width="40" class="right-align" colspan="2">Add:</td>
         <td width="100%">
             <input type="text" class="form-control to-do inset"
                    @onkeypress="@(e => handleNewActionKeypress(e))" @bind="newAction" @bind:event="oninput" />

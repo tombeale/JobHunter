@@ -33,7 +33,7 @@
     {
         <tr class="to-do">
             <td width="40" class="right-align">Add:</td>
-            <td width="100%">
+            <td width="100%" colspan="2">
                 <input type="text" class="form-control to-do inset"
                        @onkeypress="@(e => handleNewTodoKeypress(e))" @bind="newTodo" @bind:event="oninput" />
             </td>
