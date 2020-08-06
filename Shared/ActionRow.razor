@@ -15,7 +15,7 @@
         <td class="column-action-date"><DateField DateValue="@Action.EndDate" Option="date" /></td>
         <td style="width: 120px; padding: 0px 20px 0px 4px">
             <InlineToolBar Index="@Index"
-                            MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" />
+                            MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" OnChangeCallback="@OnRowOptionCallback" />
         </td>
      </tr>
 

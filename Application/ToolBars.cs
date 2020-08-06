@@ -41,5 +41,17 @@ namespace JobHunter.Application
             return list;
 
         }
+        public static List<MenuItem> GetCampaignRowItems(bool hasNotes = false, bool isDone = false)
+        {
+            string NoteImage = (hasNotes) ? "Note-Filled" : "Note";
+
+            List<MenuItem> list = new List<MenuItem>();
+            list.Add(new MenuItem("", "Edit",     "Edit this action",   "", ""));
+            list.Add(new MenuItem("", "Action",   "List/Show Actions",  "", ""));
+            list.Add(new MenuItem("", "Person",   "List/Show Contacts", "", ""));
+            list.Add(new MenuItem("", NoteImage,  "List/Show Notes",    "", ""));
+            return list;
+
+        }
     }
 }

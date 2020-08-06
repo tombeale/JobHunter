@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -109,6 +110,26 @@ namespace JobHunter.Application
             string addr2 = address.GetAddressString().Replace(" ", "+");
             string url   = $"https://www.google.com/maps/dir/{addr1}/{addr2}";
             return url;
+        }
+
+        public static Dictionary<string, string> ParseQueryString(string uri) 
+        {
+            var dict = new Dictionary<string, string>();
+            if (!String.IsNullOrEmpty(uri))
+            {
+                if (uri.Contains('?')) uri = uri.Split('?')[1];
+            }
+            if (!String.IsNullOrEmpty(uri))
+            {
+                string[] items = uri.Split('&');
+                for (int a=0;a<items.Length;a++)
+                {
+                    var vals = items[a].Split('=');
+                    if (vals.Length > 0)
+                    dict[vals[0]] = vals[1];
+                }
+            }
+            return dict;
         }
 
         /* *********************************************

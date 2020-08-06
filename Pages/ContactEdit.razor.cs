@@ -73,8 +73,6 @@ namespace JobHunter.Pages
                 Contact = new Contact();
             }
 
-            IsPartial = (FromPage != "");
-
         }
 
 
@@ -92,6 +90,11 @@ namespace JobHunter.Pages
         public void setCompanyId(int companyId)
         {
             CompanyId = companyId;
+        } 
+
+        public void setIsPartial(bool isPartial)
+        {
+            IsPartial = isPartial;
         } 
 
         /* *******************************************************************
@@ -208,13 +211,6 @@ namespace JobHunter.Pages
         protected void HandleCancel()
         {
             Redirect();
-            //if (IsPartial)
-            //{
-            //}
-            //else
-            //{
-            //    JsRuntime.InvokeVoidAsync(identifier: "hideElementsWithClass", "bs-dialog");
-            //}
         }
 
         protected void Redirect()
@@ -224,7 +220,7 @@ namespace JobHunter.Pages
                 case "companies":
                     NavManager.NavigateTo("/companies", true);
                     break;
-                case "contacts":
+                default:
                     NavManager.NavigateTo("/contacts", true);
                     break;
             }

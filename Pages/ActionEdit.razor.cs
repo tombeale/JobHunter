@@ -1,8 +1,10 @@
 ﻿using BlueSite.Data;
 using BlueSite.Data.Entities;
+using BlueSite.Data.Migrations;
 using JobHunter.Application;
 using JobHunter.Models;
 using JobHunter.Shared;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -15,9 +17,14 @@ namespace JobHunter.Pages
     {
         [Inject] IJSRuntime JSRuntime { get; set; }
         [Inject] BlueSiteContext _context { get; set; }
+        [Inject] NavigationManager NavManager { get; set; }
 
         [Parameter]
         public string actId { get; set; } = null;
+
+        public string FromPage { get; set; } = null;
+        public string RelationshipType { get; set; } = null;
+        public string RelationshipId { get; set; } = null;
 
         protected ActionItem Action;
         private int ActionId;
@@ -37,6 +44,10 @@ namespace JobHunter.Pages
         protected string StatusMessage = "";
 
         protected JobHuntRepository Actions;
+
+        private bool canceled = false;
+
+        private QueryString Params;
 
         /* *******************************************************************
             Life-Cycle Handlers
@@ -59,6 +70,11 @@ namespace JobHunter.Pages
                 if (setId != null) ActionSetIds.Add(new DDOption(setId.SetId, setId.Name));
             }
 
+            Params = new QueryString(NavManager.Uri);
+            FromPage         = Params.Get("frompage");
+            RelationshipType = Params.Get("reltype");
+            RelationshipId   = Params.Get("relid");
+
             Statuses = Globals.GetActionStatuses();
         }
 
@@ -72,6 +88,9 @@ namespace JobHunter.Pages
             if (actId == null)
             {
                 Action = new ActionItem();
+                Action.StartDate = DateTime.Now;
+                PageTitle   = $"Add New Action";
+                HeaderTitle = $"Add New Action";
             }
             else
             {
@@ -86,14 +105,36 @@ namespace JobHunter.Pages
         }
 
         /* *******************************************************************
-            Data Methods
+            Form Submission Methods
          ****************************************************************** */
 
         protected void HandleValidSubmit()
         {
-            StatusMessage = "Saved";
-            StateHasChanged();
-            _context.SaveChanges();
+            if (Action != null)
+            {
+                if (!canceled)
+                {
+                    if (!String.IsNullOrEmpty(RelationshipType) && !String.IsNullOrEmpty(RelationshipId))
+                    {
+                        int relId = Convert.ToInt32(RelationshipId);
+                        switch (RelationshipType.ToLower())
+                        {
+                            case "campaign":
+                                Action.CampaignId = relId;
+                                break;
+                        }
+                    }
+                    if (Action.ActionItemId == null)
+                    {
+                        _context.ActionItems.Add(Action);
+                    }
+                    _context.SaveChanges();
+                    StateHasChanged();
+                    canceled = false;
+                    StatusMessage = "Saved";
+                }
+                Redirect();
+            }
         }
 
         protected void HandleInvalidSubmit()
@@ -102,18 +143,32 @@ namespace JobHunter.Pages
             StateHasChanged();
         }
 
+        protected void HandleCancel()
+        {
+            canceled = true;
+            Redirect();
+        }
+        protected void Redirect()
+        {
+            switch (FromPage)
+            {
+                case "campaigns":
+                    NavManager.NavigateTo("/campaigns", true);
+                    break;
+                default:
+                    NavManager.NavigateTo("/actions", true);
+                    break;
+            }
+        }
+
+
         /* *******************************************************************
             Form-Related Methods
          ****************************************************************** */
         public bool validateForm()
         {
-            if (Action != null)
-            {
-
-            }
             return true;
         }
-
 
         /* *******************************************************************
             Handlers

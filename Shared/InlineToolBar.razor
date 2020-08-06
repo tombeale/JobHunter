@@ -12,7 +12,7 @@
     public string Index { get; set; }
 
     [Parameter]
-    public ActionItem Action { get; set; }
+    public bool HasNotes { get; set; } = false;
 
     [Parameter]
     public EventCallback<string> OnChangeCallback { get; set; }
@@ -24,7 +24,7 @@
 
     protected override void OnParametersSet()
     {
-        ImageBase = (Action.Notes != null && Action.Notes.Count > 0) ? "Note-Filled" : "Note";
+        ImageBase = (HasNotes) ? "Note-Filled" : "Note";
     }
 
 }

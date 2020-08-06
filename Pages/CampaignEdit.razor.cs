@@ -23,22 +23,35 @@ namespace JobHunter.Pages
         public string Id { get; set; } = null;
 
         public Campaign Campaign { get; set; }
+        public List<DDOption> Companies = new List<DDOption>();
+        public List<DDOption> Statuses  = new List<DDOption>();
         JobHuntRepository Repository;
 
         protected string StatusMessage = "";
         protected string PageAction = "Edit";
-
-        protected override void OnInitialized()
-        {
-            Repository = new JobHuntRepository(_context);
-        
-            
-        }
-
+        protected bool Cancelled = false;
 
         /* *******************************************************************
             Startup Events
          ****************************************************************** */
+
+        protected override void OnInitialized()
+        {
+            Repository = new JobHuntRepository(_context);
+            Companies.Add(new DDOption("", ""));
+            var list = Repository.AllCompanies.OrderBy(c => c.Name).ToList();
+            foreach (var item in list)
+            {
+                if (item.Name != null) Companies.Add(new DDOption(item.CompanyId.ToString(), item.Name));
+            }
+
+            var stats = Repository.GetStatuses();
+            foreach (var item in stats)
+            {
+                Statuses.Add(new DDOption(item.Key, item.Name));
+            }
+        }
+
 
         protected override void OnParametersSet()
         {
@@ -52,6 +65,7 @@ namespace JobHunter.Pages
             else
             {
                 Campaign = new Campaign();
+                Campaign.StartDate = DateTime.Now;
                 PageAction = "Add";
             }
         }
@@ -73,24 +87,74 @@ namespace JobHunter.Pages
 
 
         /* *******************************************************************
+            Handlers
+         ****************************************************************** */
+
+        protected int? CompanyProxy
+        {
+            get
+            {
+                return Campaign.CompanyId;
+            }
+            set
+            {
+                Campaign.CompanyId = Convert.ToInt32(value);
+                StateHasChanged();
+            }
+        }
+
+        protected string StatusProxy
+        {
+            get
+            {
+                return Campaign.Status;
+            }
+            set
+            {
+                Campaign.Status = value;
+                StateHasChanged();
+            }
+        }
+
+
+
+        /* *******************************************************************
             Form-Related Methods
          ****************************************************************** */
         protected void HandleValidSubmit()
         {
-            StatusMessage = "Saved";
+            if (Cancelled)
+            {
+                Cancelled = false;
+                return;
+            }
             if (Campaign.CampaignId < 1)
             {
+                if (Campaign.Name != null && Campaign.CompanyId != null)
+                {
+                    StatusMessage = "Saved";
+                    _context.Campaigns.Add(Campaign);
+                    StateHasChanged();
+                    _context.SaveChanges();
+                    NavManager.NavigateTo("/campaigns");
+                }
+                else
+                {
+                    StatusMessage = "Unable to Save: the Name and Company are required fields";
+                }
             }
             else
             {
+                StateHasChanged();
+                _context.SaveChanges();
+                NavManager.NavigateTo("/campaigns");
             }
-            StateHasChanged();
-            _context.SaveChanges();
-            NavManager.NavigateTo("/companies");
         }
         protected void HandleCancel()
         {
-            NavManager.NavigateTo("/campaigns");
+            
+            Cancelled = true;
+            NavManager.NavigateTo("/campaigns", true);
         }
 
     }

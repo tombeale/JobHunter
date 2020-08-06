@@ -14,14 +14,50 @@ namespace JobHunter.Pages
 {
     public class CampaignsBase : ComponentBase
     {
+        [Inject] IJSRuntime JsRuntime { get; set; }
+        [Inject] BlueSiteContext _context { get; set; }
+        [Inject] NavigationManager NavManager { get; set; }
+
         protected List<Campaign> Campaigns = new List<Campaign>();
+        JobHuntRepository Repository;
+        public List<DDOption> Statuses  = new List<DDOption>();
+        public List<ActionItem> Actions  = new List<ActionItem>();
+
+        protected string     NoteImage { get; set; }
+        protected NoteEdit   noteEdit;
+        protected NoteViewer noteviewer;
+        protected Overlay    overlay;
+
+        private User _user;
+
+        protected StateList ListState;
+
+        protected string hideCampaigns = "display: none;";
+
+        /* *******************************************************************
+            Data
+         ****************************************************************** */
+
 
         /* *******************************************************************
             Handlers
          ****************************************************************** */
 
-        protected void OnClickCallback(string key)
+        protected void HandleNoteClick(string value)
         {
+            var vals = value.Split('|');
+            int? id = Convert.ToInt32(vals[0]);
+            var action = Actions.Where(a => a.ActionItemId == id).FirstOrDefault();
+            if (action != null)
+            {
+                noteEdit.ActionItem = action;
+                noteEdit.Show(action);
+            }
+        }
+
+        public void HandleNoteSave(string value)
+        {
+            StateHasChanged();
         }
 
         protected void HandleDialogSelection(string key)
@@ -37,14 +73,85 @@ namespace JobHunter.Pages
             }
         }
 
+        protected async void HandleRowExpand(string id)
+        {
+            await JsRuntime.InvokeVoidAsync(identifier: "toggleExpand", $"campaign-{id}");
+        }
+
         protected void HandleSidebarOption(string key)
         {
             switch (key.ToLower())
             {
-                case "togglecontacts":
+                case "togglecampaigns":
+                    if (hideCampaigns == "")
+                    {
+                        hideCampaigns = "display: none;";
+                    }
+                    else
+                    {
+                        hideCampaigns = "";
+                    }
                     break;
             }
             StateHasChanged();
+        }
+
+        protected void HandleRowOptionClick(string value)
+        {
+            var vals = value.Split('|');
+            int index = Convert.ToInt32(vals[0]);
+            Campaign c = Campaigns[index];
+            switch (vals[1].ToLower())
+            {
+                case "edit":
+                    NavManager.NavigateTo($"/campaignedit/{c.CampaignId}");
+                    break;
+                case "action":
+                    ListState.Toggle(c.CampaignId, "actions");
+                    Repository.SaveUserPref(_user.UserId, "campaigns:liststate", ListState.ToString());
+                    StateHasChanged();
+                    break;
+                case "person":
+                    ListState.Toggle(c.CampaignId, "contacts");
+                    Repository.SaveUserPref(_user.UserId, "campaigns:liststate", ListState.ToString());
+                    StateHasChanged();
+                    break;
+                case "note":
+                case "note-filled":
+                    ListState.Toggle(c.CampaignId, "notes");
+                    Repository.SaveUserPref(_user.UserId, "campaigns:liststate", ListState.ToString());
+                    StateHasChanged();
+                    break;
+            }
+        }
+
+        /* *******************************************************************
+            Life Cycle Events
+         ****************************************************************** */
+        protected override void OnInitialized()
+        {
+            Repository = new JobHuntRepository(_context);
+            Campaigns  = Repository.AllCampaigns.ToList();
+            Actions    = Repository.GetAllCampaignActions();
+            var stats  = Repository.GetStatuses();
+
+            _user = Repository.GetUserFromSignon();
+
+            foreach (var item in stats)
+            {
+                Statuses.Add(new DDOption(item.Key, item.Name));
+            }
+
+            ListState = new StateList(Repository.GetUserPref(_user.UserId, "campaigns:liststate", ""));
+        }
+
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+
+
         }
 
 

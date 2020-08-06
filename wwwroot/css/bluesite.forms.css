@@ -10,7 +10,7 @@ input.bs-input-full {
     width: 100%;
 }
 
-input[type=text], input.form-control, textarea {
+input[type=text], input.form-control, textarea, select.form-control {
     border: solid .5px #ddd;
     padding: 2px 4px;
     font-size: 120%;

@@ -7,7 +7,7 @@
         <td style="width: 100%"><input type="text" class="@inputClasses inset" @onchange='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|title|{eventArgs.Value.ToString()}")' value="@Action.Title" /></td>
         <td style="width: 100px; padding: 0px 20px 0px 4px">
             <InlineToolBar Index="@Index"
-                           MenuSet="@ToolBars.GetToDoRowItems(HasNotes, Action.IsDone)" Action="@Action" OnChangeCallback="@OnRowOptionCallback" />
+                           MenuSet="@ToolBars.GetToDoRowItems(HasNotes, Action.IsDone)" OnChangeCallback="@OnRowOptionCallback" />
         </td>
     </tr>
 
@@ -53,6 +53,7 @@
             inputClasses = "form-control to-do";
             imgSource = "images/checkbox-0.png";
         }
+        HasNotes = (Action.Notes != null && Action.Notes.Count > 0);
     }
 
 }

@@ -1,13 +1,14 @@
 ﻿@inherits CampaignsBase
 @page "/campaigns"
 @using JobHunter.Shared
+@using JobHunter.Models
 @using JobHunter.Application
 @using BlueSite.Data
 @using BlueSite.Data.Entities
 @inject IJSRuntime JsRuntime
 @inject BlueSiteContext _context
 
-<SideBar MenuSet="companies" OnClickCallback="@HandleSidebarOption" />
+<SideBar MenuSet="campaigns" OnClickCallback="@HandleSidebarOption" />
 
 <h1>Campaigns<TitleIcons Title="Campaigns" IconWidth="24px" /></h1>
 
@@ -18,5 +19,75 @@
 }
 else
 {
+    <table class="to-do" border="0" style="width: 100%">
+        <tr>
+            <th class="grid">Campaign Name</th>
+            <th class="grid">Company</th>
+            <th class="grid">Start Date</th>
+            <th class="grid">Status</th>
+            <th class="grid">Description</th>
+        </tr>
+
+        @for (int i = 0; i < Campaigns.Count; i++)
+        {
+            Campaign campaign = Campaigns[i];
+            SectionState ss = ListState.GetState(campaign.CampaignId);
+            <tr class="item-list hover grid-primary">
+                <td><a href="/campaignedit/@campaign.CampaignId">@campaign.Name</a></td>
+                <td><a href="/companyedit/@campaign.CompanyId">@campaign.CompanyName</a></td>
+                <td><DateField DateValue="@campaign.StartDate" Option="date" /></td>
+                <td>@Utilities.GetFriendlyStatusName(campaign.Status, Statuses)</td>
+                <td>@campaign.Position</td>
+                <td>@campaign.RefNumber</td>
+                <td style="text-align: right;"><InlineToolBar Index="@i.ToString()" MenuSet="@ToolBars.GetCampaignRowItems(!String.IsNullOrEmpty(campaign.Notes))" OnChangeCallback="@HandleRowOptionClick" /></td>
+            </tr>
+            <tr class="campaign-actions" id="campaign-actions-@campaign.CampaignId" style='@ss.GetStyle("actions")'>
+                <td colspan="7" class="item-relationship-list">
+                    <CampaignDetails Title="Actions" NewType="action" Id="@campaign.CampaignId">
+                        <table width="100%" cellsacing="0" cellpadding="0" border="0">
+                            @foreach (ActionItem action in Actions)
+                            {
+                                if (action.CampaignId == campaign.CampaignId)
+                                {
+                                    NoteImage = (action.Notes == null || action.Notes?.Count < 1) ? "Note" : "Note-Filled";
+                                    <tr class="hover grid-secondary">
+                                        <td class="campaign-item"><a href="/actionedit/@action.ActionItemId?FromPage=campaigns">@action.Title</a></td>
+                                        <td class="campaign-item" style="width: 110px;">@Utilities.GetFriendlyDDName(action.Status, Statuses)</td>
+                                        <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.StartDate" Option="dateonly" /></td>
+                                        <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.EndDate" Option="dateonly" /></td>
+                                        <td class="campaign-item" style="width: 40px;"><ImageButton Image="@NoteImage" Index="@action.ActionItemId.ToString()" OnChangeCallback="@HandleNoteClick" ToolTip="View Notes" /></td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </CampaignDetails>
+                </td>
+            </tr>
+            <tr class="campaign-contacts" id="campaign-contacts-@campaign.CampaignId" style="@ss.GetStyle("contacts")">
+                <td colspan="7" class="item-relationship-list">
+                    <CampaignDetails Title="Contacts" NewType="contact" Id="@campaign.CampaignId">
+                        <table width="100%" cellsacing="0" cellpadding="0" border="0">
+                            <tr class="hover grid-secondary">
+                                <td class="campaign-item">Contacts go here</td>
+                            </tr>
+                        </table>
+                    </CampaignDetails>
+                </td>
+            </tr>
+            <tr class="campaign-notes" id="campaign-notes-@campaign.CampaignId" style="@ss.GetStyle("notes")">
+                <td colspan="7" class="item-relationship-list">
+                    <CampaignDetails Title="Notes">
+                        <table width="100%" cellsacing="0" cellpadding="0" border="0">
+                            <tr class="hover grid-secondary">
+                                <td class="campaign note-viewer">@campaign.Notes</td>
+                            </tr>
+                        </table>
+                    </CampaignDetails>
+                </td>
+            </tr>
+        }
+    </table>
+    <Overlay @ref="overlay" />
+    <NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />
 
 }

@@ -1,0 +1,42 @@
+﻿@using BlueSite.Data.Entities
+
+@inject NavigationManager NavManager
+
+    <div class="relationship-title">
+        @Title&nbsp;
+        @if (NewType != null)
+        {
+            <ImageButton Image="Add" OnChangeCallback="@HandleAddRequest" ToolTip="Add and attach new Contact" />
+        }
+
+    </div>
+<div class="relationship-details">@ChildContent</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string NewType { get; set; } = null;
+
+    public void HandleAddRequest(string value)
+    {
+        switch (NewType.ToLower())
+        {
+            case "contact":
+                NavManager.NavigateTo($"/contactEdit?FromPage=campaigns&reltype=campaign&relid={Id}");
+                break;
+            case "action":
+                NavManager.NavigateTo($"/actionEdit?FromPage=campaigns&reltype=campaign&relid={Id}");
+                break;
+        }
+    }
+
+
+}

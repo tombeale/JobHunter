@@ -13,7 +13,7 @@
 
 <EditForm Model="@Campaign" OnValidSubmit="HandleValidSubmit">
     <div class="d-inline-block" style="width:70%">
-        <h1>@PageAction Organization <span class="normal">(Id: #@Campaign.CampaignId.)</span></h1>
+        <h1>@PageAction Campaign <span class="normal">(Id: #@Campaign.CampaignId.)</span></h1>
     </div>
     <div class="d-inline-block" style="width:28%; text-align: right;">
         <button class="btn btn-secondary" @onclick="HandleCancel" style="margin-top: 25px;">Cancel</button>
@@ -21,10 +21,53 @@
     </div>
     <DataAnnotationsValidator />
     <ValidationSummary />
-
-
-
-
+    <div class="container left">
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="form-label" for="action-title">Campaign Name</label>
+                <input type="text" @bind-value="Campaign.Name" id="first-name" class="form-control bs-input-full bs-title inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="form-label" for="action-title">Company</label>
+                <select class="form-control" @bind="@CompanyProxy">
+                    @foreach (var option in Companies)
+                    {
+                        <option value="@option.Key">@option.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label class="form-label" for="action-title">Start Date</label><br />
+                <input type="date" @bind-value="Campaign.StartDate" id="action-end-date" class="form-control inset" style="width: 160px;" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="form-label" for="action-title">Status</label>
+                <select class="form-control" @bind="@StatusProxy">
+                    <option value=""></option>
+                    @foreach (var option in Statuses)
+                    {
+                        <option value="@option.Key">@option.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="form-label" for="action-title">Position</label>
+                <input type="text" @bind-value="Campaign.Position" id="first-name" class="form-control bs-input-full inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="form-label" for="action-title">Notes</label>
+                <textarea @bind="Campaign.Notes" id="first-name" class="form-control bs-input-full inset" style="height: 90px;"></textarea>
+            </div>
+        </div>
+    </div>
 </EditForm>
 <div class="info">@StatusMessage</div>
 

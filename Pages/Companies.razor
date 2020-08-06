@@ -46,7 +46,7 @@ else
                             @foreach (var contact in ct)
                             {
                             <tr class="hover grid-secondary">
-                                <td class="contact contact-name">@contact.FirstName @contact.LastName</td>
+                                <td class="contact contact-name"><a href="/contactedit/@contact.ContactId/companies">@contact.FirstName @contact.LastName</a></td>
                                 <td class="contact contact-title">@contact.Title</td>
                                 <td class="contact phones contact-phones"><Phones Numbers="@contact.Phones" PhoneTypes="@phoneTypes" /></td>
                                 <td class="contact"><Address Contact="@contact" /></td>
