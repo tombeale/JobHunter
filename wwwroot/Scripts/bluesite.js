@@ -72,3 +72,9 @@ function hideElementsWithClass(elementClass) {
 function setIconImage(element, img) {
     element.src = "images/icons/" + img;
 }
+
+function triggerChangeOnEnter(evt, elem) {
+    if (evt.keyCode === 13) {
+        elem.blur();
+    }
+}

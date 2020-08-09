@@ -17,6 +17,7 @@ namespace JobHunter.Application
         {
             List<DDOption> list = new List<DDOption>();
             list.Add(new DDOption("todo",      "To Do"));
+            list.Add(new DDOption("prep",      "Preparing"));
             list.Add(new DDOption("sched",     "Scheduled"));
             list.Add(new DDOption("started",   "In Progress"));
             list.Add(new DDOption("waiting",   "Waiting"));

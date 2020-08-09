@@ -1,0 +1,14 @@
+﻿<td><label class="form-label">@Caption</label></td>
+<td class="field-value" style="@Style">@Value</td>
+
+@code {
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+}

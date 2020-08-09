@@ -1,0 +1,72 @@
+﻿@using BlueSite.Data
+@using BlueSite.Data.Entities
+
+@inject BlueSiteContext _context
+
+<td><label class="form-label">@Topic.Caption</label></td>
+<td class="field-value">
+    <div class="nobreak">
+        <textarea class="input-form topic-area inset" @onchange="e => HandleTopicTextChange(e.Value.ToString())" value="@Topic.Text" />
+        <ImageButton Image="Add" ToolTip="Add a new topic" OnChangeCallback="@OnChangeCallback" />
+    </div>
+    <div class="bullet-points">
+        @for (int index = 0; index < Topic.Topics.Count; index++)
+        {
+            <Topic_Point Point="@Topic.Topics[index]" HandlePointChange="@HandleTopicChange" />
+        }
+        <Topic_Point Point="@NewPoint" IsNew="true" HandlePointChange="@HandleTopicChange" />
+    </div>
+</td>
+
+@code {
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public Topic Topic { get; set; }
+
+    [Parameter]
+    public EventCallback HandleTopicChange { get; set; }
+
+    private JobHuntRepository Repository;
+
+    BlueSite.Data.Entities.TopicPoint NewPoint;
+
+    protected override void OnInitialized()
+    {
+        Repository = new JobHuntRepository(_context);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        ClearNewPoint();
+    }
+
+    public void ReloadTopicPoints()
+    {
+        Topic.Topics = Repository.GetTopicPointsForTopic(Topic.Id);
+        ClearNewPoint();
+        StateHasChanged();
+    }
+
+    private void ClearNewPoint()
+    {
+        NewPoint         = new BlueSite.Data.Entities.TopicPoint();
+        NewPoint.Text    = "";
+        NewPoint.TopicId = Topic.Id;
+    }
+
+    async void HandleTopicTextChange(string value)
+    {
+        Topic.Text = value;
+        await HandleTopicChange.InvokeAsync(value);
+    }
+
+    async void OnChangeCallback(string value)
+    {
+        
+    }
+
+
+}

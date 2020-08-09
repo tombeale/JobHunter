@@ -105,6 +105,14 @@ div.info {
     font-size: 10pt;
 }
 
+div.page-column-6 {
+    width: 800px;
+}
+
+div.page-column-3 {
+    width: 400px;
+}
+
 td {
     vertical-align: top;
 }
@@ -176,6 +184,11 @@ td.column-action-date {
 
 td.right-align {
     text-align: right;
+}
+
+.topic-area {
+    width: 100%;
+    height: 90px;
 }
 
 label.form-label {

@@ -18,10 +18,10 @@ namespace JobHunter.Pages
         [Inject] BlueSiteContext _context { get; set; }
         [Inject] NavigationManager NavManager { get; set; }
 
-        protected List<Campaign> Campaigns = new List<Campaign>();
-        JobHuntRepository Repository;
-        public List<DDOption> Statuses  = new List<DDOption>();
-        public List<ActionItem> Actions  = new List<ActionItem>();
+        protected List<Campaign> Campaigns  = new List<Campaign>();
+        public List<DDOption>   ActionTypes = new List<DDOption>();
+        public List<DDOption>   Statuses    = new List<DDOption>();
+        public List<ActionItem> Actions     = new List<ActionItem>();
 
         protected string     NoteImage { get; set; }
         protected NoteEdit   noteEdit;
@@ -30,9 +30,11 @@ namespace JobHunter.Pages
 
         private User _user;
 
+
         protected StateList ListState;
 
         protected string hideCampaigns = "display: none;";
+        JobHuntRepository       Repository;
 
         /* *******************************************************************
             Data
@@ -43,15 +45,24 @@ namespace JobHunter.Pages
             Handlers
          ****************************************************************** */
 
-        protected void HandleNoteClick(string value)
+        protected void HandleActionClick(string value)
         {
             var vals = value.Split('|');
             int? id = Convert.ToInt32(vals[0]);
             var action = Actions.Where(a => a.ActionItemId == id).FirstOrDefault();
-            if (action != null)
+            switch (vals[1].ToLower())
             {
-                noteEdit.ActionItem = action;
-                noteEdit.Show(action);
+                case "edit":
+                    NavManager.NavigateTo($"/actionedit/{action.ActionItemId}?frompage=campaigns");
+                    break;
+                case "note":
+                case "note-filled":
+                    if (action != null)
+                    {
+                        noteEdit.ActionItem = action;
+                        noteEdit.Show(action);
+                    }
+                    break;
             }
         }
 
@@ -142,6 +153,13 @@ namespace JobHunter.Pages
                 Statuses.Add(new DDOption(item.Key, item.Name));
             }
 
+            var actionTypes = Repository.GetActionTypes();
+
+            foreach (var item in actionTypes)
+            {
+                ActionTypes.Add(new DDOption(item.ActionTypeId, item.Name));
+            }
+
             ListState = new StateList(Repository.GetUserPref(_user.UserId, "campaigns:liststate", ""));
         }
 
@@ -150,10 +168,18 @@ namespace JobHunter.Pages
         {
             base.OnParametersSet();
 
-
-
         }
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await SetTitle("Campaign Management");
+        }
+
+        protected async Task SetTitle(string title)
+        {
+            await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
+                title);
+        }
 
 
     }

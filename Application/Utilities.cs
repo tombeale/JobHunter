@@ -102,6 +102,26 @@ namespace JobHunter.Application
             return address;
         }
 
+        public static string GetActionLink(ActionItem action, int? companyId, string fromPage = "")
+        {
+            string url = $"/actionedit/{action.ActionItemId}";
+            switch (action.Type?.ToLower())
+            {
+                case "meeting":
+                    if (action.Status == "prep")
+                    {
+                        url = $"/meetingprep/{action.ActionItemId}";
+                    }
+                    else
+                    {
+                        url = $"/meeting/{action.ActionItemId}";
+                    }
+                    break;
+            }
+            url = $"{url}?CompanyId={companyId}&FromPage={fromPage}";
+            return url;
+        }
+
         public static string GetDirections(Address address)
         {
             User user = Globals.CurrentUser;

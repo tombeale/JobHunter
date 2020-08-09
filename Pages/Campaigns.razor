@@ -50,13 +50,17 @@ else
                                 if (action.CampaignId == campaign.CampaignId)
                                 {
                                     NoteImage = (action.Notes == null || action.Notes?.Count < 1) ? "Note" : "Note-Filled";
-                                    <tr class="hover grid-secondary">
-                                        <td class="campaign-item"><a href="/actionedit/@action.ActionItemId?FromPage=campaigns">@action.Title</a></td>
-                                        <td class="campaign-item" style="width: 110px;">@Utilities.GetFriendlyDDName(action.Status, Statuses)</td>
-                                        <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.StartDate" Option="dateonly" /></td>
-                                        <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.EndDate" Option="dateonly" /></td>
-                                        <td class="campaign-item" style="width: 40px;"><ImageButton Image="@NoteImage" Index="@action.ActionItemId.ToString()" OnChangeCallback="@HandleNoteClick" ToolTip="View Notes" /></td>
-                                    </tr>
+                            <tr class="hover grid-secondary">
+                                <td class="campaign-item"><a href='@Utilities.GetActionLink(action, campaign.CompanyId,  "campaigns")'>@action.Title</a></td>
+                                <td class="campaign-item" style="width: 110px;">@Utilities.GetFriendlyDDName(action.Type,   ActionTypes)</td>
+                                <td class="campaign-item" style="width: 110px;">@Utilities.GetFriendlyDDName(action.Status, Statuses)</td>
+                                <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.StartDate" Option="dateonly" /></td>
+                                <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.EndDate"   Option="dateonly" /></td>
+                                <td class="campaign-item" style="width: 80px;">
+                                    <ImageButton Image="Edit"       Index="@action.ActionItemId.ToString()" OnChangeCallback="@HandleActionClick" ToolTip="Edit Action" />
+                                    <ImageButton Image="@NoteImage" Index="@action.ActionItemId.ToString()" OnChangeCallback="@HandleActionClick" ToolTip="View Notes" />
+                                </td>
+                            </tr>
                                 }
                             }
                         </table>

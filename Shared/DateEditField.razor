@@ -1,0 +1,96 @@
+﻿<td><label class="form-label">@Caption</label></td>
+<td class="field-value">
+    @if (Option == "date" || Option == "datetime")
+    {
+        <input type="date" class="form-control inset" value="@date" @onchange="e => HandleDateChange(e.Value)" style="margin-right: 8px;@Style" />
+    }
+    @if (Option == "time" || Option == "datetime")
+    {
+        <input type="time" class="form-control inset" value="@time" @onchange="e => HandleTimeChange(e.Value)" style="@Style" />
+    }
+
+</td>
+
+@code {
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public DateTime? Value { get; set; }
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string Option { get; set; } = "date"; // date, time, datetime
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnAddCallback { get; set; }
+
+    string date;
+
+    string time;
+
+    string datetime = "";
+
+
+    void HandleDateChange(object dt)
+    {
+        date = dt.ToString();
+        datetime = $"{date} {time}";
+        ApplyDate();
+    }
+
+    void HandleTimeChange(object dt)
+    {
+        time = dt.ToString();
+        datetime = $"{date} {time}";
+        ApplyDate();
+    }
+
+    async void ApplyDate()
+    {
+        switch (Option)
+        {
+            case "date":
+                if (!String.IsNullOrEmpty(date))
+                {
+                    await OnChangeCallback.InvokeAsync(date);
+                }
+                break;
+            case "time":
+                if (!String.IsNullOrEmpty(time))
+                {
+                    await OnChangeCallback.InvokeAsync(time);
+                }
+                break;
+            case "datetime":
+                if (datetime.Length > 12)
+                {
+                    await OnChangeCallback.InvokeAsync(datetime);
+                }
+                break;
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        switch (Option)
+        {
+            case "date":
+                date = Value?.ToString("yyyy-MM-dd");
+                break;
+            case "time":
+                time = Value?.ToString("hh:mm:ss");
+                break;
+            case "datetime":
+                date = Value?.ToString("yyyy-MM-dd");
+                time = Value?.ToString("hh:mm:ss");
+                break;
+        }
+    }
+}

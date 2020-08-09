@@ -43,11 +43,11 @@
         <div class="row">
             <div class="form-group col-sm-4">
                 <label class="form-label" for="action-title">Start Date</label><br />
-                <input type="date" @bind-value="Action.StartDate" id="action-start-date" class="form-control inset" style="width: 160px;" />
+                <input type="date" @bind-value="Action.StartDate" id="action-start-date" class="form-control inset" style="width: 225px;" />
             </div>
             <div class="form-group col-sm-4">
                 <label class="form-label" for="action-title">End Date</label><br />
-                <input type="date" @bind-value="Action.EndDate" id="action-end-date" class="form-control inset" style="width: 160px;" />
+                <input type="date" @bind-value="Action.EndDate" id="action-end-date" class="form-control inset" style="width: 225px;" />
             </div>
             <div class="form-group col-sm-4">
                 <br /><Checkbox Label="Is Done?" Checked="@Action.IsDone" HandleDoneClick="@HandleDoneClicked" />

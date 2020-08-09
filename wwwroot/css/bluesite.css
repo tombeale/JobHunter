@@ -187,6 +187,10 @@ textarea {
     margin-left:  unset;
 }
 
+.nobreak {
+    white-space: nowrap;
+}
+
 .note-header {
     border-top: solid 1px #888;
     background-color: #f0f0f0;

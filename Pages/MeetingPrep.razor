@@ -1,0 +1,38 @@
+﻿@inherits MeetingPrepBase
+@page "/meetingprep"
+@page "/meetingprep/{MeetingId}"
+@using JobHunter.Shared
+@using JobHunter.Models
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+
+<SideBar MenuSet="campaigns" OnClickCallback="@HandleSidebarOption" />
+
+    <div class="d-inline-block" style="width:70%">
+        <h1>@Action.Title</h1>
+    </div>
+
+    <div class="page-column-6 flex-column">
+        <table width="100%">
+            <tr>
+                <TextField Caption="Company" Value="@Company?.Name" Style="font-weight: bold; font-size: 120%;" />
+            </tr>
+            <tr>
+                <TextField Caption="" Value="@CompanyAddress?.GetAddressString()" />
+            </tr>
+            <tr>
+                <DateEditField Caption="Meeting Date" Value="@Action.EndDate" OnChangeCallback="@HandleDateChange" Style="width: 175px" Option="datetime" />
+            </tr>
+            @foreach (var topic in Topics)
+            {
+                <tr>
+                    <TopicSection @ref="topicSection" HandleTopicChange="@HandleTopicChanged" Topic="@topic" />
+                </tr>
+            }
+        </table>
+    </div>
+
+
