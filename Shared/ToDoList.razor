@@ -1,0 +1,44 @@
+﻿@inherits ToDoListBase
+@using JobHunter.Shared
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@using BlueSite.Data.Interfaces
+@using JobHunter.Models
+@using System.Diagnostics
+
+
+<div class="d-inline-block" style="width:70%">
+    <h1>To Do List <span class="normal">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
+</div>
+<div class="d-inline-block" style="width:28%; text-align: right;">
+    <ComboBox Caption="Set Id" Id="action-set-id" HandleEventClick="@HandleActionSetIdClick" Value="@SetId" Width="225px" />
+</div>
+<table class="to-do" border="0" style="width: 100%">
+
+    @for (int i = 0; i < todos.Count; i++)
+    {
+        int index = i;
+        ActionItem todo = todos[index];
+        if (!todo.IsDone || !hideDone)
+        {
+            <ToDoRow Index="@index.ToString()" Action="@todos[index]" OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
+        }
+    }
+    @if (SetId.ToLower() != "all")
+    {
+        <tr class="to-do">
+            <td width="40" class="right-align">Add:</td>
+            <td width="100%" colspan="2">
+                <input type="text" class="form-control to-do inset"
+                       @onkeypress="@(e => handleNewTodoKeypress(e))" @bind="newTodo" @bind:event="oninput" />
+            </td>
+        </tr>
+    }
+</table>
+<Overlay @ref="overlay" />
+<Confirm @ref="confirm" Title="Confirm Delete Done Items" Message="Yes, if you select continue, all the items marked as done will be removed (You can't get them back)"
+         OnClickCallback="@HandleDialogSelection" />
+<NoteEdit @ref="noteEdit" overlay="@overlay" OnChangeCallback="@HandleNoteSave" NoteId=-1 />
+<SelectListing Id="0" @ref="actionSetIdList" Data="@ActionSetIds" OnChangeCallback="@HandleSetIdFilter" Class="select select-large" />
+

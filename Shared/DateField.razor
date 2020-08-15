@@ -1,19 +1,52 @@
-﻿@if (!String.IsNullOrEmpty(FormattedDate))
+﻿
+@if (Caption != null)
 {
-    @FormattedDate
+    <td><label class="form-label nobreak">@Caption</label></td>
+    <td class="field-value" colspan="@ColSpan">@FormattedDate</td>
 }
 else
 {
-    @:&nbsp;
+    @if (!String.IsNullOrEmpty(FormattedDate))
+    {
+        @FormattedDate
+    }
+    else
+    {
+        @:&nbsp;
+    }
 }
 
 
 @code {
     [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
     public DateTime? DateValue { get; set; }
 
     [Parameter]
-    public string Option { get; set; } = "dateonly";
+    public string DefaultValue { get; set; } = "";
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string ColSpan { get; set; } = "1";
+
+    [Parameter]
+    public string Option { get; set; } = "date"; // date, time, datetime
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnAddCallback { get; set; }
+
+    string date;
+
+    string time;
+
+    string datetime = "";
 
     protected string FormattedDate = "";
 
@@ -26,18 +59,20 @@ else
             {
                 case "date":
                 case "dateonly":
-                    FormattedDate = DateValue?.ToString("MM/dd/yyyy");
+                    FormattedDate = DateValue?.ToString("MMM d, yyyy");
                     break;
                 case "both":
                 case "datetime":
-                    FormattedDate = DateValue?.ToString("MM/dd/yyyy hh/mm/ss");
+                    FormattedDate = DateValue?.ToString("MMM d, yyyy hh:mm tt");
                     break;
                 case "time":
                 case "timeonly":
-                    FormattedDate = DateValue?.ToString("hh/mm/ss");
+                    FormattedDate = DateValue?.ToString("hh:mm");
                     break;
             }
         }
+
+        if (String.IsNullOrEmpty(FormattedDate)) FormattedDate = DefaultValue;
     }
 
 }

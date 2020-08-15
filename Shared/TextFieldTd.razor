@@ -1,0 +1,39 @@
+﻿@if (Show)
+{
+    if (!Edit)
+    {
+        <td><label class="form-label">@Caption</label></td>
+        <td class="field-value" colspan="@ColSpan" style="@Style">@Value</td>
+    }
+    else
+    {
+        <td><label class="form-label">@Caption</label></td>
+        <td class="field-value" colspan="@ColSpan" style="@Style"><input type="text" class="form-control inset" value="@Value"></td>
+    }
+}
+else
+{
+    <td><label class="form-label"></label></td>
+    <td class="field-value" colspan="@ColSpan" style="@Style"></td>
+}
+
+@code {
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string ColSpan { get; set; } = "1";
+
+    [Parameter]
+    public bool Edit { get; set; } = false;
+
+    [Parameter]
+    public bool Show { get; set; } = true;
+
+}

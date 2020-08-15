@@ -1,14 +1,65 @@
-﻿<td><label class="form-label">@Caption</label></td>
-<td class="field-value" style="@Style">@Value</td>
+﻿@if (Show)
+{
+    if (!Edit)
+    {
+        <div class="inline-flex"><label class="form-label">@Caption</label></div>
+        <div class="inline-flex field-value right-align" style="@Style">@Value</div>
+    }
+    else
+    {
+        <div class="inline-flex"><label class="form-label">@Caption</label></div>
+        <div class="inline-flex field-value" style="@Style">
+            @if (TextArea)
+            {
+                <textarea class="form-control inset" @onchange='(e => HandleFieldChange(Field, e.Value.ToString()))' style="height: 124px;" value="@Value" />
+            }
+            else
+            {
+                <input type="text" class="form-control inset" @onchange='(e => HandleFieldChange(Field, e.Value.ToString()))' value="@Value" />
+            }
+        </div>
+    }
+}
+else
+{
+    <td><label class="form-label"></label></td>
+    <td class="field-value" style="@Style"></td>
+}
 
 @code {
     [Parameter]
     public string Caption { get; set; }
 
     [Parameter]
+    public string Field { get; set; }
+
+    [Parameter]
+    public int? Index { get; set; }
+
+    [Parameter]
     public string Value { get; set; }
 
     [Parameter]
     public string Style { get; set; } = "";
+
+    [Parameter]
+    public string ColSpan { get; set; } = "1";
+
+    [Parameter]
+    public bool Edit { get; set; } = false;
+
+    [Parameter]
+    public bool Show { get; set; } = true;
+
+    [Parameter]
+    public bool TextArea { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    public async void HandleFieldChange(string field, string value)
+    {
+        await OnChangeCallback.InvokeAsync($"{field}|{value}");
+    }
 
 }

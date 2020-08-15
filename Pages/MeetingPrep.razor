@@ -9,29 +9,36 @@
 @inject IJSRuntime JsRuntime
 @inject BlueSiteContext _context
 
-<SideBar MenuSet="campaigns" OnClickCallback="@HandleSidebarOption" />
+<SideBar MenuSet="prepmeeting" OnClickCallback="@HandleSidebarOption" />
 
     <div class="d-inline-block" style="width:70%">
-        <h1>@Action.Title</h1>
+        <h1>Meeting Prep: @Action.Title</h1>
     </div>
 
     <div class="page-column-6 flex-column">
         <table width="100%">
+            <TableColumnWidths Widths="160" />
             <tr>
-                <TextField Caption="Company" Value="@Company?.Name" Style="font-weight: bold; font-size: 120%;" />
+                <TextFieldTd Caption="Company" Value="@Company?.Name" Style="font-weight: bold; font-size: 120%;" />
             </tr>
             <tr>
-                <TextField Caption="" Value="@CompanyAddress?.GetAddressString()" />
+                <TextFieldTd Caption="" Value="@CompanyAddress?.GetAddressString()" />
             </tr>
             <tr>
-                <DateEditField Caption="Meeting Date" Value="@Action.EndDate" OnChangeCallback="@HandleDateChange" Style="width: 175px" Option="datetime" />
+                <DateEditField Caption="Meeting Date" DateValue="@Action.EndDate" OnChangeCallback="@HandleDateChange" Style="width: 175px" Option="datetime" />
             </tr>
+            <TableSpacer Height="15" />
             @foreach (var topic in Topics)
             {
                 <tr>
-                    <TopicSection @ref="topicSection" HandleTopicChange="@HandleTopicChanged" Topic="@topic" />
+                    <TopicEditSection Parent="@this" HandleTopicChange="@HandleTopicChanged" Topic="@topic" />
                 </tr>
             }
+            <tr>
+                <td>
+                    <input class="form-control form-label inset" placeholder="Add Topic" @onchange="(evt => HandleAddTopic(evt.Value.ToString()))" value="" />
+                </td>
+            </tr>
         </table>
     </div>
 

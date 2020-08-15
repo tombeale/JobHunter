@@ -1,17 +1,11 @@
 ﻿@using BlueSite.Data.Entities
 @inject BlueSiteContext _context
 
-    <div class="bullet-point-edit nobreak">
-        @if (Point.Id > 0)
-        {
-            <DragHandle Index="@Index.ToString()" Image="Bars" ToolTip="Drag to set the bullet order" />
-        }
-        else
-        {
-            <Spacer Width="20" />
-        }
-        <input type="text" onkeypress="triggerChangeOnEnter(event, this)" class="form-control inset" @onchange='e => HandleChange(e.Value.ToString())' value="@Point.Text" />
-    </div>
+    <tr>
+        <td</td>
+        <td></td>
+
+    </tr>
 
 
 @code {
@@ -26,7 +20,25 @@
     public EventCallback HandlePointChange { get; set; }
 
     [Parameter]
+    public TopicSection Parent { get; set; }
+
+    [Parameter]
     public bool IsNew { get; set; }
+
+    public string ElementId = "";
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (IsNew)
+        {
+            ElementId = $"topic-point-{Parent.Topic.Id}-{Index}";
+        }
+        else
+        {
+            ElementId = $"topic-point-{Parent.Topic.Id}-new";
+        }
+    }
 
     async void HandleChange(string value)
     {
@@ -34,6 +46,7 @@
         if (IsNew)
         {
             _context.TopicPoints.Add(new TopicPoint(Point));
+            Parent.SetParentRefresh();
         }
         await HandlePointChange.InvokeAsync(value);
         StateHasChanged();

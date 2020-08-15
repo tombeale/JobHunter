@@ -1,0 +1,21 @@
+﻿@inherits LanguagesBase
+@page "/Technologies"
+@using JobHunter.Shared
+@using JobHunter.Models
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+
+<SideBar MenuSet="tech" OnClickCallback="@HandleSidebarOption" />
+
+<h1>Edit Technology Section (for resume)</h1>
+
+<table border="0" style="width: 100%;">
+    <Technology Edit="true" Language="@NewTech" />
+    @for (int index = 0; index < Technologies.Count; index++)
+    {
+        <Technology Index="@index" Edit="true" OnChangeCallback="@HandleChildChange" Language="@Technologies[index]" />
+    }
+</table>

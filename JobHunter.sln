@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunter", "JobHunter.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueSite.Data", "..\..\BlueSite.Data\BlueSite.Data.csproj", "{C512A97D-C87D-4766-9621-11A3D2354028}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueSite.Components", "..\..\BlueSite.Components\BlueSite.Components.csproj", "{9C0FD27E-FAC5-48B5-AE21-48DB6164ACF8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{C512A97D-C87D-4766-9621-11A3D2354028}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C512A97D-C87D-4766-9621-11A3D2354028}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C512A97D-C87D-4766-9621-11A3D2354028}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C0FD27E-FAC5-48B5-AE21-48DB6164ACF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C0FD27E-FAC5-48B5-AE21-48DB6164ACF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C0FD27E-FAC5-48B5-AE21-48DB6164ACF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C0FD27E-FAC5-48B5-AE21-48DB6164ACF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

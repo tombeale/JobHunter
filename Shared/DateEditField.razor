@@ -16,7 +16,7 @@
     public string Caption { get; set; }
 
     [Parameter]
-    public DateTime? Value { get; set; }
+    public DateTime? DateValue { get; set; }
 
     [Parameter]
     public string Style { get; set; } = "";
@@ -82,14 +82,14 @@
         switch (Option)
         {
             case "date":
-                date = Value?.ToString("yyyy-MM-dd");
+                date = DateValue?.ToString("yyyy-MM-dd");
                 break;
             case "time":
-                time = Value?.ToString("hh:mm:ss");
+                time = DateValue?.ToString("hh:mm:ss");
                 break;
             case "datetime":
-                date = Value?.ToString("yyyy-MM-dd");
-                time = Value?.ToString("hh:mm:ss");
+                date = DateValue?.ToString("yyyy-MM-dd");
+                time = DateValue?.ToString("hh:mm:ss");
                 break;
         }
     }

@@ -1,0 +1,40 @@
+﻿<div class="flex inline-menu" style="width: @(Size * 3 + 10)px;">
+    <img class="inline-menu link" style="@ImageSize"
+         onmouseover="setIconImage(this, '@Image0-1.png')"
+         onmouseout="setIconImage(this, '@Image0-0.png')"
+         src="/Images/Icons/@Image0-0.png"
+         onclick="resetFont()"
+         title="Decrease Font Size" />
+
+    <img class="inline-menu link" style="@ImageSize"
+         onmouseover="setIconImage(this, '@Image1-1.png')"
+         onmouseout="setIconImage(this, '@Image1-0.png')"
+         src="/Images/Icons/@Image1-0.png"
+         onclick="decreaseFont()"
+         title="Decrease Font Size" />
+
+    <img class="inline-menu link" style="@ImageSize"
+         onmouseover="setIconImage(this, '@Image2-1.png')"
+         onmouseout="setIconImage(this,  '@Image2-0.png')"
+         src="/Images/Icons/@Image2-0.png"
+         onclick="increaseFont()"
+         title="Increase Font Size" />
+</div>
+
+@code {
+    [Parameter]
+    public int Size { get; set; } = 20;
+
+    string ImageSize;
+    string Image0 = "Font-Reset";
+    string Image1 = "Font-Smaller";
+    string Image2 = "Font-Larger";
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        ImageSize = $"width={Size}px;";
+    }
+
+
+}

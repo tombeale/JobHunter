@@ -1,0 +1,29 @@
+﻿<BsDialog @ref="dialog" DlgTitle="@Title" DlgMessage="@Message"
+          DlgOnClickCallback="@OnClickCallback"
+          Buttons="Cancel:cancel:btn btn-sm btn-secondary bs-dialog,Do It:continue:btn btn-sm btn-primary bs-dialog" />
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Message { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+    private BsDialog dialog;
+
+
+    public void Hide()
+    {
+        dialog.Hide();
+    }
+
+    public void Show()
+    {
+        dialog.Show();
+    }
+
+
+}

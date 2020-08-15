@@ -22,6 +22,8 @@ namespace JobHunter.Pages
         [Parameter]
         public string actId { get; set; } = null;
 
+        protected string ActionSet = "actionedit";
+
         public string FromPage { get; set; } = null;
         public string RelationshipType { get; set; } = null;
         public string RelationshipId { get; set; } = null;
@@ -97,6 +99,7 @@ namespace JobHunter.Pages
                 Action      = Actions.GetAction(ActionId);
                 PageTitle   = $"Editing Action: '{Action.Title}'";
                 HeaderTitle = $"Editing Action";
+                ActionSet   = "editmeeting";
             }
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -230,5 +233,21 @@ namespace JobHunter.Pages
         {
             await JSRuntime.InvokeVoidAsync(identifier: "setTitle", title);
         }
+
+        protected void HandleSidebarOption(string key)
+        {
+            switch (key.ToString())
+            {
+                case "viewmeeting":
+                    NavManager.NavigateTo($"/meetingview/{Action.ActionItemId}");
+                    break;
+                case "prepmeeting":
+                    NavManager.NavigateTo($"/meetingprep/{Action.ActionItemId}");
+                    break;
+                case "editaction":
+                    NavManager.NavigateTo($"/actionedit/{Action.ActionItemId}");
+                    break;
+            }
+        } 
     }
 }

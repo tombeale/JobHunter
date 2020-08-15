@@ -1,0 +1,19 @@
+﻿@using System.Text.RegularExpressions
+
+<tr style="height: @Height;"><td></td></tr>
+
+@code {
+    [Parameter]
+    public string Height { get; set; } = "10px";
+
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (!Regex.IsMatch(Height, @"[^0-9]"))
+        {
+            Height = $"{Height}px";
+        }
+    }
+
+}

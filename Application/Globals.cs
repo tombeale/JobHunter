@@ -11,6 +11,8 @@ namespace JobHunter.Application
     {
         public static int CurrentPhoneIndex { get; set; }
 
+        public static string TechExportPath { get; set; } = @"F:\Projects\Blazor\JobHunter2020\JobHunter\Exports\Techologies.json";
+
         public static User CurrentUser { get; set; }
 
         public static List<DDOption> GetActionStatuses()

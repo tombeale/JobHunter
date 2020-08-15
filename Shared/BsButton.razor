@@ -1,0 +1,24 @@
+﻿<button class="@Class" @onclick='eventArgs => OnClickCallback.InvokeAsync(Tag)'>@Label</button>
+
+@code {
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string Tag { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+
+}

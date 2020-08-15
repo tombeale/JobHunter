@@ -9,7 +9,8 @@
 
 @inject IJSRuntime JsRuntime
 @inject BlueSiteContext _context
-<SideBar MenuSet="Create New Action" />
+
+<SideBar MenuSet="@ActionSet" OnClickCallback="@HandleSidebarOption" />
 
 <EditForm Model="@Action" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
     <div class="d-inline-block" style="width:70%">

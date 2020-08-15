@@ -1,0 +1,130 @@
+﻿@using BlueSite.Data.Entities
+
+@inject BlueSiteContext _context
+
+<tr>
+    <td class="nobreak">
+        <TextField Caption="Name"
+                   Edit="@Edit" Field="Name"
+                   Index="@Index"
+                   Style="width: 240px;"
+                   OnChangeCallback="@HandleTechnologyChange"
+                   Value="@Language.Name" />
+        <TextField Caption="Key"
+                   Edit="@Edit" Field="Key"
+                   Index="@Index"
+                   Style="width: 140px;"
+                   OnChangeCallback="@HandleTechnologyChange"
+                   Value="@Language.Key" />
+    </td>
+    <td class="nobreak right-align">
+        <TextField Caption="Since (year)"
+                   Edit="@Edit" Field="BaseYear"
+                   Index="@Index" Style="width: 70px;"
+                   OnChangeCallback="@HandleTechnologyChange"
+                   Value="@Language.BaseYear.ToString()" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2" style="padding: 2px 4px 20px 53px;">
+        @if (Edit)
+        {
+            <textarea class="form-control inset" style="height: 124px;"
+                      @onchange='e => HandleTechnologyChange($"Text|{e.Value.ToString()}")'
+                      value="@Language.Text" />
+        }
+        else
+        {
+            @Language.Text
+        }
+    </td>
+</tr>
+<tr>
+</tr>
+
+@code {
+    [Parameter]
+    public int Index { get; set; }
+
+    [Parameter]
+    public BlueSite.Data.Entities.LanguageEntry Language { get; set; }
+
+    [Parameter]
+    public bool Edit { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+
+    string Years = "";
+    bool DisplayYears = true;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        int Year = DateTime.Now.Year;
+        if (Language.BaseYear > 1990)
+        {
+            int years = Year - Language.BaseYear;
+            Years = years.ToString();
+            if (years == 0)
+            {
+                Years = $"< 1 Years";
+            }
+            else if (years == 1)
+            {
+                Years = $"{Years} Year";
+            }
+            else
+            {
+                Years = $"{Years} Years";
+            }
+            if (Language.IsEstimate) Years = $"~ {Years}";
+        }
+        else
+        {
+            DisplayYears = false;
+        }
+    }
+
+    public async void HandleTechnologyChange(string value)
+    {
+        string[] args = value.Split("|");
+        if (args.Length > 1)
+        {
+            switch (args[0].ToLower())
+            {
+                case "name":
+                    Language.Name = args[1];
+                    break;
+                case "key":
+                    Language.Key = args[1];
+                    break;
+                case "baseyear":
+                    Language.BaseYear = Convert.ToInt32(args[1]);
+                    break;
+                case "text":
+                    Language.Text = args[1];
+                    break;
+            }
+            if (Language.LanguageEntryId == 0)
+            {
+                if (Language.IsValid())
+                {
+                    _context.LanguageEntries.Add(Language);
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(Language.Name))
+                {
+                    _context.SaveChanges();
+                }
+            }
+            StateHasChanged();
+            await OnChangeCallback.InvokeAsync("");
+        }
+    }
+
+}

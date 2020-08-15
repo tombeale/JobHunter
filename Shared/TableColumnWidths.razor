@@ -1,0 +1,42 @@
+﻿@using System.Text.RegularExpressions
+    <tr>
+        @for (int a = 0; a < widths.Length; a++)
+        {
+            if (String.IsNullOrEmpty(widths[a]))
+            {
+                <td class="@Class"></td>
+            }
+            else
+            {
+                <td class="@Class" style="width: @GetWidth(widths[a])"></td>
+            }
+        }
+    </tr>
+
+@code {
+    [Parameter]
+    public string Widths { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+
+    string[] widths;
+
+    private string GetWidth(string w)
+    {
+        if (!Regex.IsMatch(w, @"[^0-9]"))
+        {
+            w = $"{w}px";
+        }
+        return w;
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        widths = Widths.Replace(" ", "").Split(',');
+
+
+    }
+
+}

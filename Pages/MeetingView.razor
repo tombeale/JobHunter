@@ -1,0 +1,46 @@
+﻿@inherits MeetingViewBase
+@page "/meetingview"
+@page "/meetingview/{MeetingId}"
+@using JobHunter.Shared
+@using JobHunter.Models
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+
+<SideBar MenuSet="viewmeeting" OnClickCallback="@HandleSidebarOption" />
+
+<div class="d-inline-block" style="width:70%">
+    <h1>Meeting: @Action.Title</h1>
+</div>
+
+<div class="page-column-6 flex-column">
+    <table width="100%" border="0">
+        <TableColumnWidths Widths="100,120" />
+        <tr>
+            <TextFieldTd Caption="Company" Value="@Company?.Name" ColSpan="2" Style="font-weight: bold; font-size: 120%;" />
+        </tr>
+        <tr>
+            <TextFieldTd Caption="" Value="@CompanyAddress?.GetAddressString()" ColSpan="2" />
+        </tr>
+        <tr>
+            <DateField Caption="Meeting Date" DateValue="@Action.EndDate" ColSpan="2" Option="datetime" DefaultValue="Not set" />
+        </tr>
+        <TableSpacer Height="15" />
+        @foreach (var topic in Topics)
+        {
+            <tr>
+                <TopicSection Topic="@topic" />
+            </tr>
+        }
+        <tr>
+            <td>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+

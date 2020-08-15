@@ -28,6 +28,7 @@ namespace JobHunter.Pages
         public string FromPage { get; set; }
 
         bool Cancelled = false;
+        public bool RefreshPage { get; set; } = false;
 
         protected string MeetingDate { get; set; }
         protected int ActionId { get; set; }
@@ -48,8 +49,19 @@ namespace JobHunter.Pages
         ****************************************************************** */
         protected void HandleSidebarOption(string key)
         {
-
-        }
+            switch (key.ToString())
+            {
+                case "viewmeeting":
+                    NavManager.NavigateTo($"/meetingview/{ActionId}");
+                    break;
+                case "editmeeting":
+                    NavManager.NavigateTo($"/meetingprep/{ActionId}");
+                    break;
+                case "editaction":
+                    NavManager.NavigateTo($"/actionedit/{MeetingId}");
+                    break;
+            }
+        } 
 
         protected void HandleDateChange(string datetime)
         {
@@ -67,31 +79,25 @@ namespace JobHunter.Pages
         protected void HandleTopicChanged()
         {
             _context.SaveChanges();
-            NavManager.NavigateTo(NavManager.Uri,true);
-            //topicSection.ReloadTopicPoints();
-            //StateHasChanged();
+            if (RefreshPage)
+            {
+                RefreshPage = false;
+                Topics = Repository.GetTopicsForParentId("action", ActionId);
+                StateHasChanged();
+                //NavManager.NavigateTo(NavManager.Uri, true);
+            }
         }
-        void HandlePointChange(string value)
+
+        protected void HandleAddTopic(string value)
         {
-            string[] v = value.Split('|');
-
-
-            if (v[0] == "N")
-            {
-                //await HandleTopicChange.InvokeAsync(value);
-            }
-            else
-            {
-                int index = Convert.ToInt32(v[1]);
-                BlueSite.Data.Entities.TopicPoint point = topicSection.Topic.Topics[index];
-                if (point != null)
-                {
-                    point.Text = value;
-                    //await HandleTopicChange.InvokeAsync(value);
-                }
-            }
+            var NewTopic      = new Topic();
+            NewTopic.ParentId = ActionId;
+            NewTopic.Caption  = value;
+            NewTopic.Text     = "";
+            _context.Topics.Add(NewTopic);
+            RefreshPage = true;
+            HandleTopicChanged();
         }
-
 
         /* *******************************************************************
             Form-Related Methods

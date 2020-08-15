@@ -1,0 +1,81 @@
+﻿@using JobHunter.Models
+
+<div class="bs-dialog" id="@Id" style="@Styles">
+    <div class="bs-dialog-header">@DlgTitle</div>
+    @if (buttons.Count > 0)
+    {
+        <div class="bs-dialog-buttons">
+            @foreach (ButtonDef b in buttons)
+            {
+                <BsButton Label="@b.Label" Tag="@b.Tag" class="@b.Class" OnClickCallback="@DlgOnClickCallback" />
+            }
+        </div>
+    }
+    @if (!String.IsNullOrEmpty(DlgMessage))
+    {
+        <div class="bs-dialog-body">@DlgMessage</div>
+    }
+    <div class="bs-dialog-body">@ChildContent</div>
+    <div class="bs-dialog-close" @onclick="Hide"><img class="bs-dialog-close" src="images/icons/close-0.png" onmouseover="setIconImage(this, 'Close-1.png')" onmouseout="setIconImage(this, 'Close-0.png')" /></div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string DlgTitle { get; set; } = "";
+
+    [Parameter]
+    public string DlgMessage { get; set; } = "";
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<string> DlgOnClickCallback { get; set; }
+
+    [Parameter]
+    public string Buttons { get; set; } = "Ok:close";
+
+    [Parameter]
+    public string Id { get; set; } = "note-editor";
+
+    private List<ButtonDef> buttons = new List<ButtonDef>();
+
+    string hidden = "display: none;";
+
+    string Styles;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        buttons.Clear();
+        if (Buttons != "")
+        {
+            var btns = Buttons.Split(',');
+            for (int i = 0; i < btns.Length; i++)
+            {
+                buttons.Add(new ButtonDef(btns[i]));
+            }
+        }
+        Styles = $"{Style} {hidden}";
+    }
+
+    public void Hide()
+    {
+        hidden = "display: none";
+        Styles = $"{Style} {hidden}";
+        StateHasChanged();
+    }
+
+    public void Show()
+    {
+        hidden = "";
+        Styles = $"{Style} {hidden}";
+        StateHasChanged();
+    }
+
+
+}

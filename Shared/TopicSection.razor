@@ -2,21 +2,23 @@
 @using BlueSite.Data.Entities
 
 @inject BlueSiteContext _context
-
+<td></td>
 <td><label class="form-label">@Topic.Caption</label></td>
 <td class="field-value">
-    <div class="nobreak">
-        <textarea class="input-form topic-area inset" @onchange="e => HandleTopicTextChange(e.Value.ToString())" value="@Topic.Text" />
-        <ImageButton Image="Add" ToolTip="Add a new topic" OnChangeCallback="@OnChangeCallback" />
+    <div class="topic-text">
+        @Topic.Text
     </div>
     <div class="bullet-points">
-        @for (int index = 0; index < Topic.Topics.Count; index++)
-        {
-            <Topic_Point Point="@Topic.Topics[index]" HandlePointChange="@HandleTopicChange" />
-        }
-        <Topic_Point Point="@NewPoint" IsNew="true" HandlePointChange="@HandleTopicChange" />
+        <ul>
+            @for (int index = 0; index < Topic.Topics.Count; index++)
+            {
+            <li>@Topic.Topics[index].Text</li>
+            }
+        </ul>
     </div>
 </td>
+
+
 
 @code {
     [Parameter]
@@ -27,6 +29,9 @@
 
     [Parameter]
     public EventCallback HandleTopicChange { get; set; }
+
+    [Parameter]
+    public JobHunter.Pages.MeetingView Parent { get; set; }
 
     private JobHuntRepository Repository;
 
@@ -43,6 +48,11 @@
         ClearNewPoint();
     }
 
+    public void SetParentRefresh(bool val = true)
+    {
+        Parent.RefreshPage = val;
+    }
+
     public void ReloadTopicPoints()
     {
         Topic.Topics = Repository.GetTopicPointsForTopic(Topic.Id);
@@ -52,8 +62,8 @@
 
     private void ClearNewPoint()
     {
-        NewPoint         = new BlueSite.Data.Entities.TopicPoint();
-        NewPoint.Text    = "";
+        NewPoint = new BlueSite.Data.Entities.TopicPoint();
+        NewPoint.Text = "";
         NewPoint.TopicId = Topic.Id;
     }
 
@@ -63,10 +73,6 @@
         await HandleTopicChange.InvokeAsync(value);
     }
 
-    async void OnChangeCallback(string value)
-    {
-        
-    }
 
 
 }

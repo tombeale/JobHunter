@@ -1,7 +1,7 @@
 ﻿body {
     padding: 105px 10px 10px 155px;
     font-family: Calibri, Arial, Helvitica, sans-serif;
-    font-size: 12pt;
+    font-size: 18px;
     box-sizing: border-box;
 }
 
@@ -28,7 +28,7 @@ a.menu-bar:hover {
     left: 315px;
     right: 0;
     padding: 18px 10px 4px 55px;
-    font-size: 12pt;
+    font-size: 100%;
     color: #0a305a;
     text-align: left;
     background-color: rgba(168, 186, 216, .7);
@@ -65,7 +65,7 @@ a.menu-bar:hover {
     position: fixed;
     top: 15px;
     left: 20px;
-    font-size: 24pt;
+    font-size: 120%;
     color: white;
 }
 
@@ -103,6 +103,10 @@ div.phone-number-type {
     display: inline-block;
     text-align: left;
     width: 4rem;
+}
+
+div.inline-flex {
+    display: inline-block;
 }
 
 div.inline-menu {
@@ -162,12 +166,12 @@ li.sidebar-link:hover {
 
 span.normal {
     font-weight: normal;
-    font-size: 10pt;
+    font-size: 100%;
 }
 
 select.dropdown {
     width: 300px;
-    font-size: 14pt;
+    font-size: 1.1%;
     padding: 2px 4px;
     display: inline-block;
 }
@@ -176,7 +180,7 @@ textarea {
     width: 100%;
     height: 149px;
     font-family: Calibri;
-    font-size: 12pt;
+    font-size: 100%;
     line-height: 120%;
     overflow: visible;
 }
@@ -197,7 +201,7 @@ textarea {
 }
 
 .note-user, .note-timestamp {
-    font-size: 9pt;
+    font-size: 75%;
 }
 
 .note-timestamp {
@@ -211,7 +215,7 @@ textarea {
 }
 
 .item-list {
-    font-size: 14pt;
+    font-size: 100%;
 }
 
 tr.hover:hover {

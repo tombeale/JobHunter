@@ -6,8 +6,9 @@
         <ul class="list-group">
             @foreach (var item in items)
             {
-                <li class="list-group-item sidebar-link" @onclick='(() => OnClickCallback.InvokeAsync(item.Action))'>@item.Caption</li>
+                <li class="list-group-item sidebar-link nobreak" @onclick='(() => OnClickCallback.InvokeAsync(item.Action))'>@item.Caption</li>
             }
+            <TextSizeControl />
         </ul>
     </div>
 

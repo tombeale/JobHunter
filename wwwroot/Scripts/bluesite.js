@@ -78,3 +78,21 @@ function triggerChangeOnEnter(evt, elem) {
         elem.blur();
     }
 }
+
+function resetFont() {
+    $("body").css("font-size", "18px");
+}
+
+function increaseFont() {
+    var currentSize = $("body").css("font-size");
+    var fontSize = parseInt(currentSize);
+    $("body").css("font-size", fontSize * 1.15);
+}
+
+function decreaseFont() {
+    var currentSize = $("body").css("font-size");
+    var fontSize = parseInt(currentSize);
+    $("body").css("font-size", fontSize * .85);
+}
+
+

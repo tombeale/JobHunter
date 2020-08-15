@@ -1,5 +1,4 @@
-﻿using BlueSite.Components;
-using BlueSite.Data;
+﻿using BlueSite.Data;
 using BlueSite.Data.Entities;
 using JobHunter.Application;
 using JobHunter.Models;
