@@ -25,6 +25,11 @@ namespace JobHunter.Pages
         protected List<LanguageEntry> Technologies = new List<LanguageEntry>();
         private User _user;
 
+        protected BsDialog publishConfirm;
+        protected string   PublishTitle;
+        protected string   PublishMessage;
+
+
         protected LanguageEntry NewTech = new LanguageEntry();
 
         /* *******************************************************************
@@ -49,6 +54,9 @@ namespace JobHunter.Pages
                 case "export":
                     ExportToJson();
                     break;
+                case "reset":
+                    ResetHeights();
+                    break;
             }
         }
 
@@ -57,15 +65,37 @@ namespace JobHunter.Pages
             StateHasChanged();
         }
 
-        protected void ExportToJson()
+        protected async void ExportToJson()
         {
             Exporter exporter = new Exporter(_context);
             string path = Globals.TechExportPath;
             string result = exporter.ExportTech(path);
+            string notify = "notify";
+            if (result == "")
+            {
+                 PublishTitle   = "Export Successful";
+                 PublishMessage = "The Tech Data and Tech Mapping tables were exported to the Resume Project.";
+                 notify = "notify";
+            }
+            else
+            {
+                 PublishTitle   = "Export Failed";
+                 PublishMessage = $"The export failed with the following error: {result}.";
+                 notify = "notifyFailure";
+            }
+            await JsRuntime.InvokeVoidAsync(identifier: notify, PublishMessage);
+            StateHasChanged();
+
         }
 
-        protected void LoadData(string sort = "name")
+        protected void LoadData()
         {
+            string sort = Repository.GetUserPref(_user.UserId, "technology:sortfield", "name");
+            LoadData(sort);
+        }
+        protected void LoadData(string sort)
+        {
+            Repository.SaveUserPref(_user.UserId, "technology:sortfield", sort);
             switch(sort.ToLower())
             {
                 case "date":
@@ -109,6 +139,11 @@ namespace JobHunter.Pages
         {
             await JsRuntime.InvokeVoidAsync(identifier: "setTitle",
                 title);
+        }
+
+        protected async Task ResetHeights()
+        {
+            await JsRuntime.InvokeVoidAsync(identifier: "resetTechHeights");
         }
 
     }

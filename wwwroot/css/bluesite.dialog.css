@@ -1,5 +1,5 @@
 ﻿div.bs-dialog {
-    position: absolute;
+    position: fixed;
     width: 300px;
     top: 200px;
     left: 500px;

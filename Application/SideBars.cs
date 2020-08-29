@@ -67,8 +67,8 @@ namespace JobHunter.Application
             list.Add(new MenuItem("", "", "Sort Name Dsc", "sortnamedesc", "option"));
             list.Add(new MenuItem("", "", "Sort Year",     "sortyear",     "option"));
             list.Add(new MenuItem("", "", "Sort Year Dsc", "sortyeardesc", "option"));
-            list.Add(new MenuItem("", "", "Export",        "export",       "option"));
-            list.Add(new MenuItem("", "", "Settings",      "export",       "option"));
+            list.Add(new MenuItem("", "", "Publish",       "export",       "option"));
+            list.Add(new MenuItem("", "", "Reset Heights", "reset",         "option"));
             return list;
         }
     }

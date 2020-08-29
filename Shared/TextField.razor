@@ -3,7 +3,7 @@
     if (!Edit)
     {
         <div class="inline-flex"><label class="form-label">@Caption</label></div>
-        <div class="inline-flex field-value right-align" style="@Style">@Value</div>
+        <div class="inline-flex field-value right-align form-text" style="@Style">@Value</div>
     }
     else
     {
@@ -11,11 +11,11 @@
         <div class="inline-flex field-value" style="@Style">
             @if (TextArea)
             {
-                <textarea class="form-control inset" @onchange='(e => HandleFieldChange(Field, e.Value.ToString()))' style="height: 124px;" value="@Value" />
+                <textarea class="form-control inset" @onchange='(e => HandleFieldChange(Field, e.Value.ToString()))' style="height: 124px;@BoldStyle" value="@Value" />
             }
             else
             {
-                <input type="text" class="form-control inset" @onchange='(e => HandleFieldChange(Field, e.Value.ToString()))' value="@Value" />
+                <input type="text" style="@BoldStyle" class="form-control inset" @onchange='(e => HandleFieldChange(Field, e.Value.ToString()))' value="@Value" />
             }
         </div>
     }
@@ -49,6 +49,9 @@ else
     public bool Edit { get; set; } = false;
 
     [Parameter]
+    public bool Bold { get; set; } = false;
+
+    [Parameter]
     public bool Show { get; set; } = true;
 
     [Parameter]
@@ -57,9 +60,19 @@ else
     [Parameter]
     public EventCallback<string> OnChangeCallback { get; set; }
 
+    string BoldStyle = "";
+
     public async void HandleFieldChange(string field, string value)
     {
         await OnChangeCallback.InvokeAsync($"{field}|{value}");
     }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (Bold) BoldStyle="font-weight: bold;";
+
+    }
+
 
 }

@@ -7,7 +7,7 @@ input.form-control {
 }
 
 textarea.form-control {
-    font-size: 105%;
+    font-size: 100%;
 }
 
 input.bs-input-full {
@@ -17,7 +17,7 @@ input.bs-input-full {
 input[type=text], input.form-control, textarea, select.form-control {
     border: solid .5px #ddd;
     padding: 2px 4px;
-    font-size: 120%;
+    font-size: 105%;
     height: calc(1em + .75rem + 2px);
 }
 
@@ -57,6 +57,10 @@ div.link {
     cursor: pointer;
 }
 
+div.form-text {
+    font-size: 105%;
+}
+
 div.select-control {
     display: inline-block;
     border: solid .5px #ddd;
@@ -68,7 +72,7 @@ div.select-control {
     background-position-x: right;
     white-space: nowrap;
     padding: 0px 25px 2px 6px;
-    font-size: 120%;
+    font-size: 105%;
     height: calc(1em + .75rem + 2px);
     text-align: left;
     color: black;

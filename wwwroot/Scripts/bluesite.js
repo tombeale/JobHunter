@@ -95,4 +95,28 @@ function decreaseFont() {
     $("body").css("font-size", fontSize * .85);
 }
 
+function notifyFailure(message, timeout = 15000) {
+    $("#notifications").html(message);
+    $("#notifications").css("background-color", "rgba(255, 0, 0, .75)");
+    $("#notifications").css("color", "#ff0");
+    $("#notifications").fadeIn(500);
+    hideNotify(timeout);
+}
 
+function notify(message, timeout = 5000, bgColor = "") {
+    $("#notifications").html(message);
+    $("#notifications").css("background-color", "");
+    $("#notifications").css("color", "");
+    $("#notifications").fadeIn(500);
+    hideNotify(timeout);
+}
+
+function resetTechHeights() {
+    $(".tech-text").css("height", "74px");
+}
+
+function hideNotify(howlong = 3000) {
+    setTimeout(function () {
+        $("#notifications").fadeOut(1500);
+    }, howlong);
+}

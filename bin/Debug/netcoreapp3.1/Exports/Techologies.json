@@ -1,1 +1,74 @@
-[{"LanguageEntryId":8,"Name":"Basic","Key":"basic","BaseYear":1979,"IsEstimate":false,"Text":"My introduction to computer programming was in the Army, about six months before my discharge. I was working as the Brigade Draftsman and shared an office with the IBM 1500 Minicomputer that was used to generate reports and run the data used in some of the brigade\u0027s war games. I was friends with the operator and I was able to get time regularly on the machine to get a good introduction to BASIC, which like many computers of that time was acting as the machine\u0027s operating system. Since then, I\u0027ve gone through a lot of computers:\n[ul]\n[li][b]A Timex Sinclair 1000[/b] with 3Kb of memory. I used a cassette tape recorder to save and load programs. Used BASIC as it\u0027s operating system.\n[li]Several [b]Commodore 64s[/b] (lost track of how many - one would break and I\u0027d by another at Toys R Us). Had a floppy disk drive, monitor and a printer. Wrote a rudimentary word processor that I used through my senior year of college.\n[li][b]Commodore Amiga[/b] This was the first \u0022real\u0022 computer I owned and I worked with two flavors of Basic on it: AmigaBasic and HiSoft Basic (a compiled version of AmigaBasic) \nDuring this time, I was working at McDonnell Douglas and had some exposure to a McDonnell Douglas Micrographics system that ran it\u0027s own flavor of Basic, DataBasic."},{"LanguageEntryId":1,"Name":"JavaScript","Key":"javascript","BaseYear":1997,"IsEstimate":true,"Text":"JavaScript is my hands-down favorite language for web development. I\u0027ve been using it on  a daily basis since the late 90s and I still haven\u0027t found anything that comes close. It supports object-oriented programming, allows variables to hold pretty much anything and handles arrays in ways that truly inspires weird and wonderful things. Using JavaScript to make AJAX calls and dynamically update portions of the page is one of my favorite techniques. Add JQuery and JSON into the mix, and nearly anything is possible."},{"LanguageEntryId":3,"Name":"ASP (Classic)","Key":"asp","BaseYear":1998,"IsEstimate":true,"Text":"I have been using ASP since the late 90s. first in freelance work, then for Boeing. When I went to work for Corillian in 2000, it became part of my day-to-day job and has been so ever since. Initially I used VBScript as the server-side language, and JavaScript as the client-side language, but I soon discovered that ASP supports JScript on the server as well and  it bacame my language of choice whenever possible."},{"LanguageEntryId":2,"Name":"C#","Key":"c","BaseYear":2002,"IsEstimate":true,"Text":"I first learned C on the Amiga, and once \u0022I got it\u0022 (it took a class at Sun Micorsystems before I really understood pointers), I was hooked. I did some C on Sun workstations at McDonnell Douglas \u2013 the Interleaf Publish System used LISP as it\u0027s scripting language (don\u0027t get me started on LISP) and all I learned in LISP was how to write a function to call a C program. After that, I made all my scripts in C. When I moved to Windows, however, C and the MFC was just to involved for what I needed it for, so I moved to other languages like Visual Basic, JavaScript, PERL and PHP."},{"LanguageEntryId":4,"Name":"AJAX","Key":"ajax","BaseYear":2006,"IsEstimate":true,"Text":"AJAX (Asynchronous JavaScript And Xml) has actually lived up to all the hype it recieved. It basically takes advantage of the XML DOM\u0027s abilty to load external files through HTTP. In practical terms, you can write a client-side function that pulls data from a server without making a round-trip to the server. (Actually it does make a round trip, but as far as your web page is concerned, it was a client-side call).\n\nThe name is actually a bit deceptive. AJAX is an acronym for Asynchronous Javascript And XML, however AJAX calls do not have to be asynchronous (your code does not wait for the result), nor does it have to return XML, and it can be done in a language other than JavaScript \u2013 I originally used the technique in server-side VB at Corillian to retrieve check images and online banking statements via SOAP calls over a VPN. "},{"LanguageEntryId":7,"Name":"Entity Framework","Key":"EF","BaseYear":2014,"IsEstimate":false,"Text":"First exposed to Entity Framework (EF) when I worked at Genesys "},{"LanguageEntryId":6,"Name":"TypeScript","Key":"typescript","BaseYear":2016,"IsEstimate":false,"Text":"SWBC uplifted their legacy applications to a new set of applications using .Net MVC on the back-end and Angular on the front end. This product was heavy on TypeScript in the front end and using AJAX calls to organize user input and pass the data back to the server."},{"LanguageEntryId":5,"Name":"Blazor","Key":"blazor","BaseYear":2020,"IsEstimate":false,"Text":"The latest language I\u0027ve picked up"}]
+[
+  {
+    "LanguageEntryId": 8,
+    "Name": "VB6",
+    "Key": "k-vb6",
+    "BaseYear": 1979,
+    "IsEstimate": false,
+    "Text": "\u003Cul\u003E\n\u003Cli\u003E\u003Cb\u003ECommodore Amiga\u003C/b\u003E This was the first serious computer I owned and I worked with two flavors of Basic on it: AmigaBasic and HiSoft Basic (a compiled version of Basic for the Amiga)\u003C/li\u003E\n\u003Cli\u003E\u003Cb\u003ECommodore 64s\u003C/b\u003E Like many machines of it\u0027s day, it used Basic as it\u0027s native operating system. I owned several during the early 80\u0027s - lost track of how many - one would break and I\u0027d buy another at Toys R Us. I had a floppy disk drive, monitor and a printer. Wrote a rudimentary word processor that I used through my senior year of college.\u003C/li\u003E\n\u003Cli\u003E\u003Cb\u003EA Timex Sinclair 1000\u003C/b\u003E with 3Kb of memory. I used a cassette tape recorder to save and load programs. It used BASIC as it\u0027s native operating system.\u003C/li\u003E\n\u003Cli\u003EMy introduction to computer programming was in the Army, about six months before my discharge. I was working as the Brigade Draftsman and shared an office with the \u003Cb\u003EIBM 1500 Minicomputer\u003C/b\u003E that was used to generate reports and run the data used in some of the brigade\u0027s war games. I was friends with the operator and I was able to get time regularly on the machine to get a good introduction to BASIC, which like many computers of that time was acting as the machine\u0027s operating system. Since then, I\u0027ve gone through a lot of computers:\u003C/li\u003E\n\u003Cul\u003E"
+  },
+  {
+    "LanguageEntryId": 1,
+    "Name": "JavaScript",
+    "Key": "k-javascript",
+    "BaseYear": 1997,
+    "IsEstimate": true,
+    "Text": "JavaScript is my hands-down favorite language for web development. I\u0027ve been using it on  a daily basis since the late 90s and I still haven\u0027t found anything that comes close. It supports object-oriented programming, allows variables to hold pretty much anything and handles arrays in ways that truly inspires weird and wonderful things. Using JavaScript to make AJAX calls and dynamically update portions of the page is one of my favorite techniques. Add JQuery and JSON into the mix, and nearly anything is possible."
+  },
+  {
+    "LanguageEntryId": 3,
+    "Name": "ASP (Classic)",
+    "Key": "k-asp-classic",
+    "BaseYear": 1998,
+    "IsEstimate": true,
+    "Text": "I have been using ASP since the late 90s. first in freelance work, then for Boeing. When I went to work for Corillian in 2000, it became part of my day-to-day job and and remained so for fourteen years. Initially I used VBScript as the server-side language, and JavaScript as the client-side language, but I soon discovered that ASP supports JScript on the server as well and  it became my language of choice whenever possible. When I went to work for the Innovation Asset Group (IAG) in 2004"
+  },
+  {
+    "LanguageEntryId": 9,
+    "Name": "SQL",
+    "Key": "k-sql",
+    "BaseYear": 1998,
+    "IsEstimate": false,
+    "Text": "Not sure exactly when I started using SQL. I know it was probably around 1998 as I was still in California doing development on a Linux server for some local websites. At that time I was doing a lot of PHP/MySQL.\nWhen I went to work at Corillian in 2000, I wrote a lot of scripts against Microsoft SQL Server databases, mostly to support development. \nAt Innovation Asset Group (IAG) the emphasis was to write generic scripts that would work on both MySQL and MS Server as the main product, Decipher, could be installed to use either database engine. IAG didn\u0027t have a dedicated DB Analyst, so I ended up doing a lot of database installs and configuration.\nAt Merrill Corp. I created and edited a lot of stored procedures which were used in the legacy product and the file interfaces to pull data from customer-provided text files and save it to the database. The product dealt with large volumes of insurance data and I often had to find ways to optimize the stored procedures to improve performance."
+  },
+  {
+    "LanguageEntryId": 2,
+    "Name": "C#",
+    "Key": "k-c",
+    "BaseYear": 2002,
+    "IsEstimate": true,
+    "Text": "I first learned C on the Amiga, and once \u0022I got it\u0022 (it took a class at Sun Micorsystems before I really understood pointers), I was hooked. I did some C on Sun workstations at McDonnell Douglas \u2013 the Interleaf Publish System used LISP as it\u0027s scripting language (don\u0027t get me started on LISP) and all I learned in LISP was how to write a function to call a C program. After that, I made all my scripts in C. When I moved to Windows, however, C and the MFC was just to involved for what I needed it for, so I moved to other languages like Visual Basic, JavaScript, PERL and PHP."
+  },
+  {
+    "LanguageEntryId": 4,
+    "Name": "AJAX",
+    "Key": "k-ajax",
+    "BaseYear": 2006,
+    "IsEstimate": true,
+    "Text": "AJAX (Asynchronous JavaScript And Xml) has actually lived up to all the hype it recieved. It basically takes advantage of the XML DOM\u0027s abilty to load external files through HTTP. In practical terms, you can write a client-side function that pulls data from a server without making a round-trip to the server. (Actually it does make a round trip, but as far as your web page is concerned, it was a client-side call).\nThe name is actually a bit deceptive. AJAX is an acronym for Asynchronous Javascript And XML, however AJAX calls do not have to be asynchronous (your code does not wait for the result), nor does it have to return XML, and it can be done in a language other than JavaScript \u2013 I originally used the technique in server-side VB at Corillian to retrieve check images and online banking statements via SOAP calls over a VPN. "
+  },
+  {
+    "LanguageEntryId": 7,
+    "Name": "Entity Framework",
+    "Key": "k-entityframework",
+    "BaseYear": 2014,
+    "IsEstimate": false,
+    "Text": "First exposed to Entity Framework (EF) when I worked at Genesys "
+  },
+  {
+    "LanguageEntryId": 6,
+    "Name": "TypeScript",
+    "Key": "k-typescript",
+    "BaseYear": 2016,
+    "IsEstimate": false,
+    "Text": "SWBC uplifted their legacy applications to a new set of applications using .Net MVC on the back-end and Angular on the front end. This product was heavy on TypeScript in the front end and using AJAX calls to organize user input and pass the data back to the server."
+  },
+  {
+    "LanguageEntryId": 5,
+    "Name": "Blazor",
+    "Key": "k-blazor",
+    "BaseYear": 2020,
+    "IsEstimate": false,
+    "Text": "The latest language I\u0027ve picked up"
+  }
+]

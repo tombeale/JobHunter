@@ -1,4 +1,5 @@
 ﻿@using BlueSite.Data.Entities
+@using System.Text.RegularExpressions
 
 @inject BlueSiteContext _context
 
@@ -7,13 +8,14 @@
         <TextField Caption="Name"
                    Edit="@Edit" Field="Name"
                    Index="@Index"
-                   Style="width: 240px;"
+                   Style="margin-right: 20px; width: 240px;"
+                   Bold="true" 
                    OnChangeCallback="@HandleTechnologyChange"
                    Value="@Language.Name" />
-        <TextField Caption="Key"
+        <TextField Caption="key"
                    Edit="@Edit" Field="Key"
                    Index="@Index"
-                   Style="width: 140px;"
+                   Style="width: 300px;"
                    OnChangeCallback="@HandleTechnologyChange"
                    Value="@Language.Key" />
     </td>
@@ -29,7 +31,7 @@
     <td colspan="2" style="padding: 2px 4px 20px 53px;">
         @if (Edit)
         {
-            <textarea class="form-control inset" style="height: 124px;"
+            <textarea class="form-control inset tech-text" style="height: 74px;"
                       @onchange='e => HandleTechnologyChange($"Text|{e.Value.ToString()}")'
                       value="@Language.Text" />
         }
@@ -126,5 +128,4 @@
             await OnChangeCallback.InvokeAsync("");
         }
     }
-
 }

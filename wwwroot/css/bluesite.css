@@ -77,6 +77,19 @@ a.menu-bar:hover {
     color: white;
 }
 
+#notifications {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 400px;
+    height: 50px;
+    background-color: rgba(143, 163, 198, .5);
+    border-top-right-radius: 25px;
+    padding: 10px 10px;
+    font-size: 80%;
+    line-height: 100%;
+}
+
 .note-viewer {
     white-space: pre;
 }
