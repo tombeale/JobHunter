@@ -42,7 +42,7 @@ input.inset::placeholder {
     color: #dee3ec;
 }
 
-input.inset:focus, textarea.inset:focus, textarea.inset:active {
+input.inset:focus, textarea.inset:focus, textarea.inset:active, div.inset {
     border: solid .5px #ddd;
     -webkit-box-shadow: inset 2px 2px 3px 3px rgba(0,0,0,0.10);
     -moz-box-shadow: inset 2px 2px 3px 3px rgba(0,0,0,0.10);

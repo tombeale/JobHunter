@@ -102,7 +102,7 @@ namespace JobHunter.Pages
         protected override void OnInitialized()
         {
             Repository = new JobHuntRepository(_context);
-            companies = GetCompanyList();
+            companies = GetCompanyList().OrderBy(c => c.Name).ToList();
             contacts  = GetAllContacts();
             contactRelationships  = GetCompanyContactRelationships();
             Self = this;

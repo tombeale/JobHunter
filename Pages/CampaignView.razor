@@ -1,0 +1,29 @@
+﻿@inherits CampaignViewBase
+@page "/campaignview/{CampaignId}"
+@using JobHunter.Shared
+@using JobHunter.Models
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+
+<SideBar MenuSet="campaignview" OnClickCallback="@HandleSidebarOption" />
+
+<h1>@PageTitle <TitleIcons Title="View Campaign" Id="@CampaignId" Icon="Edit" IconWidth="24px" /></h1>
+
+<PageSection Title="Actions" Class="item-list">
+    <table class='item-listing'>
+        <tr>
+            <th class="item-list" style="width: @(Utilities.ColSize(2))px;">Status</th>
+            <th class="item-list">Title</th>
+            <th class="item-list" style="width: @(Utilities.ColSize(2))px;">Type</th>
+            <th class="item-list" style="width: @(Utilities.ColSize(2))px;">Start</th>
+            <th class="item-list">&nbsp;</th>
+        </tr>
+        @foreach (ActionItem action in Actions)
+        {
+            <CampaignActionRow Action="@action" Lookup="@lookups" />
+        }
+    </table>
+</PageSection>

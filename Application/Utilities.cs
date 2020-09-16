@@ -152,6 +152,12 @@ namespace JobHunter.Application
             return dict;
         }
 
+        public static int ColSize(int cols)
+        {
+            int tw = Globals.ListTableWidth;
+            return (int)((tw / 12) * cols);
+        }
+
         /* *********************************************
          * Lookup Tables
          * ******************************************* */

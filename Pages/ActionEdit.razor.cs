@@ -153,8 +153,12 @@ namespace JobHunter.Pages
         }
         protected void Redirect()
         {
-            switch (FromPage)
+            string[] pageInfo = FromPage.Split('/');
+            switch (pageInfo[0])
             {
+                case "campaignview":
+                    NavManager.NavigateTo($"/{FromPage}", true);
+                    break;
                 case "campaigns":
                     NavManager.NavigateTo("/campaigns", true);
                     break;

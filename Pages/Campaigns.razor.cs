@@ -5,6 +5,7 @@ using JobHunter.Models;
 using JobHunter.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,11 @@ namespace JobHunter.Pages
             StateHasChanged();
         }
 
+        protected void HandleOpenCloseClick(int id)
+        {
+
+        }
+
         protected void HandleDialogSelection(string key)
         {
             switch (key)
@@ -93,15 +99,9 @@ namespace JobHunter.Pages
         {
             switch (key.ToLower())
             {
-                case "togglecampaigns":
-                    if (hideCampaigns == "")
-                    {
-                        hideCampaigns = "display: none;";
-                    }
-                    else
-                    {
-                        hideCampaigns = "";
-                    }
+                case "collapse-all":
+                    ListState.CloseAll();
+                    Repository.SaveUserPref(_user.UserId, "campaigns:liststate", ListState.ToString());
                     break;
             }
             StateHasChanged();
@@ -141,8 +141,10 @@ namespace JobHunter.Pages
          ****************************************************************** */
         protected override void OnInitialized()
         {
+            List<string> Exclude = new List<string>() { "nogo", "cancelled", "expired", "done" };
+            
             Repository = new JobHuntRepository(_context);
-            Campaigns  = Repository.AllCampaigns.ToList();
+            Campaigns  = Repository.AllCampaigns.Where(c => !Exclude.Contains(c.Status)).ToList();
             Actions    = Repository.GetAllCampaignActions();
             var stats  = Repository.GetStatuses();
 
@@ -170,9 +172,27 @@ namespace JobHunter.Pages
 
         }
 
+        protected void ToggleDetails(int id)
+        {
+            ListState.ToggleDetails(id);
+            Repository.SaveUserPref(_user.UserId, "campaigns:liststate", ListState.ToString());
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await SetTitle("Campaign Management");
+        }
+
+        protected string GetCompanyName(int? companyId)
+        {
+            if (companyId != null)
+            {
+                return Repository.AllCompanies.Where(c => c.CompanyId == companyId).FirstOrDefault()?.Name;
+            }
+            else
+            {
+                return "";
+            }
         }
 
         protected async Task SetTitle(string title)

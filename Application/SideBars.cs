@@ -22,6 +22,10 @@ namespace JobHunter.Application
                     return GetViewMeetingSet();
                 case "tech":
                     return GetTechSet();
+                case "campaigns":
+                    return GetCampaignsSet();
+                case "campaignview":
+                    return GetCampaignViewSet();
                 default:
                     return new List<MenuItem>();
             }
@@ -43,21 +47,23 @@ namespace JobHunter.Application
         { 
             List<MenuItem> list = new List<MenuItem>();
             list.Add(new MenuItem("", "", "Prepare",     "prepmeeting", "option"));
+            list.Add(new MenuItem("", "", "View Campaign", "viewcampaign", "option"));
             list.Add(new MenuItem("", "", "Edit Action", "editaction",  "option"));
             return list;
         }
         public static List<MenuItem> GetPrepMeetingSet()
         { 
             List<MenuItem> list = new List<MenuItem>();
-            list.Add(new MenuItem("", "", "View Meeting", "viewmeeting", "option"));
-            list.Add(new MenuItem("", "", "Edit Action",  "editaction",  "option"));
+            list.Add(new MenuItem("", "", "View Meeting",  "viewmeeting", "option"));
+            list.Add(new MenuItem("", "", "View Campaign", "viewcampaign", "option"));
+            list.Add(new MenuItem("", "", "Edit Action",   "editaction",  "option"));
             return list;
         }
         public static List<MenuItem> GetEditMeetingSet()
         { 
             List<MenuItem> list = new List<MenuItem>();
-            list.Add(new MenuItem("", "", "Prepare",      "prepmeeting", "option"));
-            list.Add(new MenuItem("", "", "View Meeting", "viewmeeting", "option"));
+            list.Add(new MenuItem("", "", "Prepare",       "prepmeeting",  "option"));
+            list.Add(new MenuItem("", "", "View Meeting",  "viewmeeting",  "option"));
             return list;
         }
         public static List<MenuItem> GetTechSet()
@@ -68,7 +74,22 @@ namespace JobHunter.Application
             list.Add(new MenuItem("", "", "Sort Year",     "sortyear",     "option"));
             list.Add(new MenuItem("", "", "Sort Year Dsc", "sortyeardesc", "option"));
             list.Add(new MenuItem("", "", "Publish",       "export",       "option"));
-            list.Add(new MenuItem("", "", "Reset Heights", "reset",         "option"));
+            list.Add(new MenuItem("", "", "Reset Heights", "reset",        "option"));
+            return list;
+        }
+        public static List<MenuItem> GetCampaignViewSet()
+        { 
+            List<MenuItem> list = new List<MenuItem>();
+            list.Add(new MenuItem("", "", "Actions",       "",                 "sep"));
+            list.Add(new MenuItem("", "", "Add Apply",     "add-task",         "option"));
+            list.Add(new MenuItem("", "", "Add Apply",     "add-application",  "option"));
+            list.Add(new MenuItem("", "", "Add Meeting",   "add-meeting",      "option"));
+            return list;
+        }
+        public static List<MenuItem> GetCampaignsSet()
+        { 
+            List<MenuItem> list = new List<MenuItem>();
+            list.Add(new MenuItem("", "", "Collapse All",     "collapse-all",         "option"));
             return list;
         }
     }

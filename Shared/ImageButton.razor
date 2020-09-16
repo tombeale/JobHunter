@@ -1,9 +1,20 @@
-﻿<img class="inline-menu link" style="@ImageSize"
-    onmouseover="setIconImage(this, '@Image-1.png')" 
-    onmouseout="setIconImage(this, '@Image-0.png')" 
-    src="images/Icons/@Image-0.png" 
-    @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|{Image}")'
-    title="@ToolTip" />
+﻿@if (!String.IsNullOrEmpty(Action))
+{
+    <a href="@Action" target="_new"><img class="inline-menu link" style="@ImageSize"
+         onmouseover="setIconImage(this, '@Image-1.png')"
+         onmouseout="setIconImage(this, '@Image-0.png')"
+         src="images/Icons/@Image-0.png"
+         title="@Action" /></a>
+}
+else
+{
+    <img class="inline-menu link" style="@ImageSize"
+         onmouseover="setIconImage(this, '@Image-1.png')"
+         onmouseout="setIconImage(this, '@Image-0.png')"
+         src="images/Icons/@Image-0.png"
+         @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|{Image}")'
+         title="@ToolTip" />
+}
 
 @code {
     [Parameter]
@@ -14,6 +25,9 @@
 
     [Parameter]
     public string Type { get; set; }
+
+    [Parameter]
+    public string Action { get; set; }
 
     [Parameter]
     public string Size { get; set; } = "20";
@@ -28,6 +42,6 @@
 
     protected override void OnParametersSet()
     {
-        ImageSize = $"{Size}px";
+        ImageSize = $"height: {Size}px";
     }
 }

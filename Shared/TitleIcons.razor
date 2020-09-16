@@ -2,7 +2,7 @@
     <span>
         @foreach (var btn in buttons)
         {
-            <a href="@btn.Action"><img src='Images/Icons/@btn.GetImage("Add", 0)' href="@btn.Action" title="@btn.ToolTip" style="width: @IconWidth"
+            <a href="@btn.Action"><img src='Images/Icons/@btn.GetImage(@Icon, 0)' href="@btn.Action" title="@btn.ToolTip" style="width: @IconWidth"
                                        onmouseover="@btn.GetMouseOver()" onmouseout="@btn.GetMouseOut()"/></a>
         }
     </span>
@@ -15,6 +15,12 @@
 
     [Parameter]
     public string IconWidth { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; } = "Add";
+
+    [Parameter]
+    public string Id { get; set; }
 
     private List<ImgButton> buttons = new List<ImgButton>();
 
@@ -33,6 +39,11 @@
 
             case "campaigns":
                 buttons.Add(new ImgButton("Add", "CampaignEdit", "Add a campaign to the list"));
+                break;
+
+            case "view campaign":
+                int id = Convert.ToInt32(Id);
+                buttons.Add(new ImgButton(Icon, $"CampaignEdit/{Id}", $"Edit this campaign"));
                 break;
         }
 

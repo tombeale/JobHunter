@@ -1,0 +1,75 @@
+﻿@using BlueSite.Data.Entities
+@using JobHunter.Models
+@using JobHunter.Application
+
+<tr class="item-row">
+    <td class="item-row nobreak" style="width: @(Utilities.ColSize(2)) px;">
+        @(GetStatusLink(Lookup.GetFriendlyName("status", Action.Status), Action.ActionItemId))
+    </td>
+    <td class="item-row">
+        @Action.Title
+    </td>
+    <td class="item-row nobreak" style="width: @(Utilities.ColSize(2)) px;">
+        @(GetActionTypeLink(Lookup.GetFriendlyName("actiontype", Action.Type), Action.ActionItemId))
+    </td>
+    <td class="item-row" style="width: @(Utilities.ColSize(2)) px;">
+        <DateField DateValue="@Action.StartDate" Option="dateonly" />
+    </td>
+    <td class="item-row">
+        <InlineToolBar Size="14" Index="@Action.ActionItemId.ToString()" MenuSet="@ToolBars.GetCampaignViewActionItems(Action?.Notes?.Count > 0)" OnChangeCallback="@HandleActionRowOptionClick" />
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public ActionItem Action { get; set; }
+
+    [Parameter]
+    public LookUps Lookup { get; set; }
+
+    [Inject] NavigationManager NavManager { get; set; }
+
+    MarkupString GetStatusLink(string status, int? id)
+    {
+        MarkupString Status = (MarkupString)status;
+
+        if (id == null) return Status;
+
+        return Status;
+    }
+
+    MarkupString GetActionTypeLink(string status, int? id)
+    {
+
+        MarkupString Status = (MarkupString)status;
+
+        if (id == null) return Status;
+
+        switch (status.ToLower())
+        {
+            case "meeting":
+            case "preparing":
+                Status = (MarkupString)$"<a href='/MeetingPrep/{id}'>{status}</a>";
+                break;
+        }
+        return Status;
+    }
+
+    protected void HandleActionRowOptionClick(string value)
+    {
+        var vals = value.Split('|');
+        int actionId = Convert.ToInt32(vals[0]);
+        switch (vals[1].ToLower())
+        {
+            case "edit":
+                NavManager.NavigateTo($"actionedit/{actionId}?campaignview/{Action.ActionItemId}");
+                break;
+            case "note":
+            case "note-filled":
+                break;
+        }
+    }
+
+
+}
+

@@ -267,11 +267,11 @@ namespace JobHunter.Shared
             var todos = Actions.AllActions.Where(a => a.Type == ActionType).ToList();
             if (SetId.ToLower() != "all") 
             { 
-                return todos.Where(a => a.SetId?.ToLower() == SetId.ToLower()).ToList();
+                return todos.Where(a => a.SetId?.ToLower() == SetId.ToLower()).OrderBy(c => c.StartDate).ToList();
             }
             else
             {
-                return todos;
+                return todos.OrderBy(c => c.StartDate).ToList();
             }
         }
 

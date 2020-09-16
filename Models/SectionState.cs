@@ -45,6 +45,19 @@ namespace JobHunter.Models
             Listing.Where(s => s.Id == id).FirstOrDefault().Toggle(key);
         }
 
+        public void CloseAll()
+        {
+            foreach(var l in Listing)
+            {
+                l.Close();
+            }
+        }
+
+        public void ToggleDetails(int id)
+        {
+            Listing.Where(s => s.Id == id).FirstOrDefault().ToggleDetails();
+        }
+
         public void Clear()
         {
             foreach (var s in Listing)
@@ -137,6 +150,32 @@ namespace JobHunter.Models
                     Notes = !Notes;
                     break;
             }
+        }
+
+        public void ToggleDetails()
+        {
+            if (Actions || Contacts || Notes)
+            {
+                Close();
+            }
+            else
+            {
+                Open();
+            }
+        }
+
+        public void Open()
+        {
+            Actions  = true;
+            Contacts = true;
+            Notes    = true;
+        }
+
+        public void Close()
+        {
+            Actions  = false;
+            Contacts = false;
+            Notes    = false;
         }
 
         public override string ToString()

@@ -13,6 +13,7 @@ namespace JobHunter.Application
 
         public static string TechExportPath { get; set; } = @"F:\Projects\Resume2020\wwwroot\scripts";
         public static User CurrentUser { get; set; }
+        public static int ListTableWidth { get; set; } = 1000;
 
         public static List<DDOption> GetActionStatuses()
         {
@@ -21,8 +22,10 @@ namespace JobHunter.Application
             list.Add(new DDOption("prep",      "Preparing"));
             list.Add(new DDOption("sched",     "Scheduled"));
             list.Add(new DDOption("started",   "In Progress"));
+            list.Add(new DDOption("submitted", "Submitted"));
             list.Add(new DDOption("waiting",   "Waiting"));
             list.Add(new DDOption("movedon",   "Moved On"));
+            list.Add(new DDOption("blocked",   "Blocked"));
             list.Add(new DDOption("nogo",      "No-Go"));
             list.Add(new DDOption("hold",      "On Hold"));
             list.Add(new DDOption("cancelled", "Cancelled"));

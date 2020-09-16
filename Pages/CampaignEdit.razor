@@ -63,6 +63,18 @@
         </div>
         <div class="row">
             <div class="form-group col-sm-8">
+                <label class="form-label" for="action-title">Reference Number</label>
+                <input type="text" @bind-value="Campaign.RefNumber" id="first-name" class="form-control bs-input-full inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label class="form-label" for="action-title">Reference Url</label>
+                <input type="text" @bind-value="Campaign.RefUrl" id="first-name" class="form-control bs-input-full inset" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
                 <label class="form-label" for="action-title">Notes</label>
                 <textarea @bind="Campaign.Notes" id="first-name" class="form-control bs-input-full inset" style="height: 90px;"></textarea>
             </div>

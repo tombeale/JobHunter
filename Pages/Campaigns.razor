@@ -33,13 +33,13 @@ else
             Campaign campaign = Campaigns[i];
             SectionState ss = ListState.GetState(campaign.CampaignId);
             <tr class="item-list hover grid-primary">
-                <td><a href="/campaignedit/@campaign.CampaignId">@campaign.Name</a></td>
-                <td><a href="/companyedit/@campaign.CompanyId">@campaign.CompanyName</a></td>
+                <td @onclick="@(() =>ToggleDetails(campaign.CampaignId))" class="link"><StatusIndicator Status="@campaign.Status" Size="14" />&nbsp;@campaign.Name</td>
+                <td><a href="/companyedit/@campaign.CompanyId">@GetCompanyName(campaign.CompanyId)</a></td>
                 <td><DateField DateValue="@campaign.StartDate" Option="date" /></td>
                 <td>@Utilities.GetFriendlyStatusName(campaign.Status, Statuses)</td>
-                <td>@campaign.Position</td>
+                <td><a href="@campaign.RefUrl" target="_new">@campaign.Position</a></td>
                 <td>@campaign.RefNumber</td>
-                <td style="text-align: right;"><InlineToolBar Index="@i.ToString()" MenuSet="@ToolBars.GetCampaignRowItems(!String.IsNullOrEmpty(campaign.Notes))" OnChangeCallback="@HandleRowOptionClick" /></td>
+                <td style="text-align: right;"><InlineToolBar Index="@i.ToString()" MenuSet="@ToolBars.GetCampaignRowItems(campaign, !String.IsNullOrEmpty(campaign.Notes))" OnChangeCallback="@HandleRowOptionClick" /></td>
             </tr>
             <tr class="campaign-actions" id="campaign-actions-@campaign.CampaignId" style='@ss.GetStyle("actions")'>
                 <td colspan="7" class="item-relationship-list">
@@ -51,13 +51,13 @@ else
                                 {
                                     NoteImage = (action.Notes == null || action.Notes?.Count < 1) ? "Note" : "Note-Filled";
                             <tr class="hover grid-secondary">
-                                <td class="campaign-item"><a href='@Utilities.GetActionLink(action, campaign.CompanyId,  "campaigns")'>@action.Title</a></td>
+                                <td class="campaign-item"><StatusIndicator Status="@action.Status" Type="@action.Type" Size="14" />&nbsp;<a href='@Utilities.GetActionLink(action, campaign.CompanyId,  "campaigns")'>@action.Title</a></td>
                                 <td class="campaign-item" style="width: 110px;">@Utilities.GetFriendlyDDName(action.Type,   ActionTypes)</td>
                                 <td class="campaign-item" style="width: 110px;">@Utilities.GetFriendlyDDName(action.Status, Statuses)</td>
                                 <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.StartDate" Option="dateonly" /></td>
                                 <td class="campaign-item" style="width: 110px;"><DateField DateValue="@action.EndDate"   Option="dateonly" /></td>
                                 <td class="campaign-item" style="width: 80px;">
-                                    <ImageButton Image="Edit"       Index="@action.ActionItemId.ToString()" OnChangeCallback="@HandleActionClick" ToolTip="Edit Action" />
+                                    <ImageButton Image="Edit" Index="@action.ActionItemId.ToString()" OnChangeCallback="@HandleActionClick" ToolTip="Edit Action" />
                                     <ImageButton Image="@NoteImage" Index="@action.ActionItemId.ToString()" OnChangeCallback="@HandleActionClick" ToolTip="View Notes" />
                                 </td>
                             </tr>
@@ -72,7 +72,7 @@ else
                     <CampaignDetails Title="Contacts" NewType="contact" Id="@campaign.CampaignId">
                         <table width="100%" cellsacing="0" cellpadding="0" border="0">
                             <tr class="hover grid-secondary">
-                                <td class="campaign-item">Contacts go here</td>
+                                <td class="campaign-item"></td>
                             </tr>
                         </table>
                     </CampaignDetails>

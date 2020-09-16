@@ -1,0 +1,52 @@
+﻿@using BlueSite.Data.Entities
+
+<img src="/images/icons/@Icon" style="position: relative; top: -2px; height: @(Size)px;" />
+
+@code {
+        [Parameter]
+        public string Size { get; set; }
+
+        [Parameter]
+        public string Status { get; set; }
+
+        [Parameter]
+        public string Type { get; set; } = "";
+
+
+
+        string Icon = "status-blank.png";
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        switch (Status?.ToLower())
+        {
+            case "todo":
+                Icon = (Type == "blocker") ? "status-blocker.png" : "status-todo.png";
+                break;
+            case "started":
+            case "prep":
+                Icon = "status-ontrack.png";
+                break;
+            case "sched":
+            case "submitted":
+            case "waiting":
+            case "hold":
+                Icon = "status-waiting.png";
+                break;
+            case "blocked":
+                Icon = "status-blocked.png";
+                break;
+            case "done":
+                Icon = "status-done.png";
+                break;
+            default:
+                Icon = "status-blank.png";
+                break;
+        }
+
+    }
+
+
+
+}

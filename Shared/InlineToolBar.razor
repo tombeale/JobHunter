@@ -1,8 +1,8 @@
 ﻿@using BlueSite.Data.Entities
 
-    <div class="flex inline-menu">
+    <div class="flex inline-menu" style="@style">
         @foreach (var t in MenuSet)
-        {<ImageButton Index="@Index.ToString()" Image="@t.Icon" ToolTip="@t.Caption" OnChangeCallback="@OnChangeCallback" />}
+        {<ImageButton Index="@Index.ToString()" Image="@t.Icon" ToolTip="@t.Caption" Size="@Size" Action="@t.Action" OnChangeCallback="@OnChangeCallback" />}
 
 
     </div>
@@ -20,11 +20,21 @@
     [Parameter]
     public List<MenuItem> MenuSet { get; set; }
 
+    [Parameter]
+    public string Size { get; set; } = "20";
+
+    public int size = 20;
+
     private string ImageBase;
+
+    private string style;
 
     protected override void OnParametersSet()
     {
+        base.OnParametersSet();
         ImageBase = (HasNotes) ? "Note-Filled" : "Note";
+        size = Convert.ToInt32(Size);
+        style = $"height: {size + 6}px";
     }
 
 }

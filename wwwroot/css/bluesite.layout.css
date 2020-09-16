@@ -1,0 +1,36 @@
+﻿div.grid-header {
+    font-size: 80%;
+    background-color: #eff4fd;
+    border-bottom: .75px solid #dee3ec;
+}
+
+div.page-section {
+    border: #dee3ec solid 1px;
+    border-radius: 6px;
+    padding: 6px 22px;
+}
+
+section.item-list {
+    padding: 4px 0px 4px 25px;
+}
+
+td.page-section-title {
+    font-size: 110%;
+    font-weight: bold;
+}
+
+td.page-section-divider {
+    padding-left: 16px;
+    width: 100%;
+}
+
+@media print {
+    body {
+        padding: 1in .75in .75in .75in;
+        font-size: 12pt;
+    }
+    
+    .noprint {
+        display: none;
+    }
+}

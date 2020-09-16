@@ -1,0 +1,56 @@
+﻿@using BlueSite.Data.Entities
+@using JobHunter.Models
+
+<div class="row">
+    <div class="col-lg-1">
+        @(GetStatusLink(Lookup.GetFriendlyName("status", Action.Status), Action.ActionItemId))
+    </div>
+    <div class="col-lg-5">
+        @Action.Title
+    </div>
+    <div class="col-lg-1">
+        @(GetActionTypeLink(Lookup.GetFriendlyName("actiontype", Action.Type), Action.ActionItemId))
+    </div>
+    <div class="col-lg-2">
+        <DateField DateValue="@Action.StartDate" Option="dateonly" />
+    </div>
+</div>
+
+    @code {
+        [Parameter]
+        public ActionItem Action { get; set; }
+
+        [Parameter]
+        public LookUps Lookup { get; set; }
+
+
+        MarkupString GetStatusLink(string status, int? id)
+        {
+            MarkupString Status = (MarkupString)status;
+
+            if (id == null) return Status;
+
+            return Status;
+        }
+
+        MarkupString GetActionTypeLink(string status, int? id)
+        {
+
+            MarkupString Status = (MarkupString) status;
+
+
+            if (id == null) return Status;
+
+            switch (status.ToLower())
+            {
+                case "meeting":
+                case "preparing":
+                    Status = (MarkupString)$"<a href='/MeetingPrep/{id}'>{status}</a>";
+                    break;
+            }
+            return Status;
+        }
+
+
+    }
+
