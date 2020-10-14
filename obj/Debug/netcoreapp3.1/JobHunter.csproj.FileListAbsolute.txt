@@ -274,3 +274,9 @@ F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclarat
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\CampaignActionRow.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\StatusIndicator.razor.g.cs
 F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\StatusIndicator.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Resume.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Pages\Resume.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\CampaignSummary.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\CampaignSummary.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\ContactList.razor.g.cs
+F:\Projects\Blazor\JobHunter2020\JobHunter\obj\Debug\netcoreapp3.1\Razor\Shared\ContactList.razor.g.cs

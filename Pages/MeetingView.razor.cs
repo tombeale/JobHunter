@@ -54,7 +54,7 @@ namespace JobHunter.Pages
             switch (key.ToString())
             {
                 case "viewcampaign":
-                    NavManager.NavigateTo($"/campaignview/{Action.CampaignId}");
+                    NavManager.NavigateTo($"/campaigns/{Action.CampaignId}");
                     break;
                 case "viewmeeting":
                     NavManager.NavigateTo($"/meetingview/{MeetingId}");

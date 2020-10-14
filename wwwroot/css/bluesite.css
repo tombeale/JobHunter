@@ -63,17 +63,16 @@ a.menu-bar:hover {
 
 #masthead-logo {
     position: fixed;
-    top: 15px;
-    left: 20px;
-    font-size: 120%;
-    color: white;
+    top:   -33px;
+    left:  -50px;
+    width: 320px;
 }
 
 #masthead-title {
     position: fixed;
-    top: 40px;
-    left: 50px;
-    font-size: 105%;
+    top: 47px;
+    left: 112px;
+    font-size: 95%;
     color: white;
 }
 
@@ -142,6 +141,12 @@ div.note-viewer {
 img.inline-menu {
     height: 20px;
     vertical-align: top;
+}
+
+.title-id {
+    font-size: 60%;
+    color: #8fa3c6;
+    font-weight: normal;
 }
 
 #side-bar {

@@ -4,10 +4,28 @@
 <SideBar MenuSet="home" />
 
 <h1>JobHunt 2020</h1>
-
-<ToDoList />
+<section class="home-links">
+    <ImageButton Image="StateSeal" Size="150" Action="https://oregon.wd5.myworkdayjobs.com/en-US/SOR_External_Career_Site/userHome" ToolTip="Oregon Jobs: Workday Home" />
+    <div class="description">
+        This is the WorkDay page to keep track of both progress in the selection process and new postings that might be interesting. This applies to most government applications and should be checked several times a day.
+    </div>
+</section>
+<section class="home-links">
+    <ImageButton Image="Campaigns" Size="150" OnChangeCallback="@HandleActionClick" ToolTip="Manage Campaigns" />
+    <div class="description">
+        <CampaignSummary />
+    </div>
+</section>
+<section class="home-links">
+    <ImageButton Image="Resume" Size="150" OnChangeCallback="@HandleActionClick" ToolTip="Manage ResumeContent" />
+    <div class="description">
+        Modify resume content
+    </div>
+</section>
 
 @code {
+
+    [Inject] NavigationManager NavManager { get; set; }
 
     List<string> EventType = new List<string>();
 
@@ -20,5 +38,21 @@
     {
         await JsRuntime.InvokeVoidAsync(identifier: "setTitle", title);
     }
+
+    protected void HandleActionClick(string key)
+    {
+        string[] keys = key?.Split('|');
+        switch (keys[1]?.ToLower())
+        {
+            case "campaigns":
+                NavManager.NavigateTo("/campaigns");
+                break;
+            case "resume":
+                NavManager.NavigateTo("/resume");
+                break;
+        }
+    }
+
+
 }
 

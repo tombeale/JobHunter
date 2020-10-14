@@ -10,6 +10,12 @@ textarea.form-control {
     font-size: 100%;
 }
 
+textarea.bullet-point-edit {
+    width: 600px;
+    height: 40px;
+    display: inline-block;
+}
+
 input.bs-input-full {
     width: 100%;
 }
@@ -32,13 +38,17 @@ input.phone-number {
     color: #6d7c98;
 }
 
+.form-label {
+    line-height: 1.2;
+}
+
 input.form-label {
     border: none;
     color: #6d7c98;
     font-size: unset;
 }
 
-input.inset::placeholder {
+input.inset::placeholder, textarea::placeholder {
     color: #dee3ec;
 }
 
@@ -90,7 +100,7 @@ div.select-button {
     background-position-x: right;
     white-space: nowrap;
     padding: 2px 22px 2px 4px;
-    font-size: 80%;
+    font-size: 130%;
     text-align: left;
     color: black;
     cursor: pointer;
@@ -213,6 +223,7 @@ td.right-align {
 label.form-label {
     margin: 0;
     color: #6d7c98;
+    line-height: 1.2;
 }
 
 select.select-control {

@@ -8,9 +8,9 @@
 <SideBar MenuSet="todolist" OnClickCallback="@HandleSidebarOption" />
 
 <div class="d-inline-block" style="width:70%">
-    <h1>Action Items <span class="normal">(@actions.Count(action => !action.IsDone) Active Items)</span></h1>
+    <h1>Action Items <span class="title-id">(@actions.Count(action => !action.IsDone) Active Items)</span></h1>
 </div>
-<div class="d-inline-block" style="width:28%; text-align: right;">
+<div class="d-inline-block noprint" style="width:28%; text-align: right;">
     <DropDown OnClickCallback="@HandleSetActionType" Data="@Options" Value="@ActionType" Style="width:180px;" First="*|All" />
 </div>
 <table class="to-do" border="0" style="width: 100%">
@@ -18,9 +18,9 @@
         <th class="column-action-status" style="width: 75px;">Done</th>
         <th class="column-action-status" style="width: 125px;">Status</th>
         <th class="column-action-name" style="width: 100%;">Name</th>
-        <th class="column-action-type" style="width: 125px;">Type</th>
-        <th class="column-action-date" style="width: 125px;">Start</th>
-        <th class="column-action-date" style="width: 125px;">End</th>
+        <th class="column-action-type noprint" style="width: 125px;">Type</th>
+        <th class="column-action-date noprint" style="width: 125px;">Start</th>
+        <th class="column-action-date noprint" style="width: 125px;">End</th>
     </tr>
     @for (int i = 0; i < actions.Count; i++)
     {
@@ -32,7 +32,7 @@
                        OnChangeCallback="@HandleActionChange" OnRowOptionCallback="@HandleRowOptionClick" />
         }
     }
-    <tr class="to-do">
+    <tr class="to-do noprint">
         <td width="40" class="right-align" colspan="2">Add:</td>
         <td width="100%">
             <input type="text" class="form-control to-do inset"

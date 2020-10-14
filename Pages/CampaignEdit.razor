@@ -13,7 +13,7 @@
 
 <EditForm Model="@Campaign" OnValidSubmit="HandleValidSubmit">
     <div class="d-inline-block" style="width:70%">
-        <h1>@PageAction Campaign <span class="normal">(Id: #@Campaign.CampaignId.)</span></h1>
+        <h1>@PageAction Campaign <span class="title-id">(Id: #@Campaign.CampaignId.)</span></h1>
     </div>
     <div class="d-inline-block" style="width:28%; text-align: right;">
         <button class="btn btn-secondary" @onclick="HandleCancel" style="margin-top: 25px;">Cancel</button>

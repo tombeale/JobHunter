@@ -1,6 +1,6 @@
 ﻿@if (!String.IsNullOrEmpty(Action))
 {
-    <a href="@Action" target="_new"><img class="inline-menu link" style="@ImageSize"
+    <a href="@Action" target="@Target"><img class="inline-menu link" style="@ImageSize"
          onmouseover="setIconImage(this, '@Image-1.png')"
          onmouseout="setIconImage(this, '@Image-0.png')"
          src="images/Icons/@Image-0.png"
@@ -11,6 +11,7 @@ else
     <img class="inline-menu link" style="@ImageSize"
          onmouseover="setIconImage(this, '@Image-1.png')"
          onmouseout="setIconImage(this, '@Image-0.png')"
+         id="@Id"
          src="images/Icons/@Image-0.png"
          @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|{Image}")'
          title="@ToolTip" />
@@ -34,6 +35,12 @@ else
 
     [Parameter]
     public string ToolTip { get; set; } = "";
+
+    [Parameter]
+    public string Id { get; set; } = "";
+
+    [Parameter]
+    public string Target { get; set; } = "_new";
 
     [Parameter]
     public EventCallback<string> OnChangeCallback { get; set; }

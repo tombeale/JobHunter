@@ -1,6 +1,6 @@
 ﻿@using BlueSite.Data.Entities
 
-    <div class="flex inline-menu" style="@style">
+    <div class="flex inline-menu noprint" style="@style">
         @foreach (var t in MenuSet)
         {<ImageButton Index="@Index.ToString()" Image="@t.Icon" ToolTip="@t.Caption" Size="@Size" Action="@t.Action" OnChangeCallback="@OnChangeCallback" />}
 

@@ -10,10 +10,10 @@
     {
         <Spacer Width="20" />
     }
-    <input type="text" id="@ElementId"
+    <textarea id="@ElementId"
            onkeypress="triggerChangeOnEnter(event, this)"
            placeholder="Add Talking Point"
-           class="form-control inset"
+           class="form-control inset bullet-point-edit"
            @onchange='e => HandleChange(e.Value.ToString())'
            value="@Point.Text" />
 </div>

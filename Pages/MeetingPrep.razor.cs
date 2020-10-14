@@ -52,7 +52,7 @@ namespace JobHunter.Pages
             switch (key.ToString())
             {
                 case "viewcampaign":
-                    NavManager.NavigateTo($"/campaignview/{Action.CampaignId}");
+                    NavManager.NavigateTo($"/campaigns/{Action.CampaignId}");
                     break;
                 case "viewmeeting":
                     NavManager.NavigateTo($"/meetingview/{ActionId}");
@@ -79,15 +79,21 @@ namespace JobHunter.Pages
             }
         }
 
-        protected void HandleTopicChanged()
+        protected async void HandleTopicChanged()
         {
-            _context.SaveChanges();
-            if (RefreshPage)
+            try
             {
-                RefreshPage = false;
-                Topics = Repository.GetTopicsForParentId("action", ActionId);
-                StateHasChanged();
-                //NavManager.NavigateTo(NavManager.Uri, true);
+                _context.SaveChanges();
+                if (RefreshPage)
+                {
+                    RefreshPage = false;
+                    Topics = Repository.GetTopicsForParentId("action", ActionId);
+                    StateHasChanged();
+                }
+            }
+            catch (Exception e)
+            {
+                await JsRuntime.InvokeVoidAsync(identifier: "notifyFailure", $"Update threw an exception: {e.Message}");
             }
         }
 
@@ -156,7 +162,13 @@ namespace JobHunter.Pages
                 int cid = Convert.ToInt32(CompanyId);
                 Company = Repository.GetCompany(cid);
                 CompanyAddress = Utilities.GetAddress<Company>(Company);
-
+                CompanyAddress = (Company != null) ? Utilities.GetAddress<Company>(Company) : null;
+            }
+            else if (Action.CampaignId != null)
+            {
+                int cid = Convert.ToInt32(Action.CampaignId);
+                Company = Repository.GetCompanyFromCampaignId(cid);
+                CompanyAddress = (Company != null) ? Utilities.GetAddress<Company>(Company) : null;
             }
             Topics = Repository.GetTopicsForParentId("action", ActionId);
 
@@ -165,7 +177,7 @@ namespace JobHunter.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await SetTitle("Meeting Preparation");
+            await SetTitle("Meeting Prep");
         }
 
         protected async Task SetTitle(string title)

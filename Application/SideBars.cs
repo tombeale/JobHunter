@@ -46,9 +46,9 @@ namespace JobHunter.Application
         public static List<MenuItem> GetViewMeetingSet()
         { 
             List<MenuItem> list = new List<MenuItem>();
-            list.Add(new MenuItem("", "", "Prepare",     "prepmeeting", "option"));
+            list.Add(new MenuItem("", "", "Prepare",       "prepmeeting", "option"));
             list.Add(new MenuItem("", "", "View Campaign", "viewcampaign", "option"));
-            list.Add(new MenuItem("", "", "Edit Action", "editaction",  "option"));
+            list.Add(new MenuItem("", "", "Edit Action",   "editaction",  "option"));
             return list;
         }
         public static List<MenuItem> GetPrepMeetingSet()
@@ -89,7 +89,8 @@ namespace JobHunter.Application
         public static List<MenuItem> GetCampaignsSet()
         { 
             List<MenuItem> list = new List<MenuItem>();
-            list.Add(new MenuItem("", "", "Collapse All",     "collapse-all",         "option"));
+            list.Add(new MenuItem("", "", "Toggle All",   "toggle-all",    "option"));
+            list.Add(new MenuItem("", "", "Collapse All", "collapse-all",         "option"));
             return list;
         }
     }

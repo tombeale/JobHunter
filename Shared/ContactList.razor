@@ -1,0 +1,39 @@
+﻿@using JobHunter.Models
+
+<div id="contact-list-sec" style="display:none;" class="float-listing float-shadow">
+    <table cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+            @foreach (DDOption contact in Contacts)
+            {
+                <tr><td class="list-item" @onclick='@(() => SetContact(contact.Key))'>@contact.Value</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public List<DDOption> Contacts { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnChangeCallback { get; set; }
+
+    private string display = "display:none;";
+
+    public int Index { get; set; }
+
+    public void Show(int index)
+    {
+        Index = index;
+
+        display = "";
+        StateHasChanged();
+    }
+
+    private void SetContact(string contactId)
+    {
+        string args = $"{Index}|{contactId}";
+        OnChangeCallback.InvokeAsync(args);
+    }
+
+}

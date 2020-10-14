@@ -3,16 +3,16 @@
 @using JobHunter.Application
 
     <tr class="action-list">
-        <td style="padding-top: 0;"><img src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 30px" /></td>
+        <td style="padding-top: 0;"><img class="checkbox" src="@imgSource" @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|done|{((Checked == "0") ? "1" : "0")}")' style="width: 30px" /></td>
         <td class="column-action-status">
             <div class="select-button" id="action-row-@Index"
                  @onclick='eventArgs => OnChangeCallback.InvokeAsync($"{Index}|status")'
                  style="width: 100px; background-color:@GetColorStyleFromStatus(Action.Status); ">&nbsp;@GetFriendlyStatusName(Action.Status)&nbsp;</div>
         </td>
         <td class="column-action-name @TitleClass">@Action.Title</td>
-        <td class="column-action-type">@GetFriendlyTypeName(Action.Type)</td>
-        <td class="column-action-date"><DateField DateValue="@Action.StartDate" Option="date" /></td>
-        <td class="column-action-date"><DateField DateValue="@Action.EndDate"   Option="date" /></td>
+        <td class="column-action-type noprint">@GetFriendlyTypeName(Action.Type)</td>
+        <td class="column-action-date noprint"><DateField DateValue="@Action.StartDate" Option="date" /></td>
+        <td class="column-action-date noprint"><DateField DateValue="@Action.EndDate"   Option="date" /></td>
         <td style="width: 120px; padding: 0px 20px 0px 4px">
             <InlineToolBar Index="@Index"
                             MenuSet="@ToolBars.GetActionRowItems(HasNotes, Action.IsDone)" OnChangeCallback="@OnRowOptionCallback" />

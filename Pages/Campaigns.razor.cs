@@ -19,15 +19,30 @@ namespace JobHunter.Pages
         [Inject] BlueSiteContext _context { get; set; }
         [Inject] NavigationManager NavManager { get; set; }
 
-        protected List<Campaign> Campaigns  = new List<Campaign>();
-        public List<DDOption>   ActionTypes = new List<DDOption>();
-        public List<DDOption>   Statuses    = new List<DDOption>();
-        public List<ActionItem> Actions     = new List<ActionItem>();
+        [Parameter]
+        public string BaseCampaignId { get; set; } = "0";
+        protected int _BaseCampaignId { get; set; } = 0;
 
-        protected string     NoteImage { get; set; }
-        protected NoteEdit   noteEdit;
-        protected NoteViewer noteviewer;
-        protected Overlay    overlay;
+        protected List<Campaign> AllCampaigns = new List<Campaign>();
+        protected List<Campaign> Campaigns    = new List<Campaign>();
+        protected List<Contact>  Contacts     = new List<Contact>();
+        protected List<Company>  Companies    = new List<Company>();
+        public List<DDOption>    ContactsList = new List<DDOption>();
+        public List<DDOption>    ActionTypes  = new List<DDOption>();
+        public List<DDOption>    Statuses     = new List<DDOption>();
+        public List<ActionItem>  Actions      = new List<ActionItem>();
+
+        protected List<Contact>  RelatedContacts        = new List<Contact>();
+        public List<CampaignContactRelationship>  CCRs  = new List<CampaignContactRelationship>();
+
+        protected string      NoteImage { get; set; }
+        protected ContactList contactList;
+        protected NoteEdit    noteEdit;
+        protected NoteViewer  noteviewer;
+        protected Overlay     overlay;
+
+        protected List<string> Exclude = new List<string>() { "nogo", "cancelled", "expired", "done" };
+        protected bool ShowAll = false;
 
         private User _user;
 
@@ -36,10 +51,6 @@ namespace JobHunter.Pages
 
         protected string hideCampaigns = "display: none;";
         JobHuntRepository       Repository;
-
-        /* *******************************************************************
-            Data
-         ****************************************************************** */
 
 
         /* *******************************************************************
@@ -72,6 +83,16 @@ namespace JobHunter.Pages
             StateHasChanged();
         }
 
+        public void HandleLinkRequest(string value)
+        {
+            string[] args = value.Split('|');
+            var vals = value.Split('|');
+            ActionItem t;
+            int id = Convert.ToInt32(vals[1]);
+            contactList.Show(id);
+            JsRuntime.InvokeVoidAsync(identifier: "locateElementBelowParent", $"contact-list-sec|add-{vals[0]}-{vals[1]}");
+        }
+
         protected void HandleOpenCloseClick(int id)
         {
 
@@ -95,10 +116,30 @@ namespace JobHunter.Pages
             await JsRuntime.InvokeVoidAsync(identifier: "toggleExpand", $"campaign-{id}");
         }
 
+        protected void HandleLinkContact(string value)
+        {
+            var vals = value.Split('|');
+            int CampaignId = Convert.ToInt32(vals[0]);
+            int ContactId  = Convert.ToInt32(vals[1]);
+            var ccr = Repository.GetCampaignContactRelationship(CampaignId, ContactId);
+            if (ccr == null)
+            {
+                ccr = new CampaignContactRelationship();
+                ccr.CampaignId = CampaignId;
+                ccr.ContactId  = ContactId;
+                _context.CampaignContactRelationships.Add(ccr);
+                _context.SaveChanges();
+            }
+            StateHasChanged();
+        }
+
         protected void HandleSidebarOption(string key)
         {
             switch (key.ToLower())
             {
+                case "toggle-all":
+                    ShowAll = !ShowAll;
+                    break;
                 case "collapse-all":
                     ListState.CloseAll();
                     Repository.SaveUserPref(_user.UserId, "campaigns:liststate", ListState.ToString());
@@ -136,17 +177,47 @@ namespace JobHunter.Pages
             }
         }
 
+        protected void HandleSectionClick(string value)
+        {
+            var vals = value.Split('|');
+            int campaignId = Convert.ToInt32(vals[0]);
+            switch (vals[1].ToLower())
+            {
+                case "action":
+                    ListState.Toggle(campaignId, "actions");
+                    break;
+                case "contact":
+                    ListState.Toggle(campaignId, "contacts");
+                    break;
+                case "note":
+                    ListState.Toggle(campaignId, "note");
+                    break;
+                default:
+                    return;
+            }
+            Repository.SaveUserPref(_user.UserId, "campaigns:liststate", ListState.ToString());
+            StateHasChanged();
+        }
+
+        protected void EditContact(int contactId)
+        {
+            NavManager.NavigateTo($"/contactedit/{contactId}");
+        }
+
         /* *******************************************************************
             Life Cycle Events
          ****************************************************************** */
         protected override void OnInitialized()
         {
-            List<string> Exclude = new List<string>() { "nogo", "cancelled", "expired", "done" };
-            
-            Repository = new JobHuntRepository(_context);
-            Campaigns  = Repository.AllCampaigns.Where(c => !Exclude.Contains(c.Status)).ToList();
-            Actions    = Repository.GetAllCampaignActions();
-            var stats  = Repository.GetStatuses();
+            Repository    = new JobHuntRepository(_context);
+            Contacts      = Repository.AllContacts.ToList();
+            Companies     = Repository.AllCompanies.ToList();
+            AllCampaigns  = Repository.AllCampaigns.ToList();
+            Actions       = Repository.GetAllCampaignActions();
+            CCRs          = _context.CampaignContactRelationships.ToList();
+            var stats     = Repository.GetStatuses();
+
+            RelatedContacts = Repository.GetAllCampaignContacts();
 
             _user = Repository.GetUserFromSignon();
 
@@ -162,14 +233,44 @@ namespace JobHunter.Pages
                 ActionTypes.Add(new DDOption(item.ActionTypeId, item.Name));
             }
 
+            foreach (var contact in Contacts)
+            {
+                string name;
+                if (!String.IsNullOrEmpty(contact.FirstName) && !String.IsNullOrEmpty(contact.LastName)) {
+                    name = $"{contact.LastName}, {contact.FirstName}";
+                }
+                else if (!String.IsNullOrEmpty(contact.FirstName))
+                {
+                    name = contact.FirstName;
+                }
+                else if (!String.IsNullOrEmpty(contact.LastName))
+                {
+                    name = contact.LastName;
+                }
+                else
+                {
+                    continue;
+                }
+                ContactsList.Add(new DDOption(contact.ContactId.ToString(), name));
+            }
+
             ListState = new StateList(Repository.GetUserPref(_user.UserId, "campaigns:liststate", ""));
         }
-
 
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
 
+            _BaseCampaignId = Convert.ToInt32(BaseCampaignId);
+
+            if (_BaseCampaignId > 0)
+            {
+                Campaigns  = AllCampaigns.Where(c => c.CampaignId == _BaseCampaignId).ToList();
+            }
+            else
+            {
+                Campaigns  = AllCampaigns;
+            }
         }
 
         protected void ToggleDetails(int id)
@@ -180,7 +281,7 @@ namespace JobHunter.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await SetTitle("Campaign Management");
+            await SetTitle("Campaigns");
         }
 
         protected string GetCompanyName(int? companyId)
@@ -201,6 +302,10 @@ namespace JobHunter.Pages
                 title);
         }
 
+        protected bool IsReletedContact(int contactId, int campaignId)
+        {
+            return CCRs.Any(c => c.CampaignId == campaignId && c.ContactId == contactId);
+        }
 
     }
 }

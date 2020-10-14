@@ -1,0 +1,13 @@
+﻿@inherits ResumeBase
+@page "/resume"
+@using JobHunter.Shared
+@using JobHunter.Models
+@using JobHunter.Application
+@using BlueSite.Data
+@using BlueSite.Data.Entities
+@inject IJSRuntime JsRuntime
+@inject BlueSiteContext _context
+
+<SideBar MenuSet="resume" OnClickCallback="@HandleSidebarOption" />
+
+<h1>Manage Resume Content<TitleIcons Title="Manage Resume" IconWidth="24px" /></h1>

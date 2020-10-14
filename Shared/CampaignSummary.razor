@@ -1,0 +1,49 @@
+﻿@using BlueSite.Data
+@using BlueSite.Data.Entities
+@using JobHunter.Models
+
+<h3>Campaigns</h3>
+<section class="nested-section">
+    <table>
+        <tr>
+            <td class="stat-label">Total Active:</td>
+            <td class="stat-value">@Stats.Active</td>
+            <td class="stat-label">Total Inctive:</td>
+            <td class="stat-value">@Stats.Cancelled</td>
+        </tr>
+        <tr>
+            <td class="stat-label">Not Started:</td>
+            <td class="stat-value">@Stats.NotStarted</td>
+            <td class="stat-label">Waiting:</td>
+            <td class="stat-value">@Stats.Waiting</td>
+        </tr>
+        <tr>
+            <td class="stat-label">Completed:</td>
+            <td class="stat-value">@Stats.Completed</td>
+        </tr>
+    </table>
+</section>
+
+@code {
+
+    [Inject] BlueSiteContext _context { get; set; }
+
+    JobHuntRepository Repository;
+
+    Campaign campaign;
+
+    JobHunter.Models.CampaignStats Stats;
+
+    User _user;
+
+    protected override void OnInitialized()
+    {
+        Repository = new JobHuntRepository(_context);
+        _user = Repository.GetUserFromSignon();
+
+        Stats = new CampaignStats(Repository.AllCampaigns.ToList());
+
+
+    }
+
+}

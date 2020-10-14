@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>b681da99-2a64-48b4-9be8-68fda273cf1e</UserSecretsId>
+    <ApplicationIcon>JobHunter.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

@@ -63,17 +63,16 @@ a.menu-bar:hover {
 
 #masthead-logo {
     position: fixed;
-    top: 15px;
-    left: 20px;
-    font-size: 120%;
-    color: white;
+    top:   -33px;
+    left:  -50px;
+    width: 320px;
 }
 
 #masthead-title {
     position: fixed;
-    top: 40px;
-    left: 50px;
-    font-size: 105%;
+    top: 47px;
+    left: 112px;
+    font-size: 95%;
     color: white;
 }
 
@@ -91,7 +90,7 @@ a.menu-bar:hover {
 }
 
 .note-viewer {
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 div.inline-phone {
@@ -123,11 +122,12 @@ div.inline-flex {
 }
 
 div.inline-menu {
+    height: 25px;
     display: inline-block;
     background-color: #f1f1f1;
     border: solid 1px #aaa;
     border-radius: 4px;
-    padding: 2px 2px 4px 2px;
+    padding-top: 2px;
     white-space: nowrap;
 }
 
@@ -140,6 +140,13 @@ div.note-viewer {
 
 img.inline-menu {
     height: 20px;
+    vertical-align: top;
+}
+
+.title-id {
+    font-size: 60%;
+    color: #8fa3c6;
+    font-weight: normal;
 }
 
 #side-bar {

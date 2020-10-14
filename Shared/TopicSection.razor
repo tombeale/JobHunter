@@ -3,11 +3,13 @@
 
 @inject BlueSiteContext _context
 <td></td>
-<td><label class="form-label">@Topic.Caption</label></td>
+<td><label class="form-label link" @onclick="ToggleViewState" style="color: black;">@Topic.Caption</label></td>
 <td class="field-value">
     <div class="topic-text">
         @Topic.Text
     </div>
+    @if (DisplayState)
+    {
     <div class="bullet-points">
         <ul>
             @for (int index = 0; index < Topic.Topics.Count; index++)
@@ -16,6 +18,7 @@
             }
         </ul>
     </div>
+    }
 </td>
 
 
@@ -35,6 +38,8 @@
 
     private JobHuntRepository Repository;
 
+    protected bool DisplayState { get; set; } = false;
+
     BlueSite.Data.Entities.TopicPoint NewPoint;
 
     protected override void OnInitialized()
@@ -46,6 +51,12 @@
     {
         base.OnParametersSet();
         ClearNewPoint();
+    }
+
+    protected void ToggleViewState()
+    {
+        DisplayState = !DisplayState;
+        StateHasChanged();
     }
 
     public void SetParentRefresh(bool val = true)

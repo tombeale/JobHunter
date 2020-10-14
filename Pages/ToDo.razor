@@ -12,9 +12,9 @@
 <SideBar MenuSet="todolist" OnClickCallback="@HandleSidebarOption" />
 
 <div class="d-inline-block" style="width:70%">
-    <h1>To Do List <span class="normal">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
+    <h1>To Do List <span class="title-id">(@todos.Count(todo => !todo.IsDone) Active Items)</span></h1>
 </div>
-<div class="d-inline-block" style="width:28%; text-align: right;">
+<div class="d-inline-block noprint" style="width:28%; text-align: right;">
     <ComboBox Caption="Set Id" Id="action-set-id" HandleEventClick="@HandleActionSetIdClick" Value="@SetId" Width="225px" />
 </div>
 <table class="to-do" border="0" style="width: 100%">

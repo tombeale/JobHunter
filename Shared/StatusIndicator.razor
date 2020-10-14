@@ -3,18 +3,18 @@
 <img src="/images/icons/@Icon" style="position: relative; top: -2px; height: @(Size)px;" />
 
 @code {
-        [Parameter]
-        public string Size { get; set; }
+    [Parameter]
+    public string Size { get; set; }
 
-        [Parameter]
-        public string Status { get; set; }
+    [Parameter]
+    public string Status { get; set; }
 
-        [Parameter]
-        public string Type { get; set; } = "";
+    [Parameter]
+    public string Type { get; set; } = "";
 
 
 
-        string Icon = "status-blank.png";
+    string Icon = "status-blank.png";
 
     protected override void OnParametersSet()
     {
@@ -37,8 +37,16 @@
             case "blocked":
                 Icon = "status-blocked.png";
                 break;
+            case "movedon":
+                Icon = "status-moved-on.png";
+                break;
             case "done":
                 Icon = "status-done.png";
+                break;
+            case "nogo":
+            case "cancelled":
+            case "expired":
+                Icon = "status-cancelled.png";
                 break;
             default:
                 Icon = "status-blank.png";

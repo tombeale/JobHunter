@@ -2,14 +2,15 @@
 
 @inject NavigationManager NavManager
 
-    <div class="relationship-title">
-        @Title&nbsp;
-        @if (NewType != null)
-        {
-            <ImageButton Image="Add" OnChangeCallback="@HandleAddRequest" ToolTip="Add and attach new Contact" />
-        }
+<div class="relationship-title">
+    <span class="link" @onclick="HandleTitleClick">@Title</span>&nbsp;
+    @if (NewType != null)
+    {
+        <ImageButton Image="Add" OnChangeCallback="@HandleAddRequest" ToolTip="Add and attach new Contact" />
+        <ImageButton Image="Link" OnChangeCallback="@HandleLinkRequest" ToolTip="Attach existing Contact" id="@linkButtonId" />
+    }
 
-    </div>
+</div>
 <div class="relationship-details">@ChildContent</div>
 
 @code {
@@ -25,6 +26,32 @@
     [Parameter]
     public string NewType { get; set; } = null;
 
+    [Parameter]
+    public EventCallback<string> AttachEntity { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+    string linkType = "";
+    string linkButtonId = "";
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        switch (NewType?.ToLower())
+        {
+            case "contact":
+                linkType = "linkcontact";
+                break;
+            case "action":
+                linkType = "linkaction";
+                break;
+
+        }
+        linkButtonId = $"add-{linkType}-{Id}";
+    }
+
+
     public void HandleAddRequest(string value)
     {
         switch (NewType.ToLower())
@@ -38,5 +65,33 @@
         }
     }
 
+    public void HandleLinkRequest(string value)
+    {
+        switch (NewType.ToLower())
+        {
+            case "contact":
+                AttachEntity.InvokeAsync($"linkcontact|{Id}");
+                break;
+            case "action":
+                NavManager.NavigateTo($"/actionEdit?FromPage=campaigns&reltype=campaign&relid={Id}");
+                break;
+        }
+    }
+
+    public void HandleTitleClick()
+    {
+        switch (NewType?.ToLower())
+        {
+            case "action":
+                OnClickCallback.InvokeAsync($"{Id}|action");
+                break;
+            case "contact":
+                OnClickCallback.InvokeAsync($"{Id}|contact");
+                break;
+            case "note":
+                OnClickCallback.InvokeAsync($"{Id}|note");
+                break;
+        }
+    }
 
 }

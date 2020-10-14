@@ -114,7 +114,7 @@ namespace JobHunter.Application
                     }
                     else
                     {
-                        url = $"/meeting/{action.ActionItemId}";
+                        url = $"/meetingview/{action.ActionItemId}";
                     }
                     break;
             }

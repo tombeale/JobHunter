@@ -42,7 +42,10 @@ namespace JobHunter.Models
 
         public void Toggle(int id, string key)
         {
-            Listing.Where(s => s.Id == id).FirstOrDefault().Toggle(key);
+            if (id > 0)
+            {
+                Listing.Where(s => s.Id == id).FirstOrDefault().Toggle(key);
+            }
         }
 
         public void CloseAll()
