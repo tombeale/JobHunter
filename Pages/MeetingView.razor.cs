@@ -83,7 +83,6 @@ namespace JobHunter.Pages
             Params = new QueryString(NavManager.Uri);
             FromPage  = Params.Get("frompage");
             CompanyId = Params.Get("companyid");
-            //ListState = new StateList(Repository.GetUserPref(_user.UserId, "campaigns:liststate", ""));
         }
 
         protected override void OnParametersSet()
@@ -97,7 +96,7 @@ namespace JobHunter.Pages
                 Company = Repository.GetCompanyFromCampaignId(cid);
                 CompanyAddress = (Company != null) ? Utilities.GetAddress<Company>(Company) : null;
             }
-            Topics = Repository.GetTopicsForParentId("action", ActionId);
+            Topics = Repository.GetTopicsForParentId("action", ActionId).OrderBy(c=>c.Caption).ToList();
 
             MeetingDate = (Action.EndDate == null) ? "Not yet known" : Action.EndDate?.ToString("MMM d, yyyy");
         }

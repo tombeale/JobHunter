@@ -4,19 +4,27 @@
 
 @inject BlueSiteContext _context
 
-<td><label class="form-label">@Topic.Caption</label></td>
-<td class="field-value">
-    <div class="nobreak">
-        <textarea class="input-form topic-area inset" @onchange="e => HandleTopicTextChange(e.Value.ToString())" value="@Topic.Text" />
-    </div>
-    <div class="bullet-points">
-        @for (int index = 0; index < Topic.Topics.Count; index++)
-        {
-            <TopicEditPoint Parent="@this" Point="@Topic.Topics[index]" HandlePointChange="@HandleTopicChange" />
-        }
-        <TopicEditPoint Parent="@this" Point="@NewPoint" IsNew="true" HandlePointChange="@HandleTopicChange" />
-    </div>
-</td>
+<tr>
+    <td colspan="2">
+        <input type="text" maxlength="150" class="form-control input-form topic-area inset" @onchange='e => HandleTopicTextChange($"caption|{e.Value.ToString()}")' value="@Topic.Caption" />
+    </td>
+    <td width="30px" class="close-control" rowspan="2"><img src="images/Icons/Delete-0.png" class="link" @onclick='e => HandleDeleteEditSection($"delete|{Topic.Id}")' width="25" /></td>
+</tr>
+<tr>
+    <td width="75px"><Spacer width="75" /></td>
+    <td class="field-value">
+        <div class="nobreak">
+            <textarea class="form-control input-form topic-area inset" @onchange='e => HandleTopicTextChange($"text|{e.Value.ToString()}")' value="@Topic.Text" />
+        </div>
+        <div class="bullet-points">
+            @for (int index = 0; index < Topic.Topics.Count; index++)
+            {
+                <TopicEditPoint Parent="@this" Point="@Topic.Topics[index]" HandlePointChange="@HandleTopicChange" />
+            }
+            <TopicEditPoint Parent="@this" Point="@NewPoint" IsNew="true" HandlePointChange="@HandleTopicChange" />
+        </div>
+    </td>
+</tr>
 
 @code {
     [Parameter]
@@ -67,10 +75,24 @@
 
     async void HandleTopicTextChange(string value)
     {
-        Topic.Text = value;
+        string[] v = value.Split('|');
+        switch (v[0])
+        {
+            case "caption":
+                Topic.Caption = v[1];
+                break;
+            case "text":
+                Topic.Text = v[1];
+                break;
+        }
         await HandleTopicChange.InvokeAsync(value);
     }
 
-
-
+    async void HandleDeleteEditSection(string value)
+    {
+        string args = $"{Topic.Id}|delete-section";
+        SetParentRefresh();
+        Repository.DeleteTopicPointsForTopic(Topic.Id);
+        await HandleTopicChange.InvokeAsync(value);
+    }
 }

@@ -15,8 +15,8 @@
         <h1>Meeting Prep: @Action.Title</h1>
     </div>
 
-    <div class="page-column-6 flex-column">
-        <table width="100%">
+    <div class="page-column-12 flex-column">
+        <table width="100%" border="0">
             <TableColumnWidths Widths="160" />
             <tr>
                 <TextFieldTd Caption="Company" Value="@Company?.Name" Style="font-weight: bold; font-size: 120%;" />
@@ -27,20 +27,20 @@
             <tr>
                 <DateEditField Caption="Meeting Date" DateValue="@Action.EndDate" OnChangeCallback="@HandleDateChange" Style="width: 175px" Option="datetime" />
             </tr>
-            <TableSpacer Height="15" />
+        </table>
+        <Spacer Height="3" />
+        <table width="100%" border="0">
             @foreach (var topic in Topics)
             {
-                <tr>
-                    <TopicEditSection Parent="@this" HandleTopicChange="@HandleTopicChanged" Topic="@topic" />
-                </tr>
+                <TopicEditSection Parent="@this" HandleTopicChange="@HandleTopicChanged" Topic="@topic" />
             }
             <tr>
-                <td>
-                    <input class="form-control form-label inset" placeholder="Add Topic" @onchange="(evt => HandleAddTopic(evt.Value.ToString()))" value="" />
+                <td colspan="2" >
+                    <input type="text"maxlength="150" class="form-control input-form form-label inset" placeholder="Add Topic" @onchange="(evt => HandleAddTopic(evt.Value.ToString()))" value="@NewTopicTitle" />
                 </td>
             </tr>
         </table>
     </div>
-    <Spacer Height="300" />
+    <Spacer Height="600" />
 
 

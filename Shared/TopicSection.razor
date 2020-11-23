@@ -2,88 +2,85 @@
 @using BlueSite.Data.Entities
 
 @inject BlueSiteContext _context
-<td></td>
-<td><label class="form-label link" @onclick="ToggleViewState" style="color: black;">@Topic.Caption</label></td>
-<td class="field-value">
+<div><label class="form-label link" @onclick="ToggleViewState" style="color: black; font-weight: 600;">@Topic.Caption</label></div>
+@if (DisplayState)
+{
     <div class="topic-text">
         @Topic.Text
     </div>
-    @if (DisplayState)
-    {
     <div class="bullet-points">
         <ul>
             @for (int index = 0; index < Topic.Topics.Count; index++)
             {
-            <li>@Topic.Topics[index].Text</li>
+                <li>@Topic.Topics[index].Text</li>
             }
         </ul>
     </div>
-    }
-</td>
-
-
-
-@code {
-    [Parameter]
-    public string Caption { get; set; }
-
-    [Parameter]
-    public Topic Topic { get; set; }
-
-    [Parameter]
-    public EventCallback HandleTopicChange { get; set; }
-
-    [Parameter]
-    public JobHunter.Pages.MeetingView Parent { get; set; }
-
-    private JobHuntRepository Repository;
-
-    protected bool DisplayState { get; set; } = false;
-
-    BlueSite.Data.Entities.TopicPoint NewPoint;
-
-    protected override void OnInitialized()
-    {
-        Repository = new JobHuntRepository(_context);
-    }
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        ClearNewPoint();
-    }
-
-    protected void ToggleViewState()
-    {
-        DisplayState = !DisplayState;
-        StateHasChanged();
-    }
-
-    public void SetParentRefresh(bool val = true)
-    {
-        Parent.RefreshPage = val;
-    }
-
-    public void ReloadTopicPoints()
-    {
-        Topic.Topics = Repository.GetTopicPointsForTopic(Topic.Id);
-        ClearNewPoint();
-        StateHasChanged();
-    }
-
-    private void ClearNewPoint()
-    {
-        NewPoint = new BlueSite.Data.Entities.TopicPoint();
-        NewPoint.Text = "";
-        NewPoint.TopicId = Topic.Id;
-    }
-
-    async void HandleTopicTextChange(string value)
-    {
-        Topic.Text = value;
-        await HandleTopicChange.InvokeAsync(value);
-    }
-
-
-
 }
+
+
+
+    @code {
+        [Parameter]
+        public string Caption { get; set; }
+
+        [Parameter]
+        public Topic Topic { get; set; }
+
+        [Parameter]
+        public EventCallback HandleTopicChange { get; set; }
+
+        [Parameter]
+        public JobHunter.Pages.MeetingView Parent { get; set; }
+
+        private JobHuntRepository Repository;
+
+        protected bool DisplayState { get; set; } = false;
+
+        BlueSite.Data.Entities.TopicPoint NewPoint;
+
+        protected override void OnInitialized()
+        {
+            Repository = new JobHuntRepository(_context);
+        }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            ClearNewPoint();
+        }
+
+        protected void ToggleViewState()
+        {
+            DisplayState = !DisplayState;
+            StateHasChanged();
+        }
+
+        public void SetParentRefresh(bool val = true)
+        {
+            Parent.RefreshPage = val;
+        }
+
+        public void ReloadTopicPoints()
+        {
+            Topic.Topics = Repository.GetTopicPointsForTopic(Topic.Id);
+            ClearNewPoint();
+            StateHasChanged();
+        }
+
+        private void ClearNewPoint()
+        {
+            NewPoint = new BlueSite.Data.Entities.TopicPoint();
+            NewPoint.Text = "";
+            NewPoint.TopicId = Topic.Id;
+        }
+
+        async void HandleTopicTextChange(string value)
+        {
+            Topic.Text = value;
+            await HandleTopicChange.InvokeAsync(value);
+        }
+
+
+
+    }

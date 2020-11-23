@@ -27,19 +27,19 @@
         <tr>
             <DateField Caption="Meeting Date" DateValue="@Action.EndDate" ColSpan="2" Option="datetime" DefaultValue="Not set" />
         </tr>
-        <TableSpacer Height="15" />
-        @foreach (var topic in Topics)
-        {
-            <tr>
-                <TopicSection Topic="@topic" />
-            </tr>
-        }
-        <tr>
-            <td>
-            </td>
-        </tr>
     </table>
+    <TableSpacer Height="15" />
+    @foreach (var topic in Topics)
+    {
+        <TopicSection Topic="@topic" />
+    }
+    <tr>
+        <td>
+        </td>
+    </tr>
 </div>
+<br />
+<Spacer Height="500" />
 
 
 

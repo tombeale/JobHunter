@@ -43,10 +43,12 @@
             case "done":
                 Icon = "status-done.png";
                 break;
-            case "nogo":
             case "cancelled":
             case "expired":
                 Icon = "status-cancelled.png";
+                break;
+            case "nogo":
+                Icon = "status-no-go.png";
                 break;
             default:
                 Icon = "status-blank.png";

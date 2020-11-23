@@ -37,6 +37,7 @@ namespace JobHunter.Pages
         protected Models.Address CompanyAddress { get; set; }
         
         protected List<Topic> Topics;
+        protected string NewTopicTitle = "";
         
         private QueryString Params;
         protected TopicSection topicSection;
@@ -88,6 +89,7 @@ namespace JobHunter.Pages
                 {
                     RefreshPage = false;
                     Topics = Repository.GetTopicsForParentId("action", ActionId);
+                    NewTopicTitle = "";
                     StateHasChanged();
                 }
             }

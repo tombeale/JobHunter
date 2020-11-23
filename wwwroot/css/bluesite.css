@@ -135,7 +135,6 @@ div.note-viewer {
     margin: 2px 10px;
     overflow: auto;
     min-height: 150px;
-    height: 600px;
 }
 
 img.inline-menu {
@@ -257,4 +256,9 @@ td.item-relationship-list {
 .nomargin {
     margin: 0;
     padding: 0;
+}
+
+div.topic-text,
+div.bullet-points {
+    margin-left: 2em;
 }

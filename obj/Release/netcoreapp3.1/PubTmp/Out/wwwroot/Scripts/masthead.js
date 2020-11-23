@@ -9,13 +9,13 @@ $(document).ready(function () {
 
 function handleMouseMove(e) {
     if (e.clientY < menuThreshold && !menuActive) {
-        $("#menu-bar").show(200, function () {
+        $("#menu-bar").show(50, function () {
             menuActive = true;
         });
     }
 
     if (e.clientY > menuThreshold && menuActive) {
-        $("#menu-bar").hide(200, function () {
+        $("#menu-bar").hide(50, function () {
             menuActive = false;
         });
     }

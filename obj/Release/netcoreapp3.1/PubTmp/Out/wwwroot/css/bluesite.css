@@ -258,3 +258,8 @@ td.item-relationship-list {
     margin: 0;
     padding: 0;
 }
+
+div.topic-text,
+div.bullet-points {
+    margin-left: 2em;
+}

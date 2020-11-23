@@ -10,9 +10,15 @@ textarea.form-control {
     font-size: 100%;
 }
 
+textarea.bullet-point-edit,
+textarea.topic-area {
+    min-height: 1em;
+    max-height: 9em;
+    overflow: auto;
+}
+
 textarea.bullet-point-edit {
-    width: 600px;
-    height: 40px;
+    width: 90%;
     display: inline-block;
 }
 
@@ -217,7 +223,6 @@ td.right-align {
 
 .topic-area {
     width: 100%;
-    height: 90px;
 }
 
 label.form-label {
